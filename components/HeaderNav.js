@@ -32,6 +32,15 @@ export default function Header() {
     (cat) => cat.parentid === "none" && cat.status === "Active"
   );
 
+  // Function to chunk brands into groups of 10
+  const chunkBrands = (brands, chunkSize = 10) => {
+    const chunks = [];
+    for (let i = 0; i < brands.length; i += chunkSize) {
+      chunks.push(brands.slice(i, i + chunkSize));
+    }
+    return chunks;
+  };
+
   return (
     <div className="hidden lg:flex items-center space-x-3 ml-4 whitespace-nowrap relative">
       {/* HOME link */}
@@ -72,52 +81,105 @@ export default function Header() {
         ))}
 
       {/* Mega Menu */}
-      {activeCat && getSubcategories(activeCat._id).length > 0 && (
-        <div
-          className="absolute left-0 top-full bg-white shadow-xl border-t z-50 w-full flex"
-          onMouseEnter={() => setActiveCat(activeCat)} // keep open if mouse inside
-          onMouseLeave={() => setActiveCat(null)} // close if leave
-        >
-          {/* Subcategory Columns */}
-          <div className="flex-1 flex">
-            {Array.from(
-              { length: Math.ceil(getSubcategories(activeCat._id).length / 10) },
-              (_, colIndex) => {
-                const isRed = colIndex % 2 === 1; // alternate colors
-                return (
-                  <div
-                    key={colIndex}
-                    className={`flex-1 px-4 py-3 border-r flex flex-col ${
-                      isRed ? "bg-red-50" : "bg-white"
-                    }`}
-                  >
-                    {getSubcategories(activeCat._id)
-                      .slice(colIndex * 10, colIndex * 10 + 10)
-                      .map((subcat) => (
-                        <Link
-                          key={subcat._id}
-                          href={`/category/${activeCat.category_slug}/${subcat.category_slug}`}
-                          className="text-[#222529] hover:text-red-500 font-bold text-[12px] uppercase mb-2"
-                        >
-                          {subcat.category_name.toUpperCase()}
-                        </Link>
-                      ))}
-                  </div>
-                );
-              }
-            )}
-          </div>
+     {activeCat && (getSubcategories(activeCat._id).length > 0 || activeCat.brands?.length > 0) && (
+  <div
+    className="absolute left-0 top-full bg-white shadow-xl border-t z-50 flex"
+    onMouseEnter={() => setActiveCat(activeCat)}
+    onMouseLeave={() => setActiveCat(null)}
+  >
+    {/* MAIN CONTENT */}
+    <div className="flex">
 
-          {/* Right Side Image */}
-          <div className="w-56 flex items-center justify-center bg-white">
-            <img
-              src={activeCat.navImage}
-              alt={activeCat.category_name}
-              className="w-full h-full object-contain"
-            />
-          </div>
-        </div>
-      )}
+      {(() => {
+        // MERGE DATA
+        const subcats = getSubcategories(activeCat._id).map((s) => ({
+          type: "sub",
+          id: s._id,
+          name: s.category_name,
+          slug: `/category/${activeCat.category_slug}/${s.category_slug}`,
+        }));
+
+        const brands = (activeCat.brands || []).map((b) => ({
+          type: "brand",
+          id: b._id,
+          name: b.brand_name,
+          slug: `/brand/${b.brand_slug || b._id}`,
+        }));
+
+        const merged = [
+          ...subcats,
+          ...(brands.length ? [{ type: "heading", name: "BRANDS", id: "heading" }] : []),
+          ...brands,
+        ];
+
+        // SPLIT INTO COLUMNS OF 10
+        const columns = [];
+        for (let i = 0; i < merged.length; i += 10) {
+          columns.push(merged.slice(i, i + 10));
+        }
+
+        return (
+          <>
+            {/* DATA COLUMNS */}
+            {columns.map((col, colIndex) => (
+              <div
+                key={colIndex}
+                className={`flex flex-col px-4 py-3 border-r w-56 ${
+                  colIndex % 2 === 0 ? "bg-white" : "bg-red-50"
+                }`}
+              >
+                {/* CATEGORY TITLE ONLY ON FIRST COLUMN */}
+                {colIndex === 0 && (
+                  <h3 className="text-[14px] font-bold text-[#222529] mb-3 uppercase">
+                    {activeCat.category_name.toUpperCase()}
+                  </h3>
+                )}
+
+                <div className="flex flex-col gap-2">
+                  {col.map((item) => {
+                    if (item.type === "heading") {
+                      return (
+                        <div key={item.id} className="text-[12px] font-bold uppercase mt-2">
+                          {item.name}
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <Link
+                        key={item.id}
+                        href={item.slug}
+                        className="text-[12px] text-[#222529] hover:text-red-500 font-semibold uppercase"
+                      >
+                        {item.name.toUpperCase()}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {/* IMAGE COLUMN AFTER LAST DATA COLUMN */}
+            {activeCat.navImage && (
+              <div className="w-56 flex items-center justify-center bg-white">
+                <img
+                  src={activeCat.navImage}
+                  alt={activeCat.category_name}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            )}
+          </>
+        );
+      })()}
+
     </div>
-  );
+  </div>
+)}
+
+
+
+
+    </div>
+);
 }

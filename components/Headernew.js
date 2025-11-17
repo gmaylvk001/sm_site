@@ -418,11 +418,11 @@ useEffect(() => {
               <FiMenu size={22} />
             </button>
             <Link href="/" className="logo">
-               <img src="/user/sathya.png" alt="Logo" className="w-auto object-contain flex-shrink-0 h-9 xl:h-12" />
+               <img src="/user/sathya.png" alt="Logo" className="w-auto object-contain flex-shrink-0 h-16" />
             </Link>
           </div>
 
-          {/* Center: Navigation (hidden on mobile, shown on lg and up) */}
+          {/* Center: Navigation (hidden on mobile, shown on lg and up) xl:h-12 */}
           {/* HeaderNav now has flex-grow to push the right content */}
           {/* Center: Navigation with spacing to the right */}
       <div className="flex-grow md:pr-4 px-0 hidden lg:block xl:px-2 xl:pr-6 ">
