@@ -85,7 +85,7 @@ export default function Header() {
               className="
                 absolute 
                 top-[100%] 
-                left-1/2 
+                left-full 
                 -translate-x-1/2 
                 mt-[2px] 
                 bg-white 
