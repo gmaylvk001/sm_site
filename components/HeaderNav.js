@@ -132,7 +132,7 @@ export default function Header() {
 
                   return (
                     <>
-                      {columns.length <= 5 && columns.map((col, colIndex) => (
+                      {columns.length <= 6 && columns.map((col, colIndex) => (
                         <div
                           key={colIndex}
                           className={`flex flex-col px-4 py-3 border-r w-56 ${
