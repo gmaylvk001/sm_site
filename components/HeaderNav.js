@@ -66,6 +66,16 @@ export default function Header() {
           className="flex items-center text-[#222529] hover:text-red-500 font-bold text-[12px] uppercase py-[21px] tracking-[0.5px]"
         >
           {topCat.category_name.toUpperCase()}
+          {/* <svg className="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fillRule="evenodd"
+              d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+              clipRule="evenodd"
+            />
+          </svg> */}
+
+          {/* Show arrow ONLY if subcats or brands exist */}
+        {(getSubcategories(topCat._id).length > 0 || topCat.brands?.length > 0) && (
           <svg className="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
             <path
               fillRule="evenodd"
@@ -73,6 +83,7 @@ export default function Header() {
               clipRule="evenodd"
             />
           </svg>
+        )}
         </Link>
 
         {/* ======================
