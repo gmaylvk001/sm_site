@@ -7,7 +7,8 @@ import { FaShoppingCart, FaStar } from "react-icons/fa";
 import { AiOutlineBarcode } from "react-icons/ai"; // import at top
 import { FiBox, FiHash } from "react-icons/fi";
 import Link from "next/link";
-
+import { Poppins } from "next/font/google";
+const poppins = Poppins({ subsets: ["latin"], weight: ["400","500","600"] });
 export default function ProductDetailsSection({ product }) {
  
   
@@ -74,14 +75,6 @@ const fetchBrand = async () => {
 useEffect(() => {
   fetchBrand();
 }, []);
-
-
-
- 
-
-  
-
-
 
   const fetchRelatedProducts = async () => {
     try {
@@ -194,6 +187,70 @@ useEffect(() => {
     );
   };
 
+    // put this near the top of your component (before return)
+  const parseJSONSafe = (value) => {
+    if (!value) return null;
+    if (typeof value === "object") return value; // already an object
+    if (typeof value !== "string") return null;
+
+    const tryParse = (str) => {
+      try {
+        return JSON.parse(str);
+      } catch {
+        return undefined;
+      }
+    };
+
+    let s = value.trim();
+
+    // 1) direct parse
+    let parsed = tryParse(s);
+    if (parsed !== undefined) {
+      // if parsed is a string again (double-encoded), recurse
+      return typeof parsed === "string" ? parseJSONSafe(parsed) : parsed;
+    }
+
+    // 2) strip wrapping quotes if present and try again
+    if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
+      s = s.slice(1, -1).trim();
+      parsed = tryParse(s);
+      if (parsed !== undefined) return typeof parsed === "string" ? parseJSONSafe(parsed) : parsed;
+    }
+
+    // 3) unescape common escaped quotes/slashes and try one last time
+    try {
+      const unescaped = s.replace(/\\"/g, '"').replace(/\\'/g, "'").replace(/\\\\/g, "\\");
+      parsed = tryParse(unescaped);
+      if (parsed !== undefined) return typeof parsed === "string" ? parseJSONSafe(parsed) : parsed;
+    } catch {}
+
+    return null; // couldn't parse
+  };
+  const decodeAndClean = (str) => {
+    if (!str) return "";
+
+    // Create a temporary element to decode HTML entities
+    const temp = document.createElement("textarea");
+    temp.innerHTML = str;
+    let decoded = temp.value;
+
+    // Remove both actual LRM char and literal "&lrm;"
+    decoded = decoded.replace(/\u200E/g, "").replace(/&lrm;/gi, "");
+
+    return decoded.trim();
+  };
+
+  const descObj = parseJSONSafe(product?.description);
+
+  const hasValidDescription = descObj && typeof descObj === "object" && Object.keys(descObj).length > 0;
+  const hasPlainDescription = product?.description && typeof product.description === "string" && !descObj;
+  const hasSpecifications = [
+    product.ingredients,
+    product.weight,
+    product.dimensions,
+  ].some(Boolean);
+  if (!hasValidDescription && !hasPlainDescription && !hasSpecifications) return null;
+
   return (
     <div className="mt-4 sm:mt-8 border border-gray-400 rounded-lg p-3 sm:p-6 bg-white shadow-sm">
       {/* Tabs */}
@@ -297,8 +354,45 @@ useEffect(() => {
 
         {activeTab === "description" && (
           <div>
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Product Description</h2>
-            <p className="text-gray-700 mt-1 sm:mt-2 text-sm sm:text-base">{tabData.description}</p>
+            {/* <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Product Description</h2>
+            <p className="text-gray-700 mt-1 sm:mt-2 text-sm sm:text-base">{tabData.description}</p> */}
+            {(hasValidDescription || hasPlainDescription) && (
+              <>
+                <h2 className={`text-sm font-bold text-left ${poppins.className}`}>
+                  Product Description
+                </h2>
+
+                {hasValidDescription ? (
+                  <div className="mt-3 text-xs sm:text-sm text-gray-700 space-y-1">
+                    {Object.entries(descObj).map(([key, val]) => {
+                      const cleanKey = decodeAndClean(key);
+                      const cleanVal = decodeAndClean(val);
+                      return (
+                        <div
+                          key={cleanKey}
+                          className="grid grid-cols-[150px,1fr] gap-x-2 items-start"
+                        >
+                          <div className={`text-xs sm:text-sm font-bold ${poppins.className}`}>
+                            {cleanKey}:
+                          </div>
+                          <div className={`text-xs sm:text-sm ${poppins.className}`}>
+                            {cleanVal}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div
+                    className="mt-3 text-xs sm:text-sm text-gray-700 prose prose-gray max-w-none text-left [&_table]:w-full [&_table]:border-collapse [&_table]:border [&_th]:border [&_td]:border [&_th]:p-2 [&_td]:p-2 [&_tr:nth-child(even)]:bg-gray-50 [&_th]:bg-gray-100 [&_th]:font-semibold"
+                    dangerouslySetInnerHTML={{
+                      __html: decodeAndClean(String(product?.description || "")),
+                    }}
+                  />
+                )}
+              </>
+            )}
+
 
             {product.features?.length > 0 && (
               <>
