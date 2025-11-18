@@ -8,7 +8,8 @@ export async function GET(req) {
     
     const { searchParams } = new URL(req.url);
     console.log(searchParams);
-    const categoryIds = searchParams.get('categoryIds')?.split(',') || [];
+    //const categoryIds = searchParams.get('categoryIds')?.split(',') || [];
+    const sub_category_new = searchParams.get('sub_category_new');
     const brandIds = searchParams.get('brands')?.split(',') || [];
     const minPrice = parseFloat(searchParams.get('minPrice')) || 0;
     const maxPrice = parseFloat(searchParams.get('maxPrice')) || 1000000;
@@ -18,8 +19,17 @@ export async function GET(req) {
 
 
     // Base query - always filter by category
+    /*
     let query = { 
         sub_category: { $in: categoryIds }, // Use $in for multiple categories
+        status: "Active" 
+      };
+*/
+      let query = { 
+        sub_category_new: { 
+        $regex: sub_category_new,
+        $options: "i"
+      },
         status: "Active" 
       };
 

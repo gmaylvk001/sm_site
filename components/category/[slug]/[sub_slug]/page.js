@@ -138,7 +138,8 @@ export default function CategoryPage() {
         ? selectedFilters.categories
         : categoryData.allCategoryIds;
 
-      query.set('categoryIds', categoryIds.join(','));
+      //query.set('categoryIds', categoryIds.join(','));
+      query.set('sub_category_new',  categoryData.category.md5_cat_name);
       query.set('page', pageNum);
       query.set('limit', itemsPerPage);
 

@@ -88,6 +88,7 @@ const handleProductClick = (product) => {
       // Fetch category data (brands, filters, etc.)
       const categoryRes = await fetch(`/api/categories/${slug}/${sub_slug}`);
       const categoryData = await categoryRes.json();
+      console.log('categoryData',categoryData);
        setCategoryData({
         ...categoryData,
         categoryTree: categoryData.category,
@@ -188,7 +189,9 @@ useEffect(() => {
       setLoading(true);
       
       const query = new URLSearchParams();
-      query.set('categoryId', categoryId);
+      //query.set('categoryId', categoryId);
+
+      query.set('sub_category_new',  categoryData.category.md5_cat_name);
       
       if (selectedFilters.brands.length > 0) {
         query.set('brands', selectedFilters.brands.join(','));
@@ -222,7 +225,7 @@ useEffect(() => {
         setNofound(false);
       }
     } catch (error) {
-      toast.error('Error fetching filtered products:', error);
+    //  toast.error('Error fetching filtered products:', error);
     } finally {
       setLoading(false);
     }
@@ -570,6 +573,11 @@ const STEP = 100;
   //     </div>
   //   );
   // }
+
+   if(values[0] < MIN || values[1] > MAX){
+     values[0] = MIN;
+     values[1] = MAX;
+   }
  
   return(
     <div className="container mx-auto px-4 py-2 pb-3 max-w-7xl">

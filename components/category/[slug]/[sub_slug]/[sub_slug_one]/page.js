@@ -165,7 +165,9 @@ export default function CategoryPage() {
       setLoading(true);
       
       const query = new URLSearchParams();
-      query.set('categoryId', categoryId);
+     // query.set('categoryId', categoryId);
+
+      query.set('sub_category_new',  categoryData.category.md5_cat_name);
       
       if (selectedFilters.brands.length > 0) {
         query.set('brands', selectedFilters.brands.join(','));
