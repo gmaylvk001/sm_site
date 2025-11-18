@@ -31,7 +31,8 @@ export async function GET(request, { params }) {
     }
 
     // Get full category tree
-    const categoryTree = await getCategoryTree(main_category._id);
+    const categoryTree = [];
+   // const categoryTree = await getCategoryTree(main_category._id);
     
     function getAllCategoryIds(categories) {
       return categories.reduce((acc, category) => {
@@ -44,15 +45,23 @@ export async function GET(request, { params }) {
         return acc;
       }, []);
     }
-    
+    const allCategoryIds = [];
     // In your GET handler
-    const allCategoryIds = getAllCategoryIds(categoryTree);
-    console.log(allCategoryIds);
+   // const allCategoryIds = getAllCategoryIds(categoryTree);
+    //console.log(allCategoryIds);
+    /*
     const products = await Product.find({
       sub_category: { $in: allCategoryIds },
       status: "Active"
     });
-    
+    */
+   const products = await Product.find({
+      status: "Active",
+      sub_category_new: { 
+        $regex: main_category.md5_cat_name,
+        $options: "i"
+      }
+    });
     if (!products || products.length === 0) {
       return Response.json({ category:categoryTree, products: [], brands: [], filters: [] });
     }

@@ -19,10 +19,20 @@ export async function GET(req, { params }) {
     }
     
     // Fetch products under this category
+    /*
     const products = await Product.find({
       sub_category: category._id,
       status: "Active" 
     });
+    */
+    const products = await Product.find({
+              status: "Active",
+              sub_category_new: { 
+                $regex: category.md5_cat_name,
+                $options: "i"
+              }
+            });
+
     if (!products || products.length === 0) {
       return Response.json({ category, products: [], brands: [], filters: [] });
     }
