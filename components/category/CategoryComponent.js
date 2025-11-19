@@ -155,7 +155,8 @@ useEffect(() => {
         ? selectedFilters.categories
         : categoryData.allCategoryIds;
 
-      query.set('categoryIds', categoryIds.join(','));
+      //query.set('categoryIds', categoryIds.join(','));
+      query.set('sub_category_new',  categoryData.main_category.md5_cat_name);
       query.set('page', pageNum);
       query.set('limit', itemsPerPage);
 
@@ -458,6 +459,11 @@ useEffect(() => {
       </div>
     );
   }
+
+   if(values[0] < MIN || values[1] > MAX){
+     values[0] = MIN;
+     values[1] = MAX;
+   }
 
   return (
 
