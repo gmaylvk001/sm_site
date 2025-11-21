@@ -257,7 +257,7 @@ const CategoryProducts = () => {
             const sanitizedCategoryImage = getSanitizedImage(activeCategoryData.categoryImage);
             const sanitizedBackgroundImage = getSanitizedImage(categoryStyle.backgroundImage);
             const finalBgUrl = sanitizedCategoryImage || sanitizedBackgroundImage || "/default-image.jpg";
-            
+            const styleObj = { backgroundImage: `url("${finalBgUrl}")` };
             const visibleDesktopCount = 5;
             const fewProducts = products.length > 0 && products.length < visibleDesktopCount;
 
