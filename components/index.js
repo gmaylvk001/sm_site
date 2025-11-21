@@ -1612,7 +1612,7 @@ export default function HomeComponent() {
                   
                     <ToastContainer />
                  
-                  {/* <RecentlyViewedProducts />  */}
+                  <RecentlyViewedProducts /> 
             </div>
         </>
     );
