@@ -503,7 +503,7 @@ export default function HomeComponent() {
     fetchFlashSales();
     fetchBrands();
     fetchCategories();
-    fetchProducts();
+    //fetchProducts();
     fetchSingleBannerData();
     fetchSingleBannerDatatwo();
     const timer = setTimeout(() => {
@@ -784,7 +784,7 @@ export default function HomeComponent() {
       );
   })() : products;
 
-  console.log("Filtered Products:", filteredProducts);
+  //console.log("Filtered Products:", filteredProducts);
 
   const handleProductClick = (product) => {
     if (navigating) return;
