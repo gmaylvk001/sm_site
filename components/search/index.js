@@ -10,6 +10,7 @@ import Addtocart from "@/components/AddToCart";
 import { ToastContainer, toast } from 'react-toastify';
 import { FaSpinner } from 'react-icons/fa';
 import { Range as ReactRange } from "react-range";
+import { useRouter } from 'next/navigation';
 
 export default function SearchComponent() {
   const [categoryData, setCategoryData] = useState({
@@ -18,17 +19,22 @@ export default function SearchComponent() {
     filters: [],
     main_category: null
   });
+  const router = useRouter();
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("query") || "";
   const category = searchParams.get("category") || "";
   const urlQuery = { slug: searchParams.get("slug") || null, category: category || null };
+  const page = Number(searchParams.get("page") || 1);
   const [products, setProducts] = useState([]);
+  //const [brands, setbrands] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({
     categories: [],
     brands: [],
     price: { min: 0, max: 100000 },
     filters: []
   });
+  const [totalProducts, setTotalProducts] = useState(0);
+  
   const [priceRange, setPriceRange] = useState([0, 100000]);
   const [filterGroups, setFilterGroups] = useState({});
   const [loading, setLoading] = useState(true);
@@ -143,11 +149,12 @@ export default function SearchComponent() {
       }
     };
     const [brandMap, setBrandMap] = useState([]);
-
+    const [brands, setbrands] = useState([]);
   useEffect(() => {
     const fetchResults = async () => {
       try {
         setLoading(true);
+        /*
         let url = '/api/search?';
         
         if (searchQuery) {
@@ -162,14 +169,34 @@ export default function SearchComponent() {
         // Add cache-busting timestamp and log outgoing request
         url += (url.endsWith('?') ? '' : '&') + `t=${Date.now()}`;
         console.log('[SearchComponent] Calling:', url);
+        */
+
+        //let url = `/api/search?query=${searchQuery}&page=${pagination.currentPage}&limit=12`;
+        let url = `/api/search?query=${searchQuery}&page=${page}`;
 
         const res = await axios.get(url);
+        //console.log('Result from /api/search:', res.data);
         const searchData = res.data;
         const productsData = searchData.products || searchData;
+        setPagination(res.data.pagination); 
 
-        console.log('[SearchComponent] /api/search responded with products:', Array.isArray(productsData) ? productsData.length : 'unknown');
+        setTotalProducts(res.data.pagination.total);
+
+        setbrands(searchData.allbrand);
+
+        console.log(brands);
+
+        //console.log('[SearchComponent] /api/search responded with products:', Array.isArray(productsData) ? productsData.length : 'unknown');
 
         setProducts(productsData);
+        /*
+        
+
+        const res = await axios.get(url);
+        const data = res.data;
+        setProducts(data.products);
+        setPagination(data.pagination); 
+        */
         
         // Calculate price range from search results
         if (productsData.length > 0) {
@@ -228,7 +255,11 @@ export default function SearchComponent() {
       setLoading(false);
       setProducts([]);
     }
-  }, [searchQuery, category]);
+  }, [searchQuery, category, page]);
+
+  useEffect(() => {
+  console.log("Updated brands:", brands);
+}, [brands]);
 
   const fetchBrand = async () => {
     try {
@@ -330,6 +361,180 @@ export default function SearchComponent() {
   const handleProductClick = (product) => {
     // You can add any tracking logic here if needed
   };
+
+  const renderAdvancedPagination = () => {
+  const { currentPage, totalPages, hasNext, hasPrev } = pagination;
+  if (totalPages <= 1) return null;
+
+  const goToPage = (pageNum) => {
+    router.push(`/search?query=${searchQuery}&page=${pageNum}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const generatePages = () => {
+    const pages = [];
+
+    // Show first page
+    if (currentPage > 3) {
+      pages.push(1);
+      if (currentPage > 4) pages.push("...");
+    }
+
+    // Pages before current
+    for (let i = currentPage - 2; i < currentPage; i++) {
+      if (i > 1) pages.push(i);
+    }
+
+    // Current
+    pages.push(currentPage);
+
+    // Pages after current
+    for (let i = currentPage + 1; i <= currentPage + 2; i++) {
+      if (i < totalPages) pages.push(i);
+    }
+
+    // Last page
+    if (currentPage < totalPages - 2) {
+      if (currentPage < totalPages - 3) pages.push("...");
+      pages.push(totalPages);
+    }
+
+    return pages;
+  };
+
+  const pageList = generatePages();
+
+  return (
+    <div className="flex justify-center items-center gap-2 my-6">
+
+      {/* Previous Button */}
+      <button
+        disabled={!hasPrev}
+        onClick={() => goToPage(currentPage - 1)}
+        className={`px-3 py-2 rounded ${
+          hasPrev ? "bg-gray-100 hover:bg-gray-200" : "bg-gray-200 text-gray-400 cursor-not-allowed"
+        }`}
+      >
+        Prev
+      </button>
+
+      {/* Page Numbers */}
+      {pageList.map((num, idx) =>
+        num === "..." ? (
+          <span key={idx} className="px-3 py-2">…</span>
+        ) : (
+          <button
+            key={idx}
+            onClick={() => goToPage(num)}
+            className={`px-3 py-2 rounded ${
+              num === currentPage
+                ? "bg-red-600 text-white"
+                : "bg-gray-100 hover:bg-gray-200"
+            }`}
+          >
+            {num}
+          </button>
+        )
+      )}
+
+      {/* Next Button */}
+      <button
+        disabled={!hasNext}
+        onClick={() => goToPage(currentPage + 1)}
+        className={`px-3 py-2 rounded ${
+          hasNext ? "bg-gray-100 hover:bg-gray-200" : "bg-gray-200 text-gray-400 cursor-not-allowed"
+        }`}
+      >
+        Next
+      </button>
+
+    </div>
+  );
+};
+
+  const handlePageChange = (page) => {
+      if (page >= 1 && page <= pagination.totalPages) {
+        fetchFilteredProducts(categoryData, page);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+  
+    const renderPagination = () => {
+      if (pagination.totalPages <= 1) return null;
+      
+      const pages = [];
+      const maxVisiblePages = 5;
+      const hasPrev = pagination.currentPage > 1;
+      const hasNext = pagination.currentPage < pagination.totalPages;
+      let startPage = Math.max(1, pagination.currentPage - Math.floor(maxVisiblePages / 2));
+      let endPage = Math.min(pagination.totalPages, startPage + maxVisiblePages - 1);
+      
+      if (endPage - startPage + 1 < maxVisiblePages) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+      }
+      
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(
+          <button
+            key={i}
+            onClick={() => handlePageChange(i)}
+            className={`px-3 py-1 rounded-md ${
+              pagination.currentPage === i
+                ? 'bg-red-600 text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-100'
+            }`}
+          >
+            {i}
+          </button>
+        );
+      }
+      
+      return (
+        <div className="flex justify-center items-center mt-8 space-x-2">
+          <button
+            onClick={() => handlePageChange(pagination.currentPage - 1)}
+            disabled={!hasPrev}
+            className={`p-2 rounded-md ${!hasPrev ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+          >
+            <ChevronLeft size={16} />
+          </button>
+          
+          {startPage > 1 && (
+            <>
+              <button
+                onClick={() => handlePageChange(1)}
+                className="px-3 py-1 rounded-md bg-white text-gray-700 hover:bg-gray-100"
+              >
+                1
+              </button>
+              {startPage > 2 && <span className="px-2">...</span>}
+            </>
+          )}
+          
+          {pages}
+          
+          {endPage < pagination.totalPages && (
+            <>
+              {endPage < pagination.totalPages - 1 && <span className="px-2">...</span>}
+              <button
+                onClick={() => handlePageChange(pagination.totalPages)}
+                className="px-3 py-1 rounded-md bg-white text-gray-700 hover:bg-gray-100"
+              >
+                {pagination.totalPages}
+              </button>
+            </>
+          )}
+          
+          <button
+            onClick={() => handlePageChange(pagination.currentPage + 1)}
+            disabled={!hasNext}
+            className={`p-2 rounded-md ${!hasNext ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
+      );
+    };
 
  const handleFilterChange = (type, value) => {
   setSelectedFilters(prev => {
@@ -569,12 +774,12 @@ const MAX = priceRange[1] || 100000;
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold mb-3 text-gray-600 pl-1">
           Search Results for 
-          {category && `  ${category}`}
+          '{searchQuery && `${searchQuery}`}'
         </h1>
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-1 gap-4">
           <p className="text-gray-600">
-            {products.length} result{products.length !== 1 ? 's' : ''} found
+            {totalProducts} result{totalProducts !== 1 ? 's' : ''} found
           </p>
           
           <div className="mb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -740,12 +945,11 @@ const MAX = priceRange[1] || 100000;
                 {isBrandsExpanded && (
                   <ul className="mt-2 max-h-48 overflow-y-auto pr-2">
                     {/* Get unique brands from search results */}
-                    {Array.from(new Set(products.map(product => product.brand)))
+                    {Array.from(new Set(brands.map(product => product.brand)))
                       .filter(brandId => brandId && brandMap[brandId]) // Filter out null/undefined brands
                       .map(brandId => {
                         const brandName = brandMap[brandId];
-                        const brandCount = products.filter(product => product.brand === brandId).length;
-                        
+                        const brandCount = brands.filter(product => product.brand === brandId).length;
                         return (
                           <li key={brandId} className="flex items-center">
                             <label className="flex items-center space-x-2 w-full cursor-pointer hover:bg-gray-50 rounded p-2 transition-colors">
@@ -942,8 +1146,11 @@ const MAX = priceRange[1] || 100000;
                   </div>
                 ))}
               </div>
+              {renderAdvancedPagination()}
             </div>
+           
           </div>
+          
         ) : (
           <div className="text-center py-12">
             <div className="max-w-md mx-auto">
