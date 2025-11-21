@@ -409,7 +409,8 @@ export default function CheckoutPage() {
               order_deliveryaddress: deliveryAddress
             },
             customerEmail: addressData.email,
-            adminEmail: 'msivaranjani2036@gmail.com' // Replace with your admin email
+          adminEmail: 'sorambeeviuit@gmail.com' 
+            // adminEmail: 'msivaranjani2036@gmail.com' // Replace with your admin email
           };
           console.log(emailData);
           alert("fgg");

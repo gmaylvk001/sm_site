@@ -721,7 +721,8 @@ const grandTotal = subtotal - totalDiscount;
             order_deliveryaddress: deliveryAddress
           },
           customerEmail: addressData.email,
-          adminEmail: 'msivaranjani2036@gmail.com'
+          // adminEmail: 'msivaranjani2036@gmail.com'
+          adminEmail : 'sorambeeviuit@gmail.com'
         };
  
        // console.log(cartItems);
