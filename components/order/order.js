@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { jwtDecode } from 'jwt-decode';
 import { useRouter } from 'next/navigation';
-
-import { FiChevronRight, FiClock, FiCheckCircle, FiTruck, FiShoppingBag, FiXCircle } from 'react-icons/fi';
+import { FiChevronRight, FiClock, FiCheckCircle, FiTruck, FiShoppingBag, FiXCircle, FiMail } from 'react-icons/fi';
 import { RiAccountCircleFill } from "react-icons/ri";
 import { ToastContainer, toast } from 'react-toastify';
 import { FaAddressBook } from "react-icons/fa";
@@ -19,6 +18,9 @@ export default function Order() {
   const [authError, setAuthError] = useState('');
   const [loading, setLoading] = useState(true);
   const [filteredOrders, setFilteredOrders] = useState([]);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+  const [showEmailConfirm, setShowEmailConfirm] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -66,7 +68,14 @@ export default function Order() {
     router.push('/');
   };
 
-  const handleCancelOrder = async (orderId) => {
+  const handleCancelClick = (order) => {
+    setSelectedOrder(order);
+    setShowCancelConfirm(true);
+  };
+
+  const handleCancelConfirm = async () => {
+    setShowCancelConfirm(false);
+    
     const token = localStorage.getItem("token");
     if (!token) {
       setShowAuthModal(true);
@@ -74,15 +83,18 @@ export default function Order() {
     }
 
     try {
-      const response = await fetch(`/api/orders/${orderId}`, {
+      alert("Hii");
+      alert(selectedOrder._id);
+      const response = await fetch(`/api/orders/${selectedOrder._id}`, {
         method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          status: "cancelled", 
+        }),
       });
 
       const data = await response.json();
-
+      console.log(data);
       if (!response.ok) {
         throw new Error(data.message || 'Failed to cancel order');
       }
@@ -90,21 +102,29 @@ export default function Order() {
       // Update local state
       if (activeFilter === 'pending') {
         // Remove from pending view
-        setFilteredOrders(prev => prev.filter(order => order._id !== orderId));
+        setFilteredOrders(prev => prev.filter(order => order._id !== selectedOrder._id));
       } else {
         // Update status in all/cancelled view
         setFilteredOrders(prev => 
           prev.map(order => 
-            order._id === orderId ? { ...order, order_status: 'cancelled' } : order
+            order._id === selectedOrder._id ? { ...order, order_status: 'cancelled' } : order
           )
         );
       }
 
       toast.success("Order cancelled successfully");
+      
+      // Show email confirmation modal
+      setShowEmailConfirm(true);
     } catch (error) {
       toast.error(error.message || "Failed to cancel order");
       console.error(error);
     }
+  };
+
+  const handleCancelReject = () => {
+    setShowCancelConfirm(false);
+    setSelectedOrder(null);
   };
 
   return (
@@ -130,21 +150,6 @@ export default function Order() {
 
       <div className="container mx-auto py-4 sm:py-6 lg:py-8 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
-          {/* Sidebar Navigation - Mobile Dropdown */}
-          {/* <div className="lg:hidden mb-4">
-            <select 
-              className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700"
-              onChange={(e) => {
-                if (e.target.value === 'orders') return;
-                router.push(`/${e.target.value}`);
-              }}
-              value="orders"
-            >
-              <option value="orders">My Orders</option>
-              <option value="wishlist">Wishlist</option>
-            </select>
-          </div> */}
-          
           {/* Sidebar Navigation - Desktop */}
           <div className="hidden lg:block w-full lg:w-72 flex-shrink-0">
             <div className="bg-white p-6 rounded-xl border border-gray-200 hover:border-red-200 transition-all duration-300 shadow-sm">
@@ -165,7 +170,7 @@ export default function Order() {
           {/* Main Content */}
           <div className="flex-1">
             <div className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 hover:border-red-200 transition-all duration-300 shadow-sm">
-              {/* Order Filters */}
+               {/* Order Filters */}
               <div className="flex flex-wrap gap-2 sm:gap-3 mb-4 sm:mb-6 pb-2 sm:pb-4 border-b border-gray-100 overflow-x-auto pb-2">
                 {['all', 'pending', 'shipped', 'delivered', 'cancelled'].map((filter) => (
                   <button
@@ -318,11 +323,19 @@ export default function Order() {
                             </button>
                             {order.order_status === 'pending' && (
                               <button 
-                                onClick={() => handleCancelOrder(order._id)}
+                                onClick={() => handleCancelClick(order)}
                                 className="px-3 sm:px-4 py-1 sm:py-2 border border-gray-300 text-gray-600 rounded-md hover:bg-gray-50 transition-colors text-xs sm:text-sm"
                               >
                                 Cancel Order
                               </button>
+                            )}
+
+                            {order.order_status === "shipped" && (
+                              <a href={`/product/${order.order_item[0].slug}#reviews`} target='_blank'>
+                                <button className="px-3 sm:px-4 py-1 sm:py-2 bg-green-100 text-green-600 rounded-md hover:bg-green-200 transition-colors text-xs sm:text-sm">
+                                  Write Review
+                                </button>
+                              </a>
                             )}
                           </div>
                         </div>
@@ -335,6 +348,39 @@ export default function Order() {
           </div>
         </div>
       </div>
+
+      {/* Cancel Confirmation Modal */}
+      {showCancelConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl max-w-md w-full p-6 animate-scale-in">
+            <div className="flex items-center mb-4">
+              <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3">
+                <FiXCircle className="text-red-600 text-xl" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800">Cancel Order</h3>
+            </div>
+            
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to cancel order <span className="font-semibold">#{selectedOrder?.order_number}</span>? This action cannot be undone.
+            </p>
+            
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={handleCancelReject}
+                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                No, Keep Order
+              </button>
+              <button
+                onClick={handleCancelConfirm}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              >
+                Yes, Cancel Order
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showAuthModal && (
         <AuthModal
