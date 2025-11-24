@@ -199,7 +199,7 @@ const CategoryProducts = () => {
   className="category-products px-3 sm:px-6 pt-6"
 >
   <div className="rounded-[23px] py-4">
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 mx-auto">
 
       {categoryProducts.map((categoryProduct, index) => {
         
