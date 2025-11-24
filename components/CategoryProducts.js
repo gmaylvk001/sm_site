@@ -738,7 +738,7 @@ const CategoryProducts = () => {
                             <Link
                               href={`/product/${product.slug}`}
                               onClick={() => handleProductClick(product)}
-                              className="font-medium text-gray-900 hover:text-red-600 mb-1 sm:mb-2 line-clamp-2 text-xs sm:text-sm leading-tight flex-grow"
+                              className="font-medium text-gray-900 text-red-800 hover:text-red-600 mb-1 sm:mb-2 line-clamp-2 text-xs sm:text-sm leading-tight flex-grow"
                             >
                               {product.name}
                             </Link>
