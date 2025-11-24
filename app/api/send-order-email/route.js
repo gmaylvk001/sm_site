@@ -39,7 +39,7 @@ export async function POST(req) {
        <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 30px;">
   <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 6px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden;box-shadow: -1px 45px 17px -12px;">
     <!-- Top Bar -->
-    <div style="background-color:#e5e2c9; padding: 20px; text-align: center;">
+    <div style="background-color:#d99494; padding: 20px; text-align: center;">
       <img src="cid:logo_cid" alt="Logo" style="width: 90px; height:90px" />
     </div>
 
@@ -104,7 +104,7 @@ export async function POST(req) {
       html: `
       <div style="font-family: Arial, sans-serif; background-color: #ffffff; padding: 30px;">
   <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 6px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden;">
-    <div style="background-color: #e5e2c9; padding: 20px; text-align: center;">
+    <div style="background-color: #d99494; padding: 20px; text-align: center;">
       <img src="cid:logo_cid" alt="Logo" style="width: 90px; height: 90px;" />
     </div>
 
