@@ -362,7 +362,7 @@ const RecentlyViewedProducts = () => {
                 </div>
 
                 {/* Fake Pagination Dots */}
-                <div className="flex justify-end mt-6 space-x-2">
+                {/* <div className="flex justify-end mt-6 space-x-2">
                   {clickElement === "next" ? (
                     <>
                       <span className="w-2.5 h-2.5 bg-gray-300 rounded-full"></span>
@@ -374,7 +374,7 @@ const RecentlyViewedProducts = () => {
                       <span className="w-2.5 h-2.5 bg-gray-300 rounded-full"></span>
                     </>
                   )}
-                </div>
+                </div> */}
 
         </div>
       </div>
