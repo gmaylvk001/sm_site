@@ -354,10 +354,10 @@ useEffect(() => {
         {/* ✅ Quick Menu Icons (Mobile Only, Before Social Icons) */}
         {showQuickMenu && (
   <div className="fixed top-[56px] right-4 z-50 md:hidden bg-white rounded-lg shadow-lg py-3 px-4 flex flex-col gap-2 text-red-600 w-52">
-    <Link href="/prebook" className="flex items-center gap-2 text-sm hover:text-red-700">
+    {/* <Link href="/prebook" className="flex items-center gap-2 text-sm hover:text-red-700">
       <FaShoppingBag className="text-base" />
       <span>Pre Book</span>
-    </Link>
+    </Link> */}
     <Link href="/all-stores" className="flex items-center gap-2 text-sm hover:text-red-700">
       <FiMapPin className="text-base" />
       <span>Stores</span>
@@ -378,8 +378,8 @@ useEffect(() => {
         {/* Desktop Top Links */}
         <div className="header-dropdown mx-1 px-1 hidden md:block">
           <div className="header-menu">
-            <ul className="flex space-x-2 text-xs lg:text-sm">
-              <li><Link href="/prebook" className="hover:text-gray-300">Pre Book</Link></li>
+            <ul className="flex space-x-6 text-xs lg:text-sm">
+              {/* <li><Link href="/prebook" className="hover:text-gray-300">Pre Book</Link></li> */}
               <li><Link href="/all-stores" className="hover:text-gray-300">Our Stores</Link></li>
               {/* <li><Link href="/view-compare" id="compare_id" className="hover:text-gray-300">Compare (0)</Link></li> */}
               <li><Link href="/contact" className="hover:text-gray-300">Contact</Link></li>
@@ -388,12 +388,12 @@ useEffect(() => {
         </div>
 
         {/* Social Icons */}
-        <span className="separator mx-2 h-4 w-px bg-gray-600 hidden md:block"></span>
+        <span className="separator mx-2 h-4 w-px bg-white hidden md:block"></span>
         <div className="social-icons flex space-x-2">
-          <a href="https://www.facebook.com/SathyaRetail.mobiles/" className="social-icon w-6 h-6 flex items-center justify-center rounded-full bg-gray-700 hover:bg-red-600" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.facebook.com/SathyaRetail.mobiles/" className="social-icon w-6 h-6 flex items-center justify-center rounded-full hover:bg-blue-600" target="_blank" rel="noopener noreferrer">
             <FaFacebookF size={12} />
           </a>
-          <a href="https://www.instagram.com/sathyamobiles.store/" className="social-icon w-6 h-6 flex items-center justify-center rounded-full bg-gray-700 hover:bg-pink-600" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/sathyamobiles.store/" className="social-icon w-6 h-6 flex items-center justify-center rounded-full hover:bg-pink-600" target="_blank" rel="noopener noreferrer">
             <FaInstagram size={12} />
           </a>
         </div>
@@ -675,7 +675,7 @@ useEffect(() => {
 
             <div className="mt-6 pt-4 border-t">
               <div className="social-icons flex space-x-4 justify-center">
-                <a href="https://www.facebook.com/SathyaRetail.mobiles/" className="social-icon w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-red-600 hover:text-white" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/SathyaRetail.mobiles/" className="social-icon w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-blue-600 hover:text-white" target="_blank" rel="noopener noreferrer">
                   <FaFacebookF size={16} />
                 </a>
                 <a href="https://www.instagram.com/sathyamobiles.store/" className="social-icon w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-pink-600 hover:text-white" target="_blank" rel="noopener noreferrer">
