@@ -200,11 +200,6 @@ const CategoryProducts = () => {
 >
   <div className="rounded-[23px] py-4">
     <div className="space-y-6 max-w-7xl mx-auto">
-      
-      {/* Header */}
-      <div className="flex justify-between items-center flex-wrap gap-4 mb-3 sm:mb-5">
-        <h5 className="text-lg sm:text-2xl font-bold">Shop by Category</h5>
-      </div>
 
       {categoryProducts.map((categoryProduct, index) => {
         

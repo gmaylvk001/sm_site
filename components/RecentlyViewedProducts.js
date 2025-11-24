@@ -153,30 +153,22 @@ const RecentlyViewedProducts = () => {
       
       
       <section className="mb-14 px-0 sm:px-0 md:px-0 pt-14">
-      <div className="max-w-7xl mx-auto flex gap-6"> 
+      <div className="max-w-7xl mx-auto flex gap-6 rounded-xl border border-gray-200 p-3 sm:p-6 shadow-sm"> 
         {/* Left Banner */}
-        <div className="hidden md:block w-1/4" style={{ height: "591px" }}>
+        {/* <div className="hidden md:block w-1/4" style={{ height: "591px" }}>
           <div className="relative rounded-xl overflow-hidden h-full group cursor-pointer">
-            {/* Background Image */}
             <img
               src="/uploads/designs/recently-visit-banner.webp"
               alt="Promo"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
-
-            {/* Overlay text (always visible) */}
             <div className="absolute inset-0 flex flex-col items-start p-6">
               <h2 className="text-gray-900 text-xl font-semibold mb-3 leading-snug">
                 Fresh Picks<br /> for You
               </h2>
-
-              {/* <button className="flex items-center gap-2 text-sm font-medium text-gray-900">
-                Shop Now →
-              </button> */}
-              
             </div>
           </div>
-        </div>
+        </div> */}
 
 
         {/* Right Side */}
