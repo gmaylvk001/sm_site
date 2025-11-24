@@ -181,14 +181,14 @@ const RecentlyViewedProducts = () => {
                     <button
                       onClick={prev}
                       disabled={startIndex === 0}
-                      className="p-2 border border-gray-300 rounded-full hover:bg-blue-600 hover:text-white transition disabled:opacity-50"
+                      className="p-2 border border-gray-300 rounded-full hover:bg-red-600 hover:text-white transition disabled:opacity-50"
                     >
                       <ChevronLeft size={20} />
                     </button>
                     <button
                       onClick={next}
                       disabled={startIndex + visibleCount >= recentProducts.length}
-                      className="p-2 border border-gray-300 rounded-full hover:bg-blue-600 hover:text-white transition disabled:opacity-50"
+                      className="p-2 border border-gray-300 rounded-full hover:bg-red-600 hover:text-white transition disabled:opacity-50"
                     >
                       <ChevronRight size={20} />
                     </button>
