@@ -129,7 +129,7 @@ const RelatedProducts = ({ currentProductId,categoryId }) => {
 <>
       {navigating && (
         <div className="fixed inset-0 z-[9999] flex justify-center items-center bg-black bg-opacity-30">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-600"></div>
         </div>
       )}
     <section className="mb-10 px-4">
@@ -140,14 +140,14 @@ const RelatedProducts = ({ currentProductId,categoryId }) => {
         <button
           onClick={prev}
           disabled={startIndex === 0}
-          className="p-2 border border-gray-300 rounded-full hover:bg-blue-600 hover:text-white transition disabled:opacity-50"
+          className="p-2 border border-gray-300 rounded-full hover:bg-red-600 hover:text-white transition disabled:opacity-50"
         >
           <ChevronLeft size={20} />
         </button>
         <button
           onClick={next}
           disabled={startIndex + visibleCount >= relatedProducts.length}
-          className="p-2 border border-gray-300 rounded-full hover:bg-blue-600 hover:text-white transition disabled:opacity-50"
+          className="p-2 border border-gray-300 rounded-full hover:bg-red-600 hover:text-white transition disabled:opacity-50"
         >
           <ChevronRight size={20} />
         </button>
