@@ -83,8 +83,6 @@ export default function Order() {
     }
 
     try {
-      alert("Hii");
-      alert(selectedOrder._id);
       const response = await fetch(`/api/orders/${selectedOrder._id}`, {
         method: 'PUT',
         headers: { "Content-Type": "application/json" },
@@ -94,7 +92,6 @@ export default function Order() {
       });
 
       const data = await response.json();
-      console.log(data);
       if (!response.ok) {
         throw new Error(data.message || 'Failed to cancel order');
       }
