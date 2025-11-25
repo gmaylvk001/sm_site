@@ -88,26 +88,28 @@ export default function Header() {
 
         {/* ======================
             MEGA MENU DROPDOWN
+            <div className="absolute top-[100%] left-full -translate-x-1/2 mt-[2px] bg-white shadow-xl border-t z-50 flex" onMouseEnter={() => setActiveCat(topCat)} onMouseLeave={() => setActiveCat(null)}>
            ====================== */}
         {activeCat?._id === topCat._id &&
           (getSubcategories(topCat._id).length > 0 ||
             topCat.brands?.length > 0) && (
             <div
-              className="
+              className={`
                 absolute 
                 top-[100%] 
                 left-full 
-                -translate-x-1/2 
+                ${topCat.category_name === "Accessories" ? "-translate-x-4/6" : "-translate-x-1/2"} 
                 mt-[2px] 
                 bg-white 
                 shadow-xl 
                 border-t 
                 z-50 
                 flex
-              "
+              `}
               onMouseEnter={() => setActiveCat(topCat)}
               onMouseLeave={() => setActiveCat(null)}
             >
+
               <div className="flex">
                 {(() => {
                   // MERGE SUBCATEGORIES
