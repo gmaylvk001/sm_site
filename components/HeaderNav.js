@@ -98,7 +98,7 @@ export default function Header() {
                 absolute 
                 top-[100%] 
                 left-full 
-                ${topCat.category_name === "Accessories" ? "-translate-x-4/6" : "-translate-x-1/2"} 
+                ${topCat.category_name === "Accessories" ? "-translate-x-4/3" : "-translate-x-1/2"} 
                 mt-[2px] 
                 bg-white 
                 shadow-xl 
