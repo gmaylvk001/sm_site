@@ -1,23 +1,29 @@
-// pages/api/search/suggestions.js
+// app/api/search/suggestions/route.js
+
+import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Product from "@/models/product";
 
-export default async function handler(req, res) {
-  const { q } = req.query;
-  if (!q) return res.status(200).json([]);
-
-  await dbConnect();
-
+export async function GET(req) {
   try {
-    const results = await Product.find({
-      product_name: { $regex: q, $options: "i" },
-    })
-      .limit(5) // only first 5
-      .select("product_name price product_slug product_image");
+    const { searchParams } = new URL(req.url);
+    const q = searchParams.get("q") || "";
 
-    res.status(200).json(results);
+    if (!q.trim()) {
+      return NextResponse.json([]);
+    }
+
+    await dbConnect();
+
+    const results = await Product.find({
+      name: { $regex: q, $options: "i" },
+    })
+      .limit(5)
+      .select("name price special_price slug images");
+
+    return NextResponse.json(results);
   } catch (error) {
-    console.error("Search error:", error);
-    res.status(500).json({ error: "Something went wrong" });
+    console.error("Suggestion API Error:", error);
+    return NextResponse.json({ error: "Server Error" }, { status: 500 });
   }
 }

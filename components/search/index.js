@@ -184,7 +184,7 @@ export default function SearchComponent() {
 
         setbrands(searchData.allbrand);
 
-        console.log(brands);
+       // console.log(brands);
 
         //console.log('[SearchComponent] /api/search responded with products:', Array.isArray(productsData) ? productsData.length : 'unknown');
 
@@ -258,7 +258,7 @@ export default function SearchComponent() {
   }, [searchQuery, category, page]);
 
   useEffect(() => {
-  console.log("Updated brands:", brands);
+  //console.log("Updated brands:", brands);
 }, [brands]);
 
   const fetchBrand = async () => {
