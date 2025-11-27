@@ -1228,7 +1228,7 @@ useEffect(() => {
               setSearchQuery(item.name);
               setSearchDropdownVisible(false);
             }}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+            className="flex items-center gap-3 px-3 py-2 rounded-lg border-t border-gray-200 shadow-xl cursor-pointer"
           >
             <Link
                                     href={`/product/${item.slug}`}
