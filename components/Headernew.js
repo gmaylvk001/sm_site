@@ -1228,18 +1228,35 @@ useEffect(() => {
               setSearchQuery(item.name);
               setSearchDropdownVisible(false);
             }}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+            className="flex items-center gap-3 px-3 py-2 rounded-lg border-t border-gray-200 shadow-xl cursor-pointer"
           >
+            <Link
+                                    href={`/product/${item.slug}`}
+                                    className="block mb-2"
+                                    onClick={() => handleProductClick(item)}
+                                  >
             <img
-              src={item.image || "/no-image.png"}
+              src= {
+                        item.images?.[0] && (
+                          item.images[0].startsWith("http")
+                            ? item.images[0]
+                            : `/uploads/products/${item.images[0]}`
+                        )
+                          }
               alt={item.name}
               className="w-10 h-10 object-contain rounded"
             />
+            </Link>
             <div>
-              <p className="text-sm font-medium">{item.name}</p>
+             <Link
+                                    href={`/product/${item.slug}`}
+                                    className="block mb-2"
+                                    onClick={() => handleProductClick(item)}
+                                  > <p className="text-sm font-medium">{item.name}</p>
               <p className="text-xs text-gray-500">
                 ₹{item.special_price || item.price}
               </p>
+               </Link>
             </div>
           </div>
         ))
