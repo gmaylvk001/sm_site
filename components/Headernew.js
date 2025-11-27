@@ -1232,7 +1232,11 @@ useEffect(() => {
           >
             <img
               src= {
-                           `/uploads/products/${item.images?.[0]}`
+                        item.images?.[0] && (
+                          item.images[0].startsWith("http")
+                            ? item.images[0]
+                            : `/uploads/products/${item.images[0]}`
+                        )
                           }
               alt={item.name}
               className="w-10 h-10 object-contain rounded"
