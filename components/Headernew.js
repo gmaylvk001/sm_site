@@ -4,7 +4,7 @@
 import { motion } from 'framer-motion';
 import Link from "next/link";
 import Image from 'next/image';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from "@/context/WishlistContext";
@@ -56,7 +56,7 @@ const Header = () => {
   const { userData,isLoggedIn, setIsLoggedIn, setUserData,isAdmin,setIsAdmin } = useHeaderdetails();
   const [showQuickMenu, setShowQuickMenu] = useState(false);
 
-  
+  const router = useRouter();
   // Auth related states
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -75,7 +75,7 @@ const Header = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState([]);
-  
+  const [products, setProducts] = useState([]);
   // Forgot password states
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   const [forgotStep, setForgotStep] = useState(1);
@@ -98,10 +98,44 @@ const Header = () => {
   // Context hooks
   const { wishlistCount } = useWishlist();
   const { cartCount, updateCartCount } = useCart();
+
+  const [sortOption, setSortOption] = useState('');
+   
+    const slideRefs = useRef({});
+    const [suggestions, setSuggestions] = useState([]);
+    // refs & state for search dropdown positioning
+    const searchInputRef = useRef(null);
+    // ADD missing state
+    const debounceRef = useRef(null);
+    const searchDropdownRef = useRef(null);
+    const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
+    const [searchDropdownLeft, setSearchDropdownLeft] = useState(0);
+    const [searchDropdownTop, setSearchDropdownTop] = useState(0);
+    const [searchDropdownWidth, setSearchDropdownWidth] = useState(0);
+
+    const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const getSortedProducts = () => {
+    const sortedProducts = [...products];
+    switch(sortOption) {
+      case 'price-low-high':
+          return sortedProducts.sort((a, b) => (a.special_price ?? a.price) - (b.special_price ?? b.price));
+      case 'price-high-low':
+          return sortedProducts.sort((a, b) => (b.special_price ?? b.price) - (a.special_price ?? a.price));
+      case 'name-a-z':
+          return sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+      case 'name-z-a':
+          return sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+      default:
+          return sortedProducts;
+      }
+    };
   
   // Refs
   const dropdownRef = useRef(null);
-  const router = useRouter();
+  
+
+  const sortedProducts = useMemo(() => getSortedProducts(), [products, sortOption]);
 
   // Announcement messages
   const messages = [
@@ -275,6 +309,123 @@ useEffect(() => {
     setHasMounted(true);
   }, []);
 
+  
+  // helper to fetch suggestions (safe JSON handling) - now uses local products for instant results
+    const fetchSuggestions = useCallback(async (q) => {
+  if (!q || q.trim().length < 1) {
+    setSuggestions([]);
+    return;
+  }
+
+  try {
+    const res = await fetch(`/api/search/suggestions?q=${encodeURIComponent(q)}`);
+    if (!res.ok) {
+      setSuggestions([]);
+      return;
+    }
+
+    const data = await res.json();
+    const items = Array.isArray(data) ? data : data?.results || [];
+
+    setSuggestions(items.slice(0, 10));
+    setSearchDropdownVisible(true);
+
+    if (searchInputRef.current) {
+      const rect = searchInputRef.current.getBoundingClientRect();
+      //setSearchDropdownLeft(rect.left);
+      setSearchDropdownLeft(Math.max(rect.width, 640));
+      setSearchDropdownTop(rect.bottom + window.scrollY);
+      setSearchDropdownWidth(Math.max(rect.width, 500));
+      
+    }
+
+  } catch (err) {
+    console.error("Suggestion fetch error:", err);
+    setSuggestions([]);
+  }
+}, []);
+
+useEffect(() => {
+  if (debounceRef.current) clearTimeout(debounceRef.current);
+
+  if (!searchQuery.trim()) {
+    setSuggestions([]);
+    setShowSuggestions(false);
+    return;
+  }
+
+  debounceRef.current = setTimeout(async () => {
+    try {
+      const res = await fetch(`/api/search/suggestions?q=${searchQuery}`);
+      const data = await res.json();
+      setSuggestions(data || []);
+      setShowSuggestions(true);
+    } catch (err) {
+      console.error("Suggestion Fetch Error", err);
+    }
+  }, 300);
+
+  return () => clearTimeout(debounceRef.current);
+}, [searchQuery]);
+
+useEffect(() => {
+  const handler = (e) => {
+    if (!searchInputRef.current?.contains(e.target)) {
+      setShowSuggestions(false);
+    }
+  };
+  document.addEventListener("mousedown", handler);
+  return () => document.removeEventListener("mousedown", handler);
+}, []);
+  
+    // Debounced effect: call fetchSuggestions while typing
+    useEffect(() => {
+  if (debounceRef.current) clearTimeout(debounceRef.current);
+
+  const q = searchQuery.trim();
+  if (!q) {
+    setSuggestions([]);
+    setSearchDropdownVisible(false);
+    return;
+  }
+
+  setSearchDropdownVisible(true);
+
+  debounceRef.current = setTimeout(() => {
+    fetchSuggestions(q);
+  }, 250);
+
+  return () => clearTimeout(debounceRef.current);
+}, [searchQuery, fetchSuggestions]);
+
+
+  
+    // Close search dropdown when clicking outside input or dropdown
+    useEffect(() => {
+  const handler = (e) => {
+    if (
+      searchDropdownVisible &&
+      searchInputRef.current &&
+      searchDropdownRef.current &&
+      !searchInputRef.current.contains(e.target) &&
+      !searchDropdownRef.current.contains(e.target)
+    ) {
+      setSearchDropdownVisible(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handler);
+  return () => document.removeEventListener("mousedown", handler);
+}, [searchDropdownVisible]);
+
+     // Memoized sorted products using existing getSortedProducts flow
+    
+     useEffect(() => {
+      const handler = () => setShowSuggestions(false);
+      window.addEventListener("click", handler);
+      return () => window.removeEventListener("click", handler);
+    }, []);
+
   // Fetch categories and check auth status
   useEffect(() => {
     if (!hasMounted) return;
@@ -433,21 +584,52 @@ useEffect(() => {
           {/* No changes needed here, HeaderNav's flex-grow will push this section */}
           <div className="flex items-center gap-1 lg:gap-2 flex-shrink-0">
             {/* Search Bar (hidden on mobile, shown on md and up) */}
-            <div className="hidden md:flex items-center bg-gray-100 rounded-full px-2 py-3 w-auto max-w-[208px] lg:max-w-[202px] xl:max-w-[216px] overflow-hidden focus-within:ring-2 focus-within:ring-red-500">
-              <form onSubmit={handleSearch} className="flex w-full">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="bg-transparent flex-1 outline-none text-sm pr-1" /* Added pr-1 to give space for the icon */
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                />
-                <button type="submit" aria-label="Submit search">
-                  <FiSearch size={18} className="text-gray-500" />
-                </button>
-              </form>
+            <div className="hidden md:flex relative items-center bg-gray-100 rounded-full px-2 py-3 w-auto max-w-[230px] overflow-visible focus-within:ring-2 focus-within:ring-red-500">
+
+              <input
+                ref={searchInputRef}
+                type="text"
+                placeholder="Search..."
+                className="bg-transparent flex-1 outline-none text-sm pr-1"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setShowSuggestions(true)}
+              />
+
+              <button onClick={handleSearch}>
+                <FiSearch size={18} className="text-gray-500" />
+              </button>
+
+              {/* ✅ AUTOSUGGESTION DROPDOWN */}
+              {showSuggestions && suggestions.length > 0 && (
+                <div className="absolute top-full mt-2 left-0 w-full bg-white border rounded-xl shadow-lg z-50 max-h-[300px] overflow-y-auto">
+
+                  {suggestions.map((item) => (
+                    <Link
+                      key={item._id}
+                      href={`/product/${item.slug}`}
+                      onClick={() => {
+                        setShowSuggestions(false);
+                        setSearchQuery("");
+                      }}
+                      className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100"
+                    >
+                      <img
+                        src={item.images?.[0] || "/no-image.png"}
+                        className="w-10 h-10 object-contain"
+                      />
+                      <div>
+                        <p className="text-sm font-semibold">{item.name}</p>
+                        <p className="text-xs text-red-600">
+                          ₹{item.special_price || item.price}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
+
 
             {/* User Actions */}
             <div className="flex items-center gap-1 relative flex-shrink-0"  ref={dropdownRef}>
@@ -1014,6 +1196,79 @@ useEffect(() => {
           </div>
         </div>
       )}
+
+      {searchDropdownVisible && (
+  <div
+    ref={searchDropdownRef}
+    className="fixed z-[80] bg-white shadow-xl rounded-xl border border-gray-200 overflow-hidden"
+    style={{
+      top: `${searchDropdownTop}px`,
+      left: `${searchDropdownLeft}px`,
+      width: `${searchDropdownWidth}px`,
+      maxHeight: "420px"
+    }}
+  >
+    <div className="px-4 pt-3 pb-2 text-xs font-semibold uppercase text-gray-500">
+      Products
+    </div>
+
+    <div
+  className="px-2 pb-2 overflow-y-auto"
+  style={{
+    maxHeight: "380px",
+    scrollbarWidth: "thin",
+  }}
+>
+      {suggestions.length > 0 ? (
+        suggestions.map((item) => (
+          <div
+            key={item._id}
+            onClick={() => {
+              router.push(`/search?query=${encodeURIComponent(item.name)}`);
+              setSearchQuery(item.name);
+              setSearchDropdownVisible(false);
+            }}
+            className="flex items-center gap-3 px-3 py-2 rounded-lg border-t border-gray-200 shadow-xl cursor-pointer"
+          >
+            <Link
+                                    href={`/product/${item.slug}`}
+                                    className="block mb-2"
+                                    onClick={() => handleProductClick(item)}
+                                  >
+            <img
+              src= {
+                        item.images?.[0] && (
+                          item.images[0].startsWith("http")
+                            ? item.images[0]
+                            : `/uploads/products/${item.images[0]}`
+                        )
+                          }
+              alt={item.name}
+              className="w-10 h-10 object-contain rounded"
+            />
+            </Link>
+            <div>
+             <Link
+                                    href={`/product/${item.slug}`}
+                                    className="block mb-2"
+                                    onClick={() => handleProductClick(item)}
+                                  > <p className="text-sm font-medium">{item.name}</p>
+              <p className="text-xs text-gray-500">
+                ₹{item.special_price || item.price}
+              </p>
+               </Link>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="py-10 text-center text-gray-500 text-sm">
+          No products found
+        </div>
+      )}
+    </div>
+  </div>
+)}
+
    
     </header>
   );
