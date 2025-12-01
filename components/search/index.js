@@ -351,7 +351,7 @@ export default function SearchPage() {
           {/* Sidebar */}
           <div className="w-full md:w-[260px] shrink-0 space-y-4">
             {/* Price */}
-            <div className="bg-white p-4 rounded shadow-sm border">
+            <div className="bg-white p-4 rounded shadow-sm border hover:border-red-200">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-base font-semibold text-gray-700">Price</h3>
                 <button onClick={() => { setValues(priceRange); const qs = buildQueryParams({ min: priceRange[0], max: priceRange[1], page: 1 }); router.push(`/search?${qs}`); }} className="text-sm text-gray-500">Reset</button>
@@ -364,13 +364,13 @@ export default function SearchPage() {
                   <span>₹{values[1]}</span>
                 </div>
                 <div className="mt-3 flex gap-2">
-                  <button onClick={() => applyPrice(values[0], values[1])} className="px-3 py-1 bg-blue-600 text-white rounded text-sm">Apply</button>
+                  <button onClick={() => applyPrice(values[0], values[1])} className="px-3 py-1 bg-red-600 text-white rounded text-sm">Apply</button>
                 </div>
               </div>
             </div>
 
             {/* Brands */}
-            <div className="bg-white p-4 rounded shadow-sm border">
+            <div className="bg-white p-4 rounded shadow-sm border hover:border-red-200">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-base font-semibold text-gray-700">Brands</h3>
                 <button onClick={() => setBrandsExpanded((s) => !s)} className="text-gray-500">{brandsExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}</button>
@@ -435,7 +435,7 @@ export default function SearchPage() {
             ) : products.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {products.map((p) => (
-                  <div key={p._id} className="group relative bg-white rounded-lg border hover:border-blue-200 transition-all shadow-sm hover:shadow-md flex flex-col h-full">
+                  <div key={p._id} className="group relative bg-white rounded-lg border hover:border-red-200 transition-all shadow-sm hover:shadow-md flex flex-col h-full">
                     <div className="relative aspect-square bg-white">
                       <Link href={`/product/${p.slug}`} className="block mb-2">
                         {p.images?.[0] && (
@@ -458,7 +458,7 @@ export default function SearchPage() {
                       </h4>
 
                       <Link href={`/product/${p.slug}`} className="block mb-1">
-                        <h3 className="text-xs sm:text-sm font-medium text-[#0069c6] hover:text-[#00badb] min-h-[32px] sm:min-h-[40px]">
+                        <h3 className="text-xs sm:text-sm font-medium text-red-600 hover:text-red-800 min-h-[32px] sm:min-h-[40px]">
                           {(p.name || "").length > 60 ? (p.name || "").slice(0, 57) + "..." : p.name}
                         </h3>
                       </Link>
