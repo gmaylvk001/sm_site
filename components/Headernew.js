@@ -49,6 +49,8 @@ import 'swiper/css/navigation';
 
 const Header = () => {
   // State management - organized related states together
+  const mobileMenuRef = useRef(null);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -150,7 +152,7 @@ const Header = () => {
   };
 
   // Close mobile menu when clicking outside
-  useEffect(() => {
+  /* useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsMobileMenuOpen(false);
@@ -160,7 +162,23 @@ const Header = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, []); */
+  useEffect(() => {
+  function handleClickOutside(e) {
+    if (
+      isMobileMenuOpen &&
+      mobileMenuRef.current &&
+      !mobileMenuRef.current.contains(e.target)
+    ) {
+      // Only close if user clicks OUTSIDE the mobile menu
+      setIsMobileMenuOpen(false);
+    }
+  }
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, [isMobileMenuOpen]);
+
 useEffect(() => {
   const handleClickOutside = (event) => {
     if (
@@ -728,8 +746,13 @@ useEffect(() => {
       </div>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 bg-white z-50 overflow-y-auto pt-4">
+      {/* {isMobileMenuOpen && (
+        <div className="fixed inset-0 bg-white z-50 overflow-y-auto pt-4"> */}
+        {isMobileMenuOpen && (
+  <div
+    ref={mobileMenuRef}
+    className="fixed inset-0 bg-white z-50 overflow-y-auto pt-4"
+  >
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center mb-6">
               <Link href="/" className="logo">
@@ -750,7 +773,10 @@ useEffect(() => {
             </div>
 
             <div className="mb-4">
-              <form onSubmit={handleSearch} className="flex items-center bg-gray-100 rounded-lg shadow overflow-hidden border">
+              <form onSubmit={(e) => {
+    handleSearch(e);
+    setIsMobileMenuOpen(false); // CLOSE MOBILE MENU
+  }} className="flex items-center bg-gray-100 rounded-lg shadow overflow-hidden border">
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
@@ -789,7 +815,7 @@ useEffect(() => {
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="block py-2 px-3 text-gray-800 hover:bg-gray-100 rounded flex justify-between items-center"
+                      className="block py-2 px-3 text-gray-800 hover:bg-gray-100 rounded flex justify-between items-center" onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.name}
                       {item.subcategories && <FiChevronRight />}
