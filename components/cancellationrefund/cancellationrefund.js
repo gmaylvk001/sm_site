@@ -77,6 +77,16 @@ const CancellationRefundPolicy = () => {
             The products sold by SATHYA Mobiles can be **returned or exchanged within 30 days** from the date of your in-store purchase or 30 days from the date your online order is delivered.
           </li>
         </ul>
+        <p>Orders once placed cannot be cancelled after dispatch.</p>
+        <p>Refunds are applicable only if:</p>
+        <p>- Wrong product delivered</p>
+        <p>- Damaged product received</p>
+        <p>- Manufacturing defect</p>
+        <p>Customers must inform us within 24 hours of receiving the product.</p>
+        <p>Refunds will be processed within 5–7 business days after verification.</p>
+        <p>Refund amount will be credited back to the original payment method.</p>
+        <p>For refund support -  Email: <a className="text-red-600 font-semibold">support@sathyamobiles.com</a></p>
+
 
 
         <h2 className="text-2xl font-extrabold text-red-700 mb-6 pb-2 flex items-center border-b-2 border-red-200">

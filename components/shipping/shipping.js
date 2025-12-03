@@ -78,6 +78,24 @@ const ShippingPolicy = () => {
                 Delivery of all orders will be to the address provided by the buyer. Delivery of our services will be confirmed on your mail ID as specified during registration.
               </p>
               <p className="text-gray-600 mb-6">
+                We deliver across India.
+              </p>
+              <p className="text-gray-600 mb-6">
+                Orders are processed within 24–48 hours.
+              </p>
+              <p className="text-gray-600 mb-6">
+                Delivery time depends on location and usually takes 3–7 business days.
+              </p>
+              <p className="text-gray-600 mb-6">
+                Once your order is shipped, tracking details will be shared via SMS or email.
+              </p>
+              <p className="text-gray-600 mb-6">
+                Delivery delays may occur due to courier issues or natural conditions.
+              </p>
+              <p className="text-gray-600 mb-6">
+                For delivery support - Email: <a className="text-red-600 font-semibold">support@sathyamobiles.com</a>
+              </p>
+              <p className="text-gray-600 mb-6">
                 For any issues in utilizing our services, you may contact our helpdesk:
               </p>
               <div className="flex flex-col sm:flex-row gap-4">

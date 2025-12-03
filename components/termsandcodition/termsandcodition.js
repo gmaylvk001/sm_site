@@ -288,6 +288,17 @@ const TermsAndConditions = () => {
           Acceptance to receive communications (Promotional and Transactional) through omni channels (Emails, SMS, WhatsApp, Telephone etc.) from the SATHYA Mobiles India Pvt Ltd, its affiliates, and third-party vendors.
         </p>
 
+        <p>By accessing this website, you agree to follow the terms and conditions.</p>
+        <ul className="list-disc pl-5 space-y-3 mb-8">
+          <li>All products listed are subject to availability.</li>
+          <li>Prices may change without prior notice.</li>
+          <li>We reserve the right to cancel any order due to stock unavailability or payment failure.</li>
+          <li>Customers must provide accurate delivery and contact details.</li>
+          <li>Unauthorized use of this website may give rise to a claim for damages.</li>
+          <li>This website is operated from India and is governed by Indian law.</li>
+        </ul>
+        <p>For support, contact - Email:  <a className="text-red-600 font-semibold">support@sathyamobiles.com</a></p>
+
         <p className="text-sm text-gray-500 mt-8">
           <em>Last updated on: {currentDate}</em>
         </p>
