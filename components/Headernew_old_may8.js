@@ -109,7 +109,7 @@ export default function Header() {
           {/* Mobile Icon & Number */}
           {/* <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
             <FaMobileAlt color="#003366" />
-            <span style={{ color: "#003366", fontWeight: "600" }}>9942699800</span>
+            <span style={{ color: "#003366", fontWeight: "600" }}>9047048777</span>
           </div> */}
 
           {/* Location Icon */}
