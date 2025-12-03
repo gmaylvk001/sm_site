@@ -93,7 +93,7 @@ const ShippingPolicy = () => {
                 Delivery delays may occur due to courier issues or natural conditions.
               </p>
               <p className="text-gray-600 mb-6">
-                For delivery support - Email: <a class="text-red-600 font-semibold">support@sathyamobiles.com</a>
+                For delivery support - Email: <a className="text-red-600 font-semibold">support@sathyamobiles.com</a>
               </p>
               <p className="text-gray-600 mb-6">
                 For any issues in utilizing our services, you may contact our helpdesk:
