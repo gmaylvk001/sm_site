@@ -54,7 +54,7 @@ export default function AddProductPage({ mode = "add", productData = null, produ
     overviewImageFile: [null],
     featured_products:[],
     warranty: "",
-    extended_warranty: "",
+    extend_warranty: [],
     product_highlights: [],
     category_new : "",
     sub_category_new : "",
