@@ -34,7 +34,7 @@ const ShippingPolicy = () => {
 
     const url = new URL(window.location.href);
 
-    const utm_source = url.searchParams.get("utm_source") ?? "Full Moon Sale";
+    const utm_source = url.searchParams.get("utm_source") ?? "Vivo X300";
     const utm_medium = url.searchParams.get("utm_medium");
     const utm_campaign = url.searchParams.get("utm_campaign");
 
