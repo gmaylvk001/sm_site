@@ -263,6 +263,7 @@ const getCategoryBrands = (category) => {
                     <li><Link href="/privacypolicy" className="hover:underline hover:text-white">Privacy Policy</Link></li>
                     <li><Link href="/terms-and-condition" className="hover:underline hover:text-white">Terms and Conditions</Link></li>
                     <li><Link href="/cancellation-refund-policy" className="hover:underline hover:text-white">Cancellation Policy</Link></li>
+                    <li><Link href="/shipping" className="hover:underline hover:text-white">Shipping and Delivery Policy</Link></li>
                   </ul>
                 </div>
               </div>

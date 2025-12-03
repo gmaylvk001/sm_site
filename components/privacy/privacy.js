@@ -134,6 +134,20 @@ const PrivacyPolicy = () => {
     <p className="mb-8">
         By using the Website and/or by providing your information, you consent to the collection and use of the information you disclose on the website in accordance with this Privacy Policy, including but not limited to your consent for sharing your information as per this privacy policy. If we decide to change our privacy policy, we will post those changes on this page so that you are always aware of what information we collect, how we use it, and under what circumstances we disclose it.
     </p>
+    <p>At Sathyamobiles.com, we value your privacy and are committed to protecting your personal information.</p>
+    <p>We collect personal details such as name, phone number, email address, shipping address, and payment details when you place an order on our website.</p>
+    <p className="mr-3 text-black">Your information is used only for:</p>
+<p>- Order processing</p>
+<p>- Delivery</p>
+<p>- Customer support</p>
+<p>- Payment verification</p>
+
+<p>We do not sell, share, or rent your personal information to any third party except trusted delivery and payment partners.</p>
+<p>All transactions are processed securely using encrypted payment gateways.</p>
+
+<p>By using our website, you consent to our Privacy Policy.</p>
+
+<p>For any questions, contact us at - Email: <a className="text-red-600 font-semibold">support@sathyamobiles.com</a></p>
 
    
 
