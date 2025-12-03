@@ -42,7 +42,7 @@ export default function Header() {
   };
 
   return (
-   <div className="hidden lg:flex items-center space-x-3 ml-4 whitespace-nowrap relative">
+   <div className="hidden lg:flex items-center space-x-10 ml-4 whitespace-nowrap relative">
 
   {/* HOME link */}
   <Link
@@ -63,7 +63,7 @@ export default function Header() {
       >
         <Link
           href={`/category/${topCat.category_slug}`}
-          className="flex items-center text-[#222529] hover:text-red-500 font-bold text-[12px] uppercase py-[21px] tracking-[0.5px]"
+          className="flex items-center text-white hover:text-white font-bold text-[12px] uppercase py-[21px] tracking-[0.5px]"
         >
           {topCat.category_name.toUpperCase()}
           {/* <svg className="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
