@@ -14,13 +14,21 @@ const ShippingPolicy = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const validate = () => {
-    if (!form.name) return "Name is required";
+    /* if (!form.name) return "Name is required";
     if (!form.phone) return "Mobile No. is required";
     if (isNaN(form.phone)) return "Invalid Mobile No.";
     if (form.phone.length !== 10) return "Mobile No. should be 10 digits";
     if (!["6", "7", "8", "9"].includes(form.phone[0]))
       return "Mobile No. should start with 6, 7, 8 or 9";
-    if (!form.city) return "City is required";
+    if (!form.city) return "City is required"; */
+
+    if (!form.name) return "";
+    if (!form.phone) return "";
+    if (isNaN(form.phone)) return "";
+    if (form.phone.length !== 10) return "";
+    if (!["6", "7", "8", "9"].includes(form.phone[0]))
+      return "";
+    if (!form.city) return "";
 
     return "";
   };
@@ -65,7 +73,7 @@ const ShippingPolicy = () => {
 
             
         {/* PREBOOK BUTTON */}
-      <button onClick={() => setShow(true)} className="fixed top-5 right-5 bg-red-600 text-white px-5 py-2 rounded-full shadow-lg" style={{ top: "28%" }}>PreBook Now</button>
+      <button onClick={() => setShow(true)} className="fixed top-[42%] right-5 bg-red-600 text-white px-5 py-2 rounded-full shadow-lg" style={{ top: "28%" }}>PreBook Now</button>
 
 
       {/* MODAL */}
@@ -99,7 +107,7 @@ const ShippingPolicy = () => {
                     value={form.name}
                     onChange={(e) =>
                       setForm({ ...form, name: e.target.value })
-                    }
+                    } required
                   />
 
                   <input
