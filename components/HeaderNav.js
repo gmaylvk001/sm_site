@@ -47,7 +47,7 @@ export default function Header() {
   {/* HOME link */}
   <Link
     href="/"
-    className="text-[#222529] hover:text-red-500 font-bold text-[12px] uppercase py-[21px] tracking-[0.5px]"
+    className="text-white hover:text-white font-bold text-[12px] uppercase py-[21px] tracking-[0.5px]"
   >
     HOME
   </Link>
@@ -63,7 +63,7 @@ export default function Header() {
       >
         <Link
           href={`/category/${topCat.category_slug}`}
-          className="flex items-center text-[#222529] hover:text-red-500 font-bold text-[12px] uppercase py-[21px] tracking-[0.5px]"
+          className="flex items-center text-white hover:text-white font-bold text-[12px] uppercase py-[21px] tracking-[0.5px]"
         >
           {topCat.category_name.toUpperCase()}
           {/* <svg className="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
@@ -145,7 +145,8 @@ export default function Header() {
 
                   return (
                     <>
-                      {columns.length <= 6 && columns.map((col, colIndex) => (
+                      {/* {columns.length <= 6 && columns.map((col, colIndex) => ( */}
+                      {columns.slice(0, 6).map((col, colIndex) => (
                         <div
                           key={colIndex}
                           className={`flex flex-col px-4 py-3 border-r w-56 ${
