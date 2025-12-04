@@ -382,7 +382,7 @@ const ShippingPolicy = () => {
                 </div>
             </div>
 
-            <div className="w-full relative">
+            <div className="w-full relative h-[450px] md:h-[650px] overflow-hidden">
 
     {/* VIDEO */}
     <video
@@ -398,21 +398,25 @@ const ShippingPolicy = () => {
     <div
         className="
             absolute inset-0 z-10
-            flex items-center justify-center
+            flex items-center
+            justify-center
             px-4
             md:justify-end md:px-8
         "
     >
-        <div className="text-white max-w-sm md:max-w-md text-center md:text-left">
-            <p className="text-sm md:text-base text-gray-300 mb-2">
+        <div className="text-white max-w-xs md:max-w-md text-center md:text-left">
+            <p className="text-sm md:text-base text-gray-300 mb-1">
                 3D Ultrasonic Fingerprint Scanning 2.0
             </p>
-            <h2 className="text-2xl md:text-4xl font-bold leading-tight mb-2">
+
+            <h2 className="text-2xl md:text-4xl font-bold leading-tight mb-1">
                 Register in One Second
             </h2>
-            <h2 className="text-2xl md:text-4xl font-bold leading-tight mb-4">
+
+            <h2 className="text-2xl md:text-4xl font-bold leading-tight mb-3">
                 Unlock in a Flash
             </h2>
+
             <p className="text-gray-300 md:text-lg leading-relaxed">
                 Experience effortless, instant, and intuitive control and unlocking.
                 Register your fingerprint in under a second and unlock just as quickly,
@@ -422,6 +426,7 @@ const ShippingPolicy = () => {
         </div>
     </div>
 </div>
+
 
         </div>
         </>
