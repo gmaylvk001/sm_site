@@ -13,6 +13,8 @@ import { FaShoppingBag } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+  const previousYear = currentYear - 1;
   const [categories, setCategories] = useState([]);
   const [groupedCategories, setGroupedCategories] = useState({ main: [], subs: {} });
 
@@ -337,7 +339,7 @@ const getCategoryBrands = (category) => {
           <div className="container mx-auto px-3 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="text-center md:text-left mb-4">
               <p>
-                <a href="#" className="hover:underline text-white">© 2023-2024 SATHYA.</a> All Rights Reserved.
+                <a href="#" className="hover:underline text-white">&copy; {previousYear}-{currentYear} SATHYA.</a> All Rights Reserved.
               </p>
             </div>
             <div className="flex flex-col md:flex-row items-center gap-4">
