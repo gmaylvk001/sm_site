@@ -254,7 +254,7 @@ background: -webkit-linear-gradient(left, #ed3237 0%, #ffe8e9 100%);
 }
 
 .-translate-x-4\/3{ 
-  --tw-translate-x: -49% !important;
+  --tw-translate-x: -64% !important;
   -webkit-transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
           transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
 }
