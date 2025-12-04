@@ -103,7 +103,9 @@ const ShippingPolicy = () => {
                       <input
                         type="text"
                         placeholder="Name"
-                        className="border p-2 w-full rounded"
+                        className={`border p-2 w-full rounded ${
+                            errors.name ? "border-red-600" : "border-gray-300"
+                          }`}
                         value={form.name}
                         onChange={(e) =>
                           setForm({ ...form, name: e.target.value })
@@ -120,7 +122,9 @@ const ShippingPolicy = () => {
                       <input
                         type="tel"
                         placeholder="Phone Number"
-                        className="border p-2 w-full rounded"
+                        className={`border p-2 w-full rounded ${
+                            errors.phone ? "border-red-600" : "border-gray-300"
+                          }`}
                         value={form.phone}
                         onChange={(e) =>
                           setForm({ ...form, phone: e.target.value })
@@ -135,7 +139,9 @@ const ShippingPolicy = () => {
 
                     <div>
                       <select
-                        className="border p-2 w-full rounded"
+                        className={`border p-2 w-full rounded ${
+                            errors.city ? "border-red-600" : "border-gray-300"
+                          }`}
                         value={form.city}
                         onChange={(e) =>
                           setForm({ ...form, city: e.target.value })
