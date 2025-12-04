@@ -339,7 +339,7 @@ const getCategoryBrands = (category) => {
           <div className="container mx-auto px-3 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="text-center md:text-left mb-4">
               <p>
-                <a href="#" className="hover:underline text-white">&copy; {previousYear}-{currentYear} SATHYA.</a> All Rights Reserved.
+                <a href="#" className="hover:underline text-white">© {previousYear}-{currentYear} SATHYA.</a> All Rights Reserved.
               </p>
             </div>
             <div className="flex flex-col md:flex-row items-center gap-4">
