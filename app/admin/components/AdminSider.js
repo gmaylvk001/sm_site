@@ -40,7 +40,7 @@ export default function AdminSider({ collapsed }) {
       ]
     },
     { icon: 'mdi:tag-outline', label: 'Offer', link: 'offer' },
-    { icon: 'mdi:note-text-outline', label: 'Blog', link: 'blog' },
+ //   { icon: 'mdi:note-text-outline', label: 'Blog', link: 'blog' },
     { icon: 'mdi:account-outline', label: 'User', link: 'user' },
     { icon: 'mdi:phone-outline', label: 'Contact', link: 'contact' },
     {
