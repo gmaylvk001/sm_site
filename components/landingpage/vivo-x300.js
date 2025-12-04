@@ -11,37 +11,33 @@ const ShippingPolicy = () => {
     city: "",
   });
 
+  const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
+  // VALIDATION FUNCTION
   const validate = () => {
-    /* if (!form.name) return "Name is required";
-    if (!form.phone) return "Mobile No. is required";
-    if (isNaN(form.phone)) return "Invalid Mobile No.";
-    if (form.phone.length !== 10) return "Mobile No. should be 10 digits";
-    if (!["6", "7", "8", "9"].includes(form.phone[0]))
-      return "Mobile No. should start with 6, 7, 8 or 9";
-    if (!form.city) return "City is required"; */
+    let newErrors = {};
 
-    if (!form.name) return "";
-    if (!form.phone) return "";
-    if (isNaN(form.phone)) return "";
-    if (form.phone.length !== 10) return "";
-    if (!["6", "7", "8", "9"].includes(form.phone[0]))
-      return "";
-    if (!form.city) return "";
+    if (!form.name.trim()) newErrors.name = "Name is required";
 
-    return "";
+    if (!form.phone) newErrors.phone = "Mobile No. is required";
+    else if (isNaN(form.phone)) newErrors.phone = "Invalid Mobile Number";
+    else if (form.phone.length !== 10)
+      newErrors.phone = "Mobile No. must be 10 digits";
+    else if (!["6", "7", "8", "9"].includes(form.phone[0]))
+      newErrors.phone = "Mobile No. must start with 6, 7, 8 or 9";
+
+    if (!form.city) newErrors.city = "City is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
+  // SUBMIT FUNCTION
   const submitForm = async () => {
-    const err = validate();
-    if (err) {
-      alert(err);
-      return;
-    }
+    if (!validate()) return;
 
     const url = new URL(window.location.href);
-
     const utm_source = url.searchParams.get("utm_source") ?? "Vivo X300";
     const utm_medium = url.searchParams.get("utm_medium");
     const utm_campaign = url.searchParams.get("utm_campaign");
@@ -55,7 +51,7 @@ const ShippingPolicy = () => {
       lead_campaign: utm_campaign,
     };
 
-    const res = await fetch(
+    await fetch(
       "https://adtarbo.eywamedia.com/api/create-lead/96mBhgZrBH9St7neU6shc6XRmIvoNHGui",
       {
         method: "POST",
@@ -73,62 +69,80 @@ const ShippingPolicy = () => {
 
             
         {/* PREBOOK BUTTON */}
-      <button onClick={() => setShow(true)} className="fixed top-[42%] right-5 bg-red-600 text-white px-5 py-2 rounded-full shadow-lg" style={{ top: "28%" }}>PreBook Now</button>
+        <button
+          onClick={() => setShow(true)}
+          className="fixed top-[28%] right-5 bg-red-600 text-white px-5 py-2 rounded-full shadow-lg z-[999]"
+        >
+          PreBook Now
+        </button>
 
-
-      {/* MODAL */}
-      {show && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[999]">
-          <motion.div
-            initial={{ scale: 0.7, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-xl w-[90%] max-w-xl p-6 relative"
-          >
-            {/* Close */}
-            <button
-              className="absolute top-3 right-3 text-xl"
-              onClick={() => setShow(false)}
+        {/* MODAL */}
+        {show && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[999]">
+            <motion.div
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="bg-white rounded-xl w-[90%] max-w-xl p-6 relative"
             >
-              ✕
-            </button>
+              <button
+                className="absolute top-3 right-3 text-xl"
+                onClick={() => setShow(false)}
+              >
+                ✕
+              </button>
 
-            {!submitted ? (
-              <>
-                <h2 className="text-xl font-semibold mb-4">
-                  Please provide your details
-                </h2>
+              {!submitted ? (
+                <>
+                  <h2 className="text-xl font-semibold mb-4">
+                    Please provide your details
+                  </h2>
 
-                {/* Form */}
-                <div className="space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    className="border p-2 w-full rounded"
-                    value={form.name}
-                    onChange={(e) =>
-                      setForm({ ...form, name: e.target.value })
-                    } required
-                  />
+                  {/* FORM */}
+                  <div className="space-y-4">
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Name"
+                        className="border p-2 w-full rounded"
+                        value={form.name}
+                        onChange={(e) =>
+                          setForm({ ...form, name: e.target.value })
+                        }
+                      />
+                      {errors.name && (
+                        <p className="text-red-600 text-sm mt-1">
+                          {errors.name}
+                        </p>
+                      )}
+                    </div>
 
-                  <input
-                    type="tel"
-                    placeholder="Phone Number"
-                    className="border p-2 w-full rounded"
-                    value={form.phone}
-                    onChange={(e) =>
-                      setForm({ ...form, phone: e.target.value })
-                    }
-                  />
+                    <div>
+                      <input
+                        type="tel"
+                        placeholder="Phone Number"
+                        className="border p-2 w-full rounded"
+                        value={form.phone}
+                        onChange={(e) =>
+                          setForm({ ...form, phone: e.target.value })
+                        }
+                      />
+                      {errors.phone && (
+                        <p className="text-red-600 text-sm mt-1">
+                          {errors.phone}
+                        </p>
+                      )}
+                    </div>
 
-                  <select
-                    className="border p-2 w-full rounded"
-                    value={form.city}
-                    onChange={(e) =>
-                      setForm({ ...form, city: e.target.value })
-                    }
-                  >
-                    <option value="">Your District</option>
-                    <option value="Aruppukkottai">Aruppukkottai</option>
+                    <div>
+                      <select
+                        className="border p-2 w-full rounded"
+                        value={form.city}
+                        onChange={(e) =>
+                          setForm({ ...form, city: e.target.value })
+                        }
+                      >
+                        <option value="">Your District</option>
+                        <option value="Aruppukkottai">Aruppukkottai</option>
                     <option value="Ambasamudhram">Ambasamudhram</option>
                     <option value="Coimbatore_saravanampatti">
                       Coimbatore (Saravanampatti)
@@ -160,24 +174,31 @@ const ShippingPolicy = () => {
                     <option value="Valliyur">Valliyur</option>
                     <option value="Vilathikulam">Vilathikulam</option>
                     <option value="Viruthunagar">Viruthunagar</option>
-                  </select>
+                      </select>
 
-                  <button
-                    onClick={submitForm}
-                    className="w-full bg-red-600 text-white py-2 rounded-lg"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </>
-            ) : (
-              <h2 className="text-center py-10 text-lg">
-                Thank You. We'll be in touch soon.
-              </h2>
-            )}
-          </motion.div>
-        </div>
-      )}
+                      {errors.city && (
+                        <p className="text-red-600 text-sm mt-1">
+                          {errors.city}
+                        </p>
+                      )}
+                    </div>
+
+                    <button
+                      onClick={submitForm}
+                      className="w-full bg-red-600 text-white py-2 rounded-lg"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <h2 className="text-center py-10 text-lg">
+                  Thank You. We'll be in touch soon.
+                </h2>
+              )}
+            </motion.div>
+          </div>
+        )}
             {/* 🔥 Banner Section */}
             <div className="w-full">
                 <img src="/uploads/pre-book/vivo-x300/vivo-x300.jpeg" alt="Shipping Banner" className="w-full h-full object-cover"/>
