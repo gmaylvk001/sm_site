@@ -373,38 +373,56 @@ const ShippingPolicy = () => {
                     <img src="/uploads/pre-book/vivo-x300/security.webp" alt="background" className="absolute inset-0 w-full h-full object-contain scale-90 md:scale-95 opacity-90"/>
                     {/* CONTENT — TOP SIDE */}
                     <div className="absolute inset-0 flex flex-col items-center justify-start z-10 text-white px-5 pt-6">
-                        <p>3D Ultrasonic Fingerprint Scanning 2.016</p>
-                        <h2 className="text-2xl md:text-4xl font-bold mb-2">Register in One Second ,Unlock in a Flash</h2>
+                        <p>5-Year OS Upgrades & 7-Year Security Updates</p>
+                        <h2 className="text-2xl md:text-4xl font-bold mb-2">The Future-Proof Device</h2>
                         <p className="text-center items-center">
-                            Experience effortless, instant, and intuitive control and unlocking. Register your fingerprint in under a second and unlock just as quickly, all while maintaining a natural and comfortable hand position, with the assurance of enterprise-grade security.
+                            A device you can truly rely on. We guarantee seven years of security updates and system maintenance so your technology stays current, secure, and performing at its best.
                         </p>
                     </div>
                 </div>
             </div>
 
             <div className="w-full relative">
-                {/* VIDEO */}
-                <video src="/uploads/pre-book/vivo-x300/fingerprint.webm" autoPlay loop muted playsInline className="w-full h-full object-cover"/>
-                {/* CONTENT ON RIGHT CENTER */}
-                <div className="absolute inset-0 z-10 flex items-center justify-end px-8">
-                    <div className="text-white max-w-md">
-                        <p className="text-sm md:text-base text-gray-300 mb-2">
-                            3D Ultrasonic Fingerprint Scanning 2.0
-                        </p>
-                        <h2 className="text-2xl md:text-4xl font-bold leading-tight mb-2">
-                            Register in One Second
-                        </h2>
-                        <h2 className="text-2xl md:text-4xl font-bold leading-tight mb-4">
-                            Unlock in a Flash
-                        </h2>
-                        <p className="text-gray-300 md:text-lg leading-relaxed text-justify">
-                            Experience effortless, instant, and intuitive control and unlocking. Register your
-                            fingerprint in under a second and unlock just as quickly, all while maintaining a
-                            natural and comfortable hand position, with the assurance of enterprise-grade security.
-                        </p>
-                    </div>
-                </div>
-            </div>
+
+    {/* VIDEO */}
+    <video
+        src="/uploads/pre-book/vivo-x300/fingerprint.webm"
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="w-full h-full object-cover"
+    />
+
+    {/* CONTENT */}
+    <div
+        className="
+            absolute inset-0 z-10
+            flex items-center justify-center
+            px-4
+            md:justify-end md:px-8
+        "
+    >
+        <div className="text-white max-w-sm md:max-w-md text-center md:text-left">
+            <p className="text-sm md:text-base text-gray-300 mb-2">
+                3D Ultrasonic Fingerprint Scanning 2.0
+            </p>
+            <h2 className="text-2xl md:text-4xl font-bold leading-tight mb-2">
+                Register in One Second
+            </h2>
+            <h2 className="text-2xl md:text-4xl font-bold leading-tight mb-4">
+                Unlock in a Flash
+            </h2>
+            <p className="text-gray-300 md:text-lg leading-relaxed">
+                Experience effortless, instant, and intuitive control and unlocking.
+                Register your fingerprint in under a second and unlock just as quickly,
+                all while maintaining a natural and comfortable hand position, with
+                the assurance of enterprise-grade security.
+            </p>
+        </div>
+    </div>
+</div>
+
         </div>
         </>
     );
