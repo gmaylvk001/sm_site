@@ -62,6 +62,8 @@ const [currentCategoryBannerIndex, setCurrentCategoryBannerIndex] = useState(0);
       fetchInitialData();
     }
   }, [slug]);
+
+  
   
   const fetchInitialData = async () => {
     try {
