@@ -285,14 +285,20 @@ const RecentlyViewedProducts = () => {
                       </Link>
                       {/* Product Info */}
                       <div className="p-4 flex flex-col">
-                         <h4 className="text-xs text-gray-500 mb-2 uppercase">
-                            <Link
-                              href={`/brand/${product.brand.toLowerCase().replace(/\s+/g, "-")}`}
-                              className="hover:text-red-600"
-                            >
-                              {product.brand}
-                            </Link>
-                          </h4>
+                        <h4 className="text-xs text-gray-500 mb-2 uppercase">
+						  {typeof product?.brand === "string" && product.brand.trim() !== "" ? (
+							<Link
+							  href={`/brand/${product.brand
+								.toLowerCase()
+								.replace(/\s+/g, "-")}`}
+							  className="hover:text-red-600"
+							>
+							  {product.brand}
+							</Link>
+						  ) : (
+							<span className="text-gray-400">No Brand</span>
+						  )}
+						</h4>
 
                         {/* Title truncate */}
                         <Link
@@ -385,27 +391,3 @@ const RecentlyViewedProducts = () => {
 };
 
 export default RecentlyViewedProducts;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
