@@ -1090,7 +1090,7 @@ const handleUpdateNavImageChange = async (e) => {
               id="update_meta_title"
               className="w-full rounded-md border p-2 focus:ring-2 focus:ring-red-400"
               placeholder="Enter Meta Title"
-              required
+              
             />
             {errorMessage && (
               <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
@@ -1101,14 +1101,14 @@ const handleUpdateNavImageChange = async (e) => {
             <label htmlFor="update_meta_keyword" className="block mb-1 text-sm font-semibold text-gray-700">
               Meta Keyword
             </label>
-            <input
+            <textarea
               name="meta_keyword"
               value={categoryToUpdate.meta_keyword}
               onChange={(e) => setCategoryToUpdate({ ...categoryToUpdate, meta_keyword: e.target.value })}
               id="update_meta_keyword"
               className="w-full rounded-md border p-2 focus:ring-2 focus:ring-red-400"
               placeholder="Enter Meta Keyword"
-              required
+              
             />
             {errorMessage && (
               <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
@@ -1126,7 +1126,7 @@ const handleUpdateNavImageChange = async (e) => {
               id="update_meta_description"
               className="w-full rounded-md border p-2 focus:ring-2 focus:ring-red-400"
               placeholder="Enter Meta Description"
-              required
+              
             />
             {errorMessage && (
               <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
