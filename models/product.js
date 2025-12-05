@@ -37,6 +37,7 @@ const ProductSchema = new mongoose.Schema({
   product_highlights: {type: [String],default: [],},
   meta_title: { type: String, default: "" }, // Add meta_title field
   meta_description: { type: String, default: "" }, // Add meta_description field
+  search_keywords: { type: String, default: "" }, // Add search_keywords field
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   category_new : String,

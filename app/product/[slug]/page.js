@@ -27,8 +27,9 @@ export async function generateMetadata({ params  }) {
   return {
   title: data.name,
   openGraph: {
-    title: data.name,
-    description: 'Buy Now ' + data.name,
+    title: data.meta_title,
+    keywords: data.search_keywords,
+    description: 'Buy Now ' + data.meta_description,
     images: [`${baseUrl}/uploads/products/${data.images[0]}`],
     url: `${baseUrl}/product/${slug}`,
     type: "website",
