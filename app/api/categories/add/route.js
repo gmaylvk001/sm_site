@@ -21,6 +21,9 @@ export async function POST(req) {
     // Parse formData instead of req.body
     const formData = await req.formData();
     const category_name = formData.get("category_name");
+    const meta_title = formData.get("meta_title");
+    const meta_description = formData.get("meta_description");
+    const meta_keyword = formData.get("meta_keyword");
     const parentid = formData.get("parentid") || "none";
     const status = formData.get("status") || "Active";
     const show_on_home = formData.get("show_on_home") || "No"; // Add this line
@@ -64,6 +67,9 @@ console.log(show_on_home)
       category_name,
       category_slug,
       md5_cat_name,
+      meta_title,
+      meta_description,
+      meta_keyword,
       parentid,
       status,
       show_on_home, // Include the new field

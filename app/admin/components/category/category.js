@@ -20,6 +20,9 @@ const [updateImageError, setUpdateImageError] = useState("");
   const [imageError, setImageError] = useState("");
   const [newCategory, setNewCategory] = useState({
     category_name: "",
+    meta_title: "",
+    meta_description: "",
+    meta_keyword: "",
     parentid: "none",
     status: "Active",
     image: null,
@@ -28,6 +31,9 @@ const [updateImageError, setUpdateImageError] = useState("");
   const [categoryToUpdate, setCategoryToUpdate] = useState({
     _id: "",
     category_name: "",
+    meta_title: "",
+    meta_description: "",
+    meta_keyword: "",
     parentid: "none",
     status: "Active",
     image: null,
@@ -159,6 +165,9 @@ const handleImageChange = async (e) => {
 
   const formData = new FormData();
   formData.append("category_name", trimmedCategoryName);
+  formData.append("meta_title", newCategory.meta_title);
+  formData.append("meta_description", newCategory.meta_description);
+  formData.append("meta_keyword", newCategory.meta_keyword);
   formData.append("parentid", newCategory.parentid);
   formData.append("status", newCategory.status);
   formData.append("image", newCategory.image);
@@ -180,6 +189,9 @@ const handleImageChange = async (e) => {
       // Reset form
       setNewCategory({
         category_name: "",
+         meta_title: "",
+          meta_description: "",
+          meta_keyword: "",
         parentid: "none",
         status: "Active",
         image: null,
@@ -287,6 +299,9 @@ const handleUpdateCategory = async (e) => {
   const formData = new FormData();
   formData.append("_id", categoryToUpdate._id);
   formData.append("category_name", trimmedCategoryName);
+  formData.append("meta_title", categoryToUpdate.meta_title);
+  formData.append("meta_description", categoryToUpdate.meta_description);
+  formData.append("meta_keyword", categoryToUpdate.meta_keyword);
   formData.append("parentid", categoryToUpdate.parentid);
   formData.append("status", categoryToUpdate.status);
 
@@ -813,6 +828,9 @@ const handleUpdateNavImageChange = async (e) => {
                  setIsModalOpen(false)
                 setNewCategory({
         category_name: "",
+        meta_title : "",
+        meta_description : "",
+        meta_keyword : "",
         parentid: "none",
         status: "Active",
         image: null,
@@ -844,20 +862,73 @@ const handleUpdateNavImageChange = async (e) => {
 
               <div>
                  <label htmlFor="category_name" className="block mb-1 text-sm font-semibold text-gray-700">
-    Category Name
-  </label>
-  <input
-    name="category_name"
-    value={newCategory.category_name}
-    onChange={handleInputChange}
-    id="category_name"
-    className="w-full rounded-md border p-2 focus:ring-2 focus:ring-red-400"
-    placeholder="Enter Category Name"
-    required
-  />
-  {errorMessage && (
-    <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
-  )}
+                  Category Name
+                </label>
+                <input
+                  name="category_name"
+                  value={newCategory.category_name}
+                  onChange={handleInputChange}
+                  id="category_name"
+                  className="w-full rounded-md border p-2 focus:ring-2 focus:ring-red-400"
+                  placeholder="Enter Category Name"
+                  required
+                />
+                {errorMessage && (
+                  <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+                )}
+              </div>
+
+              <div>
+                 <label htmlFor="meta_title" className="block mb-1 text-sm font-semibold text-gray-700">
+                  Meta Title
+                </label>
+                <input
+                  name="meta_title"
+                  value={newCategory.meta_title}
+                  onChange={handleInputChange}
+                  id="meta_title"
+                  className="w-full rounded-md border p-2 focus:ring-2 focus:ring-red-400"
+                  placeholder="Enter Meta Title"
+                  required
+                />
+               
+                {errorMessage && (
+                  <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+                )}
+              </div>
+
+              <div>
+                 <label htmlFor="meta_keyword" className="block mb-1 text-sm font-semibold text-gray-700">
+                  Meta Keyword
+                </label>
+                
+                 <textarea
+                  name="meta_keyword"
+                  value={newCategory.meta_keyword || ''}
+                  onChange={handleInputChange}
+                  className="w-full border p-2 rounded"
+                  rows="2"
+                />
+                
+                {errorMessage && (
+                  <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+                )}
+              </div>
+
+              <div>
+                 <label htmlFor="meta_description" className="block mb-1 text-sm font-semibold text-gray-700">
+                  Meta Description
+                </label>
+                <textarea
+                  name="meta_description"
+                  value={newCategory.meta_description || ''}
+                  onChange={handleInputChange}
+                  className="w-full border p-2 rounded"
+                  rows="2"
+                />
+                {errorMessage && (
+                  <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+                )}
               </div>
 
               <div>
@@ -1001,6 +1072,61 @@ const handleUpdateNavImageChange = async (e) => {
               className="w-full rounded-md border p-2 focus:ring-2 focus:ring-red-400"
               placeholder="Enter Category Name"
               required
+            />
+            {errorMessage && (
+              <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+            )}
+          </div>
+
+
+          <div>
+            <label htmlFor="update_meta_title" className="block mb-1 text-sm font-semibold text-gray-700">
+              Meta Title
+            </label>
+            <input
+              name="meta_title"
+              value={categoryToUpdate.meta_title}
+              onChange={(e) => setCategoryToUpdate({ ...categoryToUpdate, meta_title: e.target.value })}
+              id="update_meta_title"
+              className="w-full rounded-md border p-2 focus:ring-2 focus:ring-red-400"
+              placeholder="Enter Meta Title"
+              
+            />
+            {errorMessage && (
+              <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="update_meta_keyword" className="block mb-1 text-sm font-semibold text-gray-700">
+              Meta Keyword
+            </label>
+            <textarea
+              name="meta_keyword"
+              value={categoryToUpdate.meta_keyword}
+              onChange={(e) => setCategoryToUpdate({ ...categoryToUpdate, meta_keyword: e.target.value })}
+              id="update_meta_keyword"
+              className="w-full rounded-md border p-2 focus:ring-2 focus:ring-red-400"
+              placeholder="Enter Meta Keyword"
+              
+            />
+            {errorMessage && (
+              <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="update_meta_description" className="block mb-1 text-sm font-semibold text-gray-700">
+              Meta Description
+            </label>
+            <textarea
+              name="meta_description"
+              value={categoryToUpdate.meta_description}
+              onChange={(e) => setCategoryToUpdate({ ...categoryToUpdate, meta_description: e.target.value })}
+              id="update_meta_description"
+              className="w-full rounded-md border p-2 focus:ring-2 focus:ring-red-400"
+              placeholder="Enter Meta Description"
+              
             />
             {errorMessage && (
               <p className="text-red-500 text-sm mt-1">{errorMessage}</p>

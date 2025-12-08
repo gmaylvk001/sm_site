@@ -446,8 +446,9 @@ const fetchBrand = async () => {
                   </div>
 
                 <title>{product.name}</title>
-                <meta property="og:title" content={product.name} />
-                <meta property="og:description" content={product.description} />
+                <meta property="og:title" content={product.meta_title} />
+                <meta property="og:keyword" content={product.search_keywords} />
+                <meta property="og:description" content={product.meta_description} />
                 <meta
           property="og:image"
           content={"/no-image.jpg"
