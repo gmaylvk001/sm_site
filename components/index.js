@@ -368,7 +368,7 @@ export default function HomeComponent() {
       };
 
       // ✅ add extra field only for 1st (index 0) and 3rd (index 2)
-      if (index === 0) {
+      /* if (index === 0) {
         obj.categoryname = "SMART PHONE";
       }else if(index === 1){
         obj.categoryname="AIR CONDITIONER";
@@ -376,6 +376,15 @@ export default function HomeComponent() {
         obj.categoryname="REFRIGERATOR";
       }else if(index === 3){
         obj.categoryname="WASHING MACHINE";
+      } */
+     if (index === 0) {
+        obj.categoryname = "";
+      }else if(index === 1){
+        obj.categoryname="";
+      }else if(index === 2){
+        obj.categoryname="";
+      }else if(index === 3){
+        obj.categoryname="";
       }
 
       return obj;
