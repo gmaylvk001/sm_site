@@ -1,42 +1,20 @@
-
-
+"use client";
+import { useState, useEffect, use } from "react"; // Import 'use' from React
 import CategoryComponent from "@/components/category/CategoryComponent";
 
-export async function generateMetadata({ params }) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/categories/${params.slug}`,
-    { cache: "no-store" }
+export default function Dashboard({ params }) {
+  // Unwrap the params promise using React.use()
+  const resolvedParams = use(params);
+  const [time, setTime] = useState(null);
+
+  useEffect(() => {
+    setTime(Date.now());
+  }, []);
+
+  return (
+    <div>
+      {/* Pass the resolved params to the CategoryComponent */}
+      <CategoryComponent params={resolvedParams} />
+    </div>
   );
-
-  const data = await res.json();
-  const category = data?.main_category;
-
-  if (!category) {
-    return {
-      title: "Category Not Found",
-      description: "This category does not exist",
-    };
-  }
-
-  return {
-    title: category.meta_title || category.category_name,
-    description:
-      category.meta_description ||
-      `Buy ${category.category_name} products at best price`,
-
-    openGraph: {
-      title: category.meta_title || category.category_name,
-      keywords: category.meta_keyword || category.category_name,
-      description:
-        category.meta_description ||
-        `Buy ${category.category_name} products at best price`,
-      images: category.image ? [category.image] : [],
-      type: "website",
-    },
-
-  };
-}
-
-export default function Page({ params }) {
-  return <CategoryComponent params={params} />;
-}
+} 
