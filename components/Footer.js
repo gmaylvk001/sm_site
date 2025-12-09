@@ -316,7 +316,7 @@ const getCategoryBrands = (category) => {
                   </div>
                   <div className="flex flex-col md:flex-row items-center gap-4">
                   <div className="py-3">
-                    <img src="https://sathyamobiles.com/storefront/assets/images/payments.png" alt="Payment methods" className="w-[200px]" />
+                    <img src="/uploads/payments.png" alt="Payment methods" className="w-[200px]" />
                   </div>
                 </div>
                 </div>
