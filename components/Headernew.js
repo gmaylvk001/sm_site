@@ -1619,6 +1619,10 @@ const Header = () => {
 
                   {/* RIGHT — ICONS (3 columns, centered) */}
                   <div className="col-span-3 flex justify-center items-center gap-6">
+                    <Link href="/all-stores" className="relative">
+                      <FiMapPin size={18} className="text-red-600" />
+                    </Link>
+
                     <Link href="/contact" className="relative">
                       <FiPhoneCall size={18} className="text-red-600" />
                     </Link>
