@@ -1548,73 +1548,77 @@ const Header = () => {
             <div className={`${isMobileMenuOpen ? "fixed inset-0 mt-0 pt-0 z-50 overflow-y-auto" : "bg-white px-4 sm:px-6 md:px-6 py-0 sticky top-0 z-40"}`}>
                 {/* NEW MOBILE TOP ROW (from reference) */}
                 {/* DESKTOP ROW (clean 3-section layout) */}
-                <div className="hidden sm:flex items-center justify-between w-full py-2 px-4 bg-white">
+                <div className="hidden sm:grid grid-cols-12 w-full py-2 px-4 bg-white items-center">
 
-                  {/* LEFT — LOGO */}
-                  <div className="flex-shrink-0">
-                    <Link href="/index">
-                      <img
-                        src="/user/sathya.png"
-                        alt="Logo"
-                        width={80}
-                        height={45}
-                        className="h-auto"
+                  {/* LEFT — LOGO (3 columns, centered) */}
+                  <div className="col-span-3 flex justify-center items-center">
+                    <div className="flex-shrink-0">
+                      <Link href="/index">
+                        <img
+                          src="/user/sathya.png"
+                          alt="Logo"
+                          width={80}
+                          height={45}
+                          className="h-auto"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* CENTER — SEARCH BAR (6 columns, centered) */}
+                  <div className="col-span-6 flex justify-center items-center">
+                    {/* CENTER — SEARCH BAR (reduced height + clean) */}
+                    <div
+                      className="search-bar relative hidden sm:flex flex-1 w-full max-w-[900px] mx-auto items-center bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200" role="search" style={{minHeight: '50px', display: 'flex',
+                          alignItems: 'center',
+                          gap: '10px',
+                          background: 'var(--bg)',
+                          borderRadius: '10px',
+                          padding: '7px 10px',
+                          border: '2px solid #fddddd',
+                          boxShadow: 'var(--shadow)',
+                          transition:
+                            'box-shadow .25s ease, transform .12s ease, border-color .18s ease',
+                          width: '100%',
+                          maxWidth: '600px',
+                          margin: '0 auto',}}>
+                      {/* Category */}
+                      <select
+                        value={selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                        className="text-sm bg-transparent border-r pr-2 mr-2 h-full outline-none"
+                      >
+                        <option value="All Category">All Category</option>
+                        {categories.map((cat) => (
+                          <option key={cat._id} value={cat.category_name}>
+                            {cat.category_name}
+                          </option>
+                        ))}
+                      </select>
+
+                      {/* Search Input */}
+                      <input
+                        type="search"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onFocus={() => {
+                          setSearchContext("desktop");
+                          if (searchQuery.trim().length >= 1) fetchSuggestions(searchQuery);
+                          setSearchDropdownVisible(true);
+                        }}
+                        className="flex-1 bg-transparent text-sm outline-none"
+                        placeholder="Search for products..."
                       />
-                    </Link>
+
+                      {/* Search Icon */}
+                      <button onClick={handleSearchBtnClick} className="text-red-600 px-2">
+                        <FaSearch size={16} />
+                      </button>
+                    </div>
                   </div>
 
-                  {/* CENTER — SEARCH BAR (reduced height + clean) */}
-                  <div
-                    className="search-bar relative hidden sm:flex flex-1 w-full max-w-[900px] mx-auto items-center bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200" role="search" style={{minHeight: '50px', display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        background: 'var(--bg)',
-                        borderRadius: '10px',
-                        padding: '7px 10px',
-                        border: '2px solid #fddddd',
-                        boxShadow: 'var(--shadow)',
-                        transition:
-                          'box-shadow .25s ease, transform .12s ease, border-color .18s ease',
-                        width: '100%',
-                        maxWidth: '600px',
-                        margin: '0 auto',}}>
-                    {/* Category */}
-                    <select
-                      value={selectedCategory}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                      className="text-sm bg-transparent border-r pr-2 mr-2 h-full outline-none"
-                    >
-                      <option value="All Category">All Category</option>
-                      {categories.map((cat) => (
-                        <option key={cat._id} value={cat.category_name}>
-                          {cat.category_name}
-                        </option>
-                      ))}
-                    </select>
-
-                    {/* Search Input */}
-                    <input
-                      type="search"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      onFocus={() => {
-                        setSearchContext("desktop");
-                        if (searchQuery.trim().length >= 1) fetchSuggestions(searchQuery);
-                        setSearchDropdownVisible(true);
-                      }}
-                      className="flex-1 bg-transparent text-sm outline-none"
-                      placeholder="Search for products..."
-                    />
-
-                    {/* Search Icon */}
-                    <button onClick={handleSearchBtnClick} className="text-red-600 px-2">
-                      <FaSearch size={16} />
-                    </button>
-                  </div>
-
-                  {/* RIGHT — ICON GROUP */}
-                  <div className="flex items-center gap-6">
-
+                  {/* RIGHT — ICONS (3 columns, centered) */}
+                  <div className="col-span-3 flex justify-center items-center gap-6">
                     <Link href="/contact" className="relative">
                       <FiPhoneCall size={18} className="text-red-600" />
                     </Link>
@@ -1637,38 +1641,36 @@ const Header = () => {
                     <div className="relative">
                       {isLoggedIn ? (
                         <>
-                          <button
-                            onClick={() => setDropdownOpen(!dropdownOpen)}
-                            className="flex items-center text-black"
-                          >
-                           <FiUser size={18} className="text-red-600" />
-                                        <span className="ml-1 font-bold text-xs sm:text-sm text-red-600 hidden lg:inline">
-                                            Hi, {userData?.name || userData?.username || "User"}
-                                        </span>
+                          <button onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center text-black">
+                            <FiUser size={18} className="text-red-600" />
+                            <span className="ml-1 font-bold text-xs sm:text-sm text-red-600 hidden lg:inline">
+                                Hi, {userData?.name || userData?.username || "User"}
+                            </span>
                           </button>
 
                           {dropdownOpen && (
                             <div className="absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-xl z-50 py-2">
-                              {isAdmin && (
+                                {isAdmin && (
                                   <>
-                                      <Link href="/admin/dashboard" className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-red-50 transition-colors">
-                                          <span className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full bg-red-600 text-white">
-                                              <FaUserShield className="w-3 h-3 sm:w-4 sm:h-4" />
-                                          </span>
-                                          Admin Panel
-                                      </Link>
-                                    </>
+                                    <Link href="/admin/dashboard" className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-red-50 transition-colors">
+                                        <span className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full bg-red-600 text-white">
+                                            <FaUserShield className="w-3 h-3 sm:w-4 sm:h-4" />
+                                        </span>
+                                        Admin Panel
+                                    </Link>
+                                  </>
                                 )}
                               <Link href="/orders" className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-red-50 transition-colors">
-                                                    <span className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full bg-red-600 text-white">
-                                                        <FaShoppingBag className="w-3 h-3 sm:w-4 sm:h-4" />
-                                                    </span>My Orders</Link>
-                                                <hr className="my-2 border-gray-200" />
-                                                <button onClick={handleLogout} className="flex items-center gap-2 sm:gap-3 w-full text-left px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-red-50 transition-colors">
-                                                    <span className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full bg-red-600 text-white">
-                                                        <IoLogOut className="w-3 h-3 sm:w-4 sm:h-4" />
-                                                    </span>Logout
-                                                </button>
+                                <span className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full bg-red-600 text-white">
+                                  <FaShoppingBag className="w-3 h-3 sm:w-4 sm:h-4" />
+                                </span>My Orders
+                              </Link>
+                              <hr className="my-2 border-gray-200" />
+                              <button onClick={handleLogout} className="flex items-center gap-2 sm:gap-3 w-full text-left px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-red-50 transition-colors">
+                                  <span className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full bg-red-600 text-white">
+                                      <IoLogOut className="w-3 h-3 sm:w-4 sm:h-4" />
+                                  </span>Logout
+                              </button>
                             </div>
                           )}
                         </>
@@ -1678,7 +1680,6 @@ const Header = () => {
                         </button>
                       )}
                     </div>
-
                   </div>
                 </div>
 
