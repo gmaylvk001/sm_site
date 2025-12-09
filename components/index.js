@@ -353,7 +353,7 @@ export default function HomeComponent() {
     }; */}
 
 
-    const fetchCategoryBanners = async () => {
+    /* const fetchCategoryBanners = async () => {
       try {
         const response = await fetch("/api/categorybanner"); 
         const res = await response.json();
@@ -368,7 +368,7 @@ export default function HomeComponent() {
       };
 
       // ✅ add extra field only for 1st (index 0) and 3rd (index 2)
-      /* if (index === 0) {
+      if (index === 0) {
         obj.categoryname = "SMART PHONE";
       }else if(index === 1){
         obj.categoryname="AIR CONDITIONER";
@@ -376,15 +376,6 @@ export default function HomeComponent() {
         obj.categoryname="REFRIGERATOR";
       }else if(index === 3){
         obj.categoryname="WASHING MACHINE";
-      } */
-     if (index === 0) {
-        obj.categoryname = "";
-      }else if(index === 1){
-        obj.categoryname="";
-      }else if(index === 2){
-        obj.categoryname="";
-      }else if(index === 3){
-        obj.categoryname="";
       }
 
       return obj;
@@ -396,7 +387,7 @@ export default function HomeComponent() {
       } catch (error) {
         console.error("Error fetching category banners:", error);
       }
-    };
+    }; */
 
     const fetchSingleBannerData = async () => {
       setIsSingleBannerLoading(true);
@@ -887,85 +878,7 @@ export default function HomeComponent() {
     //console.log(categoryBanner);
     const renderSection = (sectionName) => {
       switch(sectionName) {
-          case 'category_banner':
-              return (
-
-                // <section id="category_banner">
-                //   <div className="px-0  pt-7">
-                //       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                //           {categoryBanner.map((banner, index) => (
-                //               <div key={index} className="col-span-1">
-                //                   <div className="card  overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                //                       <Link href={banner.redirectUrl || "#"} className="no-underline">
-                //                           <img
-                //                               src={banner.imageUrl}
-                //                               alt={`Category Banner ${index + 1}`}
-                //                               // title={`Category Banner ${index + 1}`}
-                //                               className="w-full h-auto object-cover"
-                //                               width={400}
-                //                               height={400}
-                //                           />
-                //                       </Link>
-                //                   </div>
-                //               </div>
-                //           ))}
-                //       </div>
-                //   </div>
-                // </section>
-
-                  <section id="category_banner">
-                <div className="px-4 md:px-6 py-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {categoryBanner.map((banner, index) => (
-                      
-                      <div key={index} className="col-span-1">
-                        <div className="relative group overflow-hidden  shadow-sm hover:shadow-md transition-shadow">
-
-                          {/* Image */}
-                          <img
-                            src={banner.imageUrl}
-                            alt={`Category Banner ${index + 1}`}
-                            className="w-full h-[300px] object-cover transform group-hover:scale-105 transition duration-500 ease-in-out"
-                            width={400}
-                            height={400}
-                          />
-
-                          <div className="absolute top-1 mb-4 left-4 py-6">
-                            <h3 className="text-lg md:text-xl font-bold">{banner.categoryname}</h3>
-                          </div>
-
-                          {/* Shop Now Link with Arrow */}
-                          <div className="absolute top-8 left-4 py-6">
-                            <Link
-                              href={banner.redirectUrl || "#"}
-                              className="mt-2 inline-flex items-center text-sm font-medium text-gray-800 hover:text-black transition"
-                            >
-                              {banner.buttonText || "Shop Now"}
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="ml-1 h-4 w-4"
-                              >
-                                <path d="m9 18 6-6-6-6" />
-                              </svg>
-                            </Link>
-                          </div>
-
-
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </section>
-              );
+         
           
       
           case 'product':
@@ -1555,7 +1468,7 @@ export default function HomeComponent() {
         // Map section names from API to our component names
         const getSectionComponentName = (sectionName) => {
             const mapping = {
-                'categorybanner': 'category_banner',
+                // 'categorybanner': 'category_banner',
                 'flashsale': 'flash_sales',
                 'Brands': 'brands',
                 'topbanner' : 'topbanner',
@@ -1610,7 +1523,7 @@ export default function HomeComponent() {
                     ) : (
                         // Fallback order if no sections are configured
                         <>
-                            {renderSection('category_banner')}
+                            {/* {renderSection('category_banner')} */}
                             {renderSection('flash_sales')}
                             {renderSection('brands')}
                             {renderSection('features')}
