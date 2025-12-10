@@ -1648,7 +1648,8 @@ const Header = () => {
                           <button onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center text-black">
                             <FiUser size={18} className="text-red-600" />
                             <span className="ml-1 font-bold text-xs sm:text-sm text-red-600 hidden lg:inline">
-                                Hi, {userData?.name || userData?.username || "User"}
+                                Hi, {/* {userData?.name || userData?.username || "User"} */}
+                                {userData?.name?.length > 13 ? userData?.name.slice(0, 13) + "..." : userData?.name || (userData?.username?.length > 13 ? userData?.username.slice(0, 13) + "..." : userData?.username || "User")}
                             </span>
                           </button>
 
