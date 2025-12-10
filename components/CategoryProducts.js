@@ -206,7 +206,7 @@ const CategoryProducts = () => {
         const category = categoryProduct.subcategoryId;
 
         const slug = category?.category_slug?.toLowerCase() || "";
-        const keywords = ["mobile", "phone", "tv", "television"];
+        const keywords = ["mobile", "phone", "tv", "television", "Laptop& Desktops", "Laptop&", "Laptop", "Desktops"];
         const isAllowed = keywords.some((key) => slug.includes(key));
 
         if (!isAllowed) return null;
@@ -554,6 +554,15 @@ const CategoryProducts = () => {
             <div className="flex overflow-x-auto space-x-2 no-scrollbar px-2 sm:justify-center snap-x">
   {categoryProducts.map((categoryProduct) => { 
     const category = categoryProduct.subcategoryId;
+
+
+    const slug = category?.category_slug?.toLowerCase() || "";
+        const keywords = ["Air", "conditioner", "accessories", "tablets"];
+        const isAllowed = keywords.some((key) => slug.includes(key));
+
+        if (!isAllowed) return null;
+
+
     if (!category) return null;
 
     const isActive = activeCategory === categoryProduct._id;
