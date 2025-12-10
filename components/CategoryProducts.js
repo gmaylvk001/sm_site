@@ -552,7 +552,7 @@ const CategoryProducts = () => {
          <div className="relative mb-4 sm:mb-6">
           <div className="flex justify-center overflow-x-auto pb-2 space-x-2 scrollbar-hide snap-x">
             <div className="flex overflow-x-auto space-x-2 no-scrollbar px-2 sm:justify-center snap-x">
-  {categoryProducts.map((categoryProduct) => {
+  {categoryProducts.map((categoryProduct) => { 
     const category = categoryProduct.subcategoryId;
     if (!category) return null;
 
