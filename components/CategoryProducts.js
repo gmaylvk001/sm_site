@@ -206,7 +206,7 @@ const CategoryProducts = () => {
         const category = categoryProduct.subcategoryId;
 
         const slug = category?.category_slug?.toLowerCase() || "";
-        const keywords = ["mobile", "phone", "tv", "television", "Laptop& Desktops", "Laptop&", "Laptops", "Desktops"];
+        const keywords = ["mobile", "phone", "tv", "television"];
         const isAllowed = keywords.some((key) => slug.includes(key));
 
         if (!isAllowed) return null;
@@ -552,17 +552,8 @@ const CategoryProducts = () => {
          <div className="relative mb-4 sm:mb-6">
           <div className="flex justify-center overflow-x-auto pb-2 space-x-2 scrollbar-hide snap-x">
             <div className="flex overflow-x-auto space-x-2 no-scrollbar px-2 sm:justify-center snap-x">
-  {categoryProducts.map((categoryProduct) => { 
+  {categoryProducts.map((categoryProduct) => {
     const category = categoryProduct.subcategoryId;
-
-
-    const slug = category?.category_slug?.toLowerCase() || "";
-        const keywords = ["Air", "conditioner", "accessories", "tablets", "Laptop& Desktops", "Laptop&", "Laptops", "Desktops"];
-        const isAllowed = keywords.some((key) => slug.includes(key));
-
-        if (!isAllowed) return null;
-
-
     if (!category) return null;
 
     const isActive = activeCategory === categoryProduct._id;
