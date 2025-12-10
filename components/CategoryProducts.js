@@ -206,7 +206,7 @@ const CategoryProducts = () => {
         const category = categoryProduct.subcategoryId;
 
         const slug = category?.category_slug?.toLowerCase() || "";
-        const keywords = ["mobile", "phone", "tv", "television", "Laptop& Desktops", "Laptop&", "Laptop", "Desktops"];
+        const keywords = ["mobile", "phone", "tv", "television"];
         const isAllowed = keywords.some((key) => slug.includes(key));
 
         if (!isAllowed) return null;
@@ -557,7 +557,7 @@ const CategoryProducts = () => {
 
 
     const slug = category?.category_slug?.toLowerCase() || "";
-        const keywords = ["Air", "conditioner", "accessories", "tablets"];
+        const keywords = ["Air", "conditioner", "accessories", "tablets", "Laptop& Desktops", "Laptop&", "Laptops", "Desktops"];
         const isAllowed = keywords.some((key) => slug.includes(key));
 
         if (!isAllowed) return null;
