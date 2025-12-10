@@ -72,6 +72,10 @@ export default function BlogComponent() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4 sm:p-6 " id="scroll_blog">
         {visibleBlogs.length > 0 ? (
           visibleBlogs.map((blog) => (
+            <Link
+                  href={`/blog/${blog.blog_slug}`}
+                  className="mt-4 text-orange-500 text-sm font-medium"
+                >
             <div key={blog._id} className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
               <img
                 src={blog.image || "/default-blog.jpg"}
@@ -86,14 +90,15 @@ export default function BlogComponent() {
                   {blog.blog_name}
                 </h3>
                 <p className="text-gray-600 flex-1">{blog.description.slice(0, 100)}...</p>
-                <Link
+                {/* <Link
                   href={`/blog/${blog.blog_slug}`}
                   className="mt-4 text-orange-500 hover:underline text-sm font-medium"
-                >
+                > */}
                   Read More &rarr;
-                </Link>
+                {/* </Link> */}
               </div>
             </div>
+            </Link>
           ))
         ) : (
           <p className="col-span-full text-center text-gray-500">No active blogs found.</p>
