@@ -21,8 +21,8 @@ const StoreList = () => {
       });
   }, []);
 
-  const generateSlug = (name) =>
-    name?.toLowerCase().replace(/\s+/g, "-");
+ /*  const generateSlug = (name) =>
+    name?.toLowerCase().replace(/\s+/g, "-"); */
 
   if (loading) {
     return <p className="text-center text-gray-500">Loading stores...</p>;
@@ -64,7 +64,7 @@ const StoreList = () => {
             )}
 
             <Link
-              href={`/store/${generateSlug(store.organisation_name)}`}
+              href={`/store/${(store.slug)}`}
               className="mt-3 inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-4 py-2 rounded-md transition-colors"
             >
               Visit Store
