@@ -123,31 +123,25 @@ export async function PUT(request, { params }) {
     // ======================================================
     // SOCIAL TIMELINE with Thumbnail Upload Support
     // ======================================================
-    updateData.socialTimeline = [];
-    const socialPayload = fields.socialTimeline
-      ? JSON.parse(fields.socialTimeline[0])
-      : [];
+    // ---------- SOCIAL TIMELINE ----------
+updateData.socialTimeline = [];
+const socialPayload = fields.socialPayload ? JSON.parse(fields.socialPayload[0]) : [];
 
-    for (let i = 0; i < socialPayload.length; i++) {
-      const item = socialPayload[i];
+socialPayload.forEach((item, i) => {
+  let thumbnail = item.thumbnail || null;
 
-      // detect uploaded thumbnail
-      const thumbField = `social_thumbnail_${i}`;
-      const hasNewThumbnail = files[thumbField]?.[0];
+  // If new thumbnail uploaded
+  if (files[`social_thumbnail_${i}`]?.[0]) {
+    thumbnail = `/uploads/${path.basename(files[`social_thumbnail_${i}`][0].filepath)}`;
+  }
 
-      let thumbnailURL = item.thumbnail || "";
-
-      if (hasNewThumbnail) {
-        thumbnailURL = `/uploads/${path.basename(files[thumbField][0].filepath)}`;
-      }
-
-      updateData.socialTimeline.push({
-        media: item.media,
-        text: item.text,
-        postedOn: item.postedOn,
-        thumbnail: thumbnailURL,
-      });
-    }
+  updateData.socialTimeline.push({
+    media: item.media || "",
+    text: item.text || "",
+    postedOn: item.postedOn || "",
+    thumbnail: thumbnail
+  });
+});
 
     // ---------- LOGO ----------
     if (files.logo?.[0]) {
