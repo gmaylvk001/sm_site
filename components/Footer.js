@@ -67,14 +67,30 @@ const Footer = () => {
     fetchStores();
   }, []);
 
-    const groupedStores = stores.reduce((acc, store) => {
+    /* const groupedStores = stores.reduce((acc, store) => {
   const city = store.city; // or store.store_city based on your API
   if (!acc[city]) {
     acc[city] = [];
   }
   acc[city].push(store.organisation_name);
   return acc;
+}, {}); */
+
+const groupedStores = stores.reduce((acc, store) => {
+  const city = store.city;
+
+  if (!acc[city]) {
+    acc[city] = [];
+  }
+
+  acc[city].push({
+    name: store.organisation_name,
+    slug: store.slug
+  });
+
+  return acc;
 }, {});
+
 
   useEffect(() => {
    const fetchCategories = async () => {
@@ -396,11 +412,23 @@ const getCategoryBrands = (category) => {
               {/* RIGHT SECTION (Our Location) */}
               <div className="space-y-4">
                 <h3 className="text-white font-semibold text-lg mb-4">Our Stores</h3>
-                {Object.entries(groupedStores).map(([city, orgs], index) => (
+                {/* {Object.entries(groupedStores).map(([city, orgs], index) => (
                   <div key={index}>
                     <p className="text-sm text-gray-400">{orgs.join(", ")}</p>
                   </div>
-                ))}
+                ))} */}
+
+                {Object.entries(groupedStores).map(([city, orgList], index) => (
+  <div key={index}>
+    {orgList.map((org, i) => (
+      <a key={i} href={`all-stores/${org.slug}`} className="hover:text-white hover:underline">
+        <p className="text-sm text-white-400">{org.name}</p>
+      </a>
+    ))}
+  </div>
+))}
+
+
               </div>
           </div>
           

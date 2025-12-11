@@ -3,7 +3,7 @@ import storeModel from "@/models/store";
 import Link from "next/link";
 
 export default async function StoreDetailPage({ params }) {
-  const normalize = (str) =>
+  /* const normalize = (str) =>
     str
       .toLowerCase()
       .replace(/[^a-z0-9]/gi, " ")
@@ -20,7 +20,16 @@ export default async function StoreDetailPage({ params }) {
   const store = allStores.find((store) => {
     const normalizedName = normalize(store.organisation_name);
     return normalizedName === formattedSlug;
-  });
+  }); */
+
+  await connectDB();
+
+const slug = params?.slug || "";
+
+// Directly find the store using slug from DB
+const store = await storeModel.findOne({ slug });
+
+
 
   if (!store) {
     return <div className="p-4 text-red-500">Store not found</div>;
