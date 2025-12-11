@@ -1,112 +1,141 @@
-import store from "@/models/store"; // Adjust path as necessary
-import connectDB from "@/lib/db"; // Your database connection utility
-import path from 'path';
-import fs from 'fs/promises'; // Use fs/promises for async file operations
+import store from "@/models/store";
+import connectDB from "@/lib/db";
+import path from "path";
+import fs from "fs/promises";
 
-// We no longer need to disable bodyParser for req.formData()
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
+// 🔥 Helper to generate a URL friendly slug
+function slugify(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+}
 
 export async function POST(req) {
   await connectDB();
 
   try {
-    const formData = await req.formData(); // Get the FormData object directly
-
+    const formData = await req.formData();
     const newStoreData = {};
     const storeImagesFiles = [];
     const generalImagesFiles = [];
+    const bannerFiles = [];
+    const featuredFiles = [];
+    const offerFiles = [];
+    const highlightFiles = [];
+    const socialThumbFiles = [];
 
-    // Iterate over formData entries to separate fields and files
+    // ------------------------
+    // READ FORM DATA
+    // ------------------------
     for (const [key, value] of formData.entries()) {
-      if (typeof value === 'object' && 'name' in value && 'size' in value) {
-        // This is a File object
-        if (key === 'logo') {
-          newStoreData.logoFile = value; // Temporarily store the File object
-        } else if (key.startsWith('store_image_')) {
-          storeImagesFiles.push(value); // Store store image File objects
-        } else if (key === 'images') {
-          generalImagesFiles.push(value); // Store general image File objects
-        }
+      if (value && typeof value === "object" && "name" in value) {
+        // FILE
+        if (key === "logo") newStoreData.logoFile = value;
+
+        else if (key.startsWith("store_image_")) storeImagesFiles.push(value);
+
+        else if (key.startsWith("banner_")) bannerFiles.push(value);
+
+        else if (key.startsWith("featured_image_")) featuredFiles.push(value);
+
+        else if (key.startsWith("offer_image_")) offerFiles.push(value);
+
+        else if (key.startsWith("highlight_image_")) highlightFiles.push(value);
+
+        else if (key.startsWith("social_thumb_")) socialThumbFiles.push(value);
+
       } else {
-        // This is a regular text field
-        if (key === 'tags') {
-          try {
-            newStoreData[key] = JSON.parse(value);
-          } catch (error) {
-            console.error("Failed to parse tags:", error);
-            newStoreData[key] = []; // Default to empty array if parsing fails
-          }
+        // TEXT FIELD
+        if (
+          [
+            "tags",
+            "banners",
+            "featuredProducts",
+            "offers",
+            "highlights",
+            "keyHighlights",
+            "nearbyStores",
+            "businessHours",
+            "socialTimeline"
+          ].includes(key)
+        ) {
+          newStoreData[key] = JSON.parse(value);
         } else {
           newStoreData[key] = value;
         }
       }
     }
 
-    // --- Process and save files ---
+    // ---------------------------------------
+    // 🔥 GENERATE UNIQUE SLUG
+    // ---------------------------------------
+    const baseSlug = slugify(newStoreData.organisation_name);
+    let uniqueSlug = baseSlug;
+    let counter = 1;
 
-    // Handle logo
-    if (newStoreData.logoFile && newStoreData.logoFile.size > 0) {
-      const logoBuffer = Buffer.from(await newStoreData.logoFile.arrayBuffer());
-      const logoFilename = `${Date.now()}-${newStoreData.logoFile.name}`;
-      const logoPath = path.join(process.cwd(), 'public', 'uploads', logoFilename);
-      await fs.writeFile(logoPath, logoBuffer);
-      newStoreData.logo = `/uploads/${logoFilename}`; // Store path in DB
-    } else {
-      newStoreData.logo = null;
+    while (await store.findOne({ slug: uniqueSlug })) {
+      uniqueSlug = `${baseSlug}-${counter++}`;
     }
-    delete newStoreData.logoFile; // Remove the temporary file object
 
-    // Handle store images
+    newStoreData.slug = uniqueSlug;
+
+    // ---------------------------------------
+    // PROCESS FILE UPLOADS
+    // ---------------------------------------
+
+    // LOGO
+    if (newStoreData.logoFile) {
+      const buffer = Buffer.from(await newStoreData.logoFile.arrayBuffer());
+      const filename = `${Date.now()}-${newStoreData.logoFile.name}`;
+      const filepath = path.join(process.cwd(), "public", "uploads", filename);
+      await fs.writeFile(filepath, buffer);
+      newStoreData.logo = `/uploads/${filename}`;
+    }
+
+    delete newStoreData.logoFile;
+
+    // ------------ STORE IMAGES ------------
     newStoreData.store_images = [];
     for (const file of storeImagesFiles) {
-      if (file.size > 0) {
-        const buffer = Buffer.from(await file.arrayBuffer());
-        const filename = `${Date.now()}-${file.name}`;
-        const filePath = path.join(process.cwd(), 'public', 'uploads', filename);
-        await fs.writeFile(filePath, buffer);
-        newStoreData.store_images.push(`/uploads/${filename}`);
-      }
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const filename = `${Date.now()}-${file.name}`;
+      const filepath = path.join(process.cwd(), "public", "uploads", filename);
+      await fs.writeFile(filepath, buffer);
+      newStoreData.store_images.push(`/uploads/${filename}`);
     }
 
-    // Handle general images
-    newStoreData.images = [];
-    for (const file of generalImagesFiles) {
-      if (file.size > 0) {
-        const buffer = Buffer.from(await file.arrayBuffer());
-        const filename = `${Date.now()}-${file.name}`;
-        const filePath = path.join(process.cwd(), 'public', 'uploads', filename);
-        await fs.writeFile(filePath, buffer);
-        newStoreData.images.push(`/uploads/${filename}`);
-      }
+    // ---------------------------------------------------
+    // SOCIAL TIMELINE – Save Thumbnails
+    // ---------------------------------------------------
+    if (newStoreData.socialTimeline) {
+      newStoreData.socialTimeline = await Promise.all(
+        newStoreData.socialTimeline.map(async (item, i) => {
+          if (socialThumbFiles[i]) {
+            const buffer = Buffer.from(await socialThumbFiles[i].arrayBuffer());
+            const filename = `${Date.now()}-thumb-${socialThumbFiles[i].name}`;
+            const filepath = path.join(process.cwd(), "public", "uploads", filename);
+            await fs.writeFile(filepath, buffer);
+            return {
+              ...item,
+              thumbnail: `/uploads/${filename}`,
+            };
+          }
+          return item;
+        })
+      );
     }
 
-    if (!newStoreData.category || newStoreData.category === "") {
-  newStoreData.category = null;
-}
+    // FINAL SAVE
+    const record = await store.create(newStoreData);
 
-    
-    // Create new store in database
-    // Ensure the model is imported correctly and named 'Store' if that's what you want to use
-    const storeRecord = await store.create(newStoreData);
-
-    return new Response(JSON.stringify({ success: true, data: storeRecord }), {
+    return new Response(JSON.stringify({ success: true, data: record }), {
       status: 201,
-      headers: {
-        'Content-Type': 'application/json',
-      },
     });
-
-  } catch (error) {
-    console.error('Error creating store:', error);
-    return new Response(JSON.stringify({ success: false, error: error.message || 'An unknown error occurred' }), {
-      status: 400,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  } catch (err) {
+    console.error("Create Store Error:", err);
+    return new Response(JSON.stringify({ success: false, error: err.message }), {
+      status: 500,
     });
   }
 }
