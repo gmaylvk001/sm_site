@@ -376,7 +376,7 @@ export default function StoreComponent() {
                           </td>
                           <td className="p-2">
                             <div className="flex items-center gap-2">
-                               <Link href={`/admin/store/edit/${store._id}`} passHref>
+                               <Link href={`/admin/store/edit/${store.slug}`}>
                                <button
                                 className="w-7 h-7 bg-red-100 text-red-600 rounded-full inline-flex items-center justify-center hover:bg-red-200 transition"
                                 title="Edit"
