@@ -343,7 +343,7 @@ const getCategoryBrands = (category) => {
 
         {/* Bottom Section */}
         <div className="bg-[#222529] text-gray-400 mt-10 pt-5 border-t border-white">
-          <div className="container mx-auto px-2 grid grid-cols-1 md:grid-cols-[55%_45%] gap-8">
+          <div className="container mx-auto px-2 grid grid-cols-1 md:grid-cols-[60%_45%] gap-8">
              {/* LEFT SECTION (Categories + Brands) */}
               <div>
                 {/* <div className="mb-2  flex flex-col md:flex-row justify-between items-center gap-6">
@@ -421,7 +421,7 @@ const getCategoryBrands = (category) => {
                 {Object.entries(groupedStores).map(([city, orgList], index) => (
   <div key={index}>
     {orgList.map((org, i) => (
-      <a key={i} href={`all-stores/${org.slug}`} className="hover:text-white hover:underline">
+      <a key={i} href={`store/${org.slug}`} className="hover:text-white hover:underline">
         <p className="text-sm text-white-400">{org.name}</p>
       </a>
     ))}
