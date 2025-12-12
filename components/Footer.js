@@ -343,7 +343,7 @@ const getCategoryBrands = (category) => {
 
         {/* Bottom Section */}
         <div className="bg-[#222529] text-gray-400 mt-10 pt-5 border-t border-white">
-          <div className="container mx-auto px-2 grid grid-cols-1 md:grid-cols-[72%_28%] gap-8">
+          <div className="container mx-auto px-2 grid grid-cols-1 md:grid-cols-[70%_30%] gap-8">
              {/* LEFT SECTION (Categories + Brands) */}
               <div>
                 {/* <div className="mb-2  flex flex-col md:flex-row justify-between items-center gap-6">
