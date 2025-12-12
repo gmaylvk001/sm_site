@@ -418,7 +418,7 @@ const getCategoryBrands = (category) => {
                   </div>
                 ))} */}
 
-                {Object.entries(groupedStores).map(([city, orgList], index) => (
+                {/* {Object.entries(groupedStores).map(([city, orgList], index) => (
   <div key={index}>
     {orgList.map((org, i) => (
       <a key={i} href={`store/${org.slug}`} className="hover:text-white hover:underline">
@@ -426,7 +426,22 @@ const getCategoryBrands = (category) => {
       </a>
     ))}
   </div>
+))} */}
+
+{Object.entries(groupedStores).map(([city, orgList], index) => (
+  <div key={index}>
+    {orgList.map((org, i) => (
+      <a
+        key={i}
+        href={`/store/${org.slug}`}   // ✅ FIXED — add leading slash
+        className="hover:text-white hover:underline"
+      >
+        <p className="text-sm text-white-400">{org.name}</p>
+      </a>
+    ))}
+  </div>
 ))}
+
 
 
               </div>
