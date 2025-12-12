@@ -74,31 +74,38 @@ export default function StoreDetail() {
         {/* ================= FEATURED PRODUCTS ================= */}
         {store.featuredProducts?.length > 0 && (
           <section className="p-7 overflow-hidden bg-gradient-to-r from-[#ed3237] to-[#c11116] rounded-xl">
-            <h2 className="text-center text-white mb-7 text-xl font-semibold">
-              Featured Products
-            </h2>
+  <h2 className="text-center text-white mb-7 text-xl font-semibold">
+    Featured Products
+  </h2>
 
-            <Swiper
-              modules={[Navigation]}
-              navigation
-              spaceBetween={15}
-              breakpoints={{
-                1200: { slidesPerView: 4 },
-                992: { slidesPerView: 3 },
-                768: { slidesPerView: 2 },
-                0: { slidesPerView: 1 },
-              }}
-            >
-              {store.featuredProducts.map((prod, idx) => (
-                <SwiperSlide key={idx} className="flex flex-col items-center">
-                  <div className="w-40 h-40 bg-white rounded-full overflow-hidden shadow">
-                    <img src={prod.image} className="w-full h-full object-cover" />
-                  </div>
-                  <p className="text-white text-sm mt-2">{prod.title}</p>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </section>
+  <Swiper
+    modules={[Navigation]}
+    navigation
+    spaceBetween={15}
+    breakpoints={{
+      1200: { slidesPerView: 4 },
+      992: { slidesPerView: 3 },
+      768: { slidesPerView: 2 },
+      0: { slidesPerView: 1 },
+    }}
+  >
+    {store.featuredProducts.map((prod, idx) => (
+      <SwiperSlide
+        key={idx}
+        className="!flex !flex-col !items-center"  // ensures centered content
+      >
+        <div className="w-40 h-40 bg-white rounded-full overflow-hidden shadow flex justify-center">
+          <img
+            src={prod.image}
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        <p className="text-white text-sm mt-2">{prod.title}</p>
+      </SwiperSlide>
+    ))}
+  </Swiper>
+</section>
         )}
 
         {/* ================= OFFERS ================= */}
@@ -180,6 +187,36 @@ export default function StoreDetail() {
           </section>
         )}
 
+<section class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+    <div class="bg-gray-200 border border-gray-300 rounded-xl p-4">
+      <h3 class="font-semibold text-lg mb-2">Parking Options</h3>
+      <p class="text-xs text-slate-600 font-medium">Free parking on site</p>
+    </div>
+
+    <div class="bg-gray-200 border border-gray-300 rounded-xl p-4">
+      <h3 class="font-semibold text-lg mb-2">Payment Methods</h3>
+      <p class="text-xs text-slate-600 font-medium">Cash, Credit Card, Debit Card, Online Payment</p>
+    </div>
+
+    {/* Tags Section */}
+  {store.tags && store.tags.length > 0 && (
+    <div className="rounded-xl border border-gray-300 bg-gray-200 p-4 space-y-3">
+      <h3 className="font-semibold">Tags</h3>
+
+      <div className="flex flex-wrap gap-2 text-xs max-h-32 overflow-y-auto">
+        {store.tags.map((tag, index) => (
+          <span
+            key={index}
+            className="px-3 py-1 rounded-full bg-slate-100"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  )}
+  </section>
+
         {/* ================= HIGHLIGHTS ================= */}
         {store.highlights?.length > 0 && (
           <section className="bg-gradient-to-r from-[#ed3237] to-[#c11116] text-white rounded-xl py-6 px-4 md:px-8">
@@ -214,7 +251,7 @@ export default function StoreDetail() {
                   <div className="relative">
                     <img
                       src={item.thumbnail || "/images/default-thumb.png"}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-96 object-cover"
                     />
 
                     <a
