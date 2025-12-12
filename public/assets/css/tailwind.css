@@ -9097,9 +9097,6 @@ body[data-sidebar-size=collapsed] .bg-iconbar {
     --tw-text-opacity: 1 !important;
     color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
   }
-  .md\:grid-cols-\[60\%_45\%\] {
-    grid-template-columns: 72% 45%;
-  }
 }
 @media (min-width: 1024px){
   .lg\:order-1{
