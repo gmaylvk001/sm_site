@@ -1553,7 +1553,7 @@ const Header = () => {
                   {/* LEFT — LOGO (3 columns, centered) */}
                   <div className="col-span-3 flex justify-center items-center">
                     <div className="flex-shrink-0">
-                      <Link href="/index">
+                      <Link href="/">
                         <img
                           src="/user/sathya.png"
                           alt="Logo"
