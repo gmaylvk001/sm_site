@@ -115,13 +115,18 @@ const AddToCartButton = ({ productId, quantity = 1, warranty, additionalProducts
         ...(guestCartId && { guestCartId }), // ✅ include only if guest
       }),
     });
-
+   // console.log("Response data:",cartResponse);
     if(cartResponse.ok) {
       toast.success("Product added!");
     }
     
     if(cartResponse.status == 409) {
       toast.error("Stock limit exceeded!");
+      return;
+    }
+
+    if(cartResponse.ok == false) {
+      toast.error("Login required!");
       return;
     }
 
@@ -152,6 +157,7 @@ const AddToCartButton = ({ productId, quantity = 1, warranty, additionalProducts
     updateCartCount(responseData.cart.totalItems + additionalProducts.length);
 
     // ✅ Track events (skip if guest)
+    
     if (isLoggedIn) {
       trackAddToCart({
         user: {
@@ -181,7 +187,7 @@ const AddToCartButton = ({ productId, quantity = 1, warranty, additionalProducts
 
     setCartSuccess(true);
   } catch (error) {
-    console.error("Add to cart error:", error);
+   // console.error("Add to cart error:", error);
   } finally {
     setIsLoading(false);
   }

@@ -316,20 +316,14 @@ export default function StoreComponent() {
 
             {/* Date Range Picker */}
             <div className="w-full col-span-1 md:col-span-1">
+              
               <label className="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
               <div className="flex items-center gap-2">
                 <div className="flex-1">
+                  
                   <DateRangePicker onDateChange={handleDateChange} />
                 </div>
-                {/* {(dateFilter.startDate || dateFilter.endDate) && (
-                  <button
-                    onClick={clearDateFilter}
-                    className="p-2 text-sm text-red-600 hover:text-red-800 bg-red-50 rounded-md"
-                    title="Clear date filter"
-                  >
-                    <Icon icon="mdi:close-circle-outline" className="w-5 h-5" />
-                  </button>
-                )} */}
+             
               </div>
             </div>
 

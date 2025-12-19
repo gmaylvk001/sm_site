@@ -1,72 +1,63 @@
+import ProductClient from "./ProductClient";
 
-
-import ProductClient from "./ProductClient"; 
-//import { useParams } from "next/navigation";
-
-export async function generateMetadata({ params  }) {
+export async function generateMetadata({ params }) {
   const slug = params.slug;
-
-  // Always use absolute URL
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  const response = await fetch(`${baseUrl}/api/product/${slug}`, {
-    // Disable caching so metadata is always fresh
-    cache: "no-store",
-  });
+  try {
+    const response = await fetch(`${baseUrl}/api/product/${slug}`, {
+      cache: "no-store",
+    });
 
-  if (!response.ok) {
-    console.error("Metadata fetch failed:", response.status);
+    if (!response.ok) {
+      return {
+        title: "Product not found",
+        description: "This product is unavailable",
+      };
+    }
+
+    const product = await response.json();
+
+    const title = product.meta_title || product.name;
+    const description =
+      product.meta_description ||
+      product.description?.replace(/<[^>]*>/g, "").slice(0, 160) ||
+      "Buy products online at best price";
+
+    const image =
+      product.images?.length > 0
+        ? `${baseUrl}/uploads/products/${product.images[0]}`
+        : `${baseUrl}/no-image.jpg`;
+
     return {
-      title: "Product not found",
+      title,
+      description,
+      keywords: product.search_keywords || "",
+
+      openGraph: {
+        title,
+        description,
+        url: `${baseUrl}/product/${slug}`,
+        images: [image],
+        type: "website", // ✅ FIXED
+      },
+
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [image],
+      },
+    };
+  } catch (error) {
+    console.error("Metadata error:", error);
+    return {
+      title: "Product",
+      description: "Buy products online",
     };
   }
-
-  const data = await response.json();
- // console.log("Fetched product for metadata:", `${baseUrl}/product/${slug}`);
-
-  return {
-  title: data.name,
-  openGraph: {
-    title: data.meta_title,
-    keywords: data.search_keywords,
-    description: 'Buy Now ' + data.meta_description,
-    images: [`${baseUrl}/uploads/products/${data.images[0]}`],
-    url: `${baseUrl}/product/${slug}`,
-    type: "website",
-  },
-}
 }
 
-/*
-export const metadata = {
-  title: 'new product',
-  openGraph: {
-    title: 'new product',
-    description: 'new product',
-    images: ['https://sathyamobiles.com/img/product/oIPmpsryJ0DW1wrF.jpg'],
-    url: 'https://bea.divinfosys.com/newme2',
-    type: "website",
-  },
+export default function ProductNew() {
+  return <ProductClient />;
 }
-  */
-
-export default function ProductNew({ currentProductId }) {
-  //const product = await getProductById(params.id);
-  //console.log("Server-side Product ID:", currentProductId); 
-
-  return <ProductClient currentProductId={currentProductId} />;
-}
-
-
-
- /*
-export default function ProductPage(currentProductId) {
-
-  console.log("Server-side Product ID:", currentProductId);
-  return (
-    <main>
-      <h1>product lastest</h1>
-    </main>
-  )
-}
-  */
