@@ -144,7 +144,7 @@ const CategoryProducts = () => {
       try {
         const response = await fetch("/api/categoryproduct/settings");
         const result = await response.json();
-        console.log("result");
+        //console.log("result");
         console.log(result);
         if (result.ok) {
           setCategoryProducts(result.data);

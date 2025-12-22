@@ -12,21 +12,26 @@ export async function DELETE(req) {
 
   try {
     await connectDB();
-
+/*
     const updatedStore = await store.findByIdAndUpdate(
       storeId,
       { status: "Inactive" },
       { new: true, runValidators: true } 
     );
+*/
+    //const deletedStore = await store.findByIdAndRemove(storeId);
 
-    if (!updatedStore) {
+    const deletedStore = await store.findByIdAndDelete(storeId);
+
+    if (!deletedStore) {
       return NextResponse.json({ error: "Store not found." }, { status: 404 });
     }
 
-    return NextResponse.json({ message: "Store status updated to Inactive.", store: updatedStore }, { status: 200 });
+    return NextResponse.json({ message: "Store removed successfully." }, { status: 200 });
   } catch (error) {
-    console.error("Error inactivating store:", error);
-    return NextResponse.json({ error: "Internal Server Error", details: error.message }, { status: 500 });
+   // console.error("Error inactivating store:", error);
+    // return NextResponse.json({ error: "Internal Server Error", details: error.message }, { status: 500 });
+    
   }
 }
 
