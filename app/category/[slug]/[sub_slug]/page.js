@@ -2,11 +2,11 @@
 import CategoryClient from "@/components/category/[slug]/page";
 
 export async function generateMetadata({ params }) {
-  const { slug } = params;
+  const { sub_slug } = params;
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
   try {
-    const res = await fetch(`${baseUrl}/api/categories/${slug}`, {
+    const res = await fetch(`${baseUrl}/api/categories/${sub_slug}`, {
       cache: "no-store",
     });
 
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }) {
 
     const data = await res.json();
     const category = data.main_category;
-
+    //console.log('category',category);
     return {
       title: category.meta_title || category.category_name,
       description:
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }) {
       openGraph: {
         title: category.meta_title || category.category_name,
         description: category.meta_description,
-        url: `${baseUrl}/category/${slug}`,
+        url: `${baseUrl}/category/${sub_slug}`,
         images: category.image ? [`${baseUrl}${category.image}`] : [],
         type: "website",
       },

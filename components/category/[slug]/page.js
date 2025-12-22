@@ -88,7 +88,7 @@ const handleProductClick = (product) => {
       // Fetch category data (brands, filters, etc.)
       const categoryRes = await fetch(`/api/categories/${slug}/${sub_slug}`);
       const categoryData = await categoryRes.json();
-      console.log('categoryData',categoryData);
+      //console.log('categoryData',categoryData);
        setCategoryData({
         ...categoryData,
         categoryTree: categoryData.category,
