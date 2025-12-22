@@ -193,7 +193,8 @@ System Notification`,
       ) : (
         <div className="bg-white shadow-md rounded-lg p-5 mb-5 overflow-x-auto">
           {/* 🔍 Filters */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-end mb-4">
+          <div className="border rounded-lg px-3 py-1.5 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end mb-4">
             {/* Search */}
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -245,7 +246,11 @@ System Notification`,
               </select>
             </div>
 
-            {/* Payment */}
+            
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end mb-4">
+          {/* Payment */}
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Payment Method
@@ -269,6 +274,7 @@ System Notification`,
               <DateRangePicker onDateChange={handleDateChange} />
             </div>
           </div>
+          </div>  
 
           {/* 📋 Table */}
           <div className="overflow-x-auto">

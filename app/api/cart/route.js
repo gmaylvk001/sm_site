@@ -55,8 +55,8 @@ export async function POST(req) {
       selectedExtendedWarranty = 0,
       upsellProducts = [],
     } = await req.json();
-    console.log("Selected warranty:", selectedWarranty);
-console.log("Selected extended warranty:", selectedExtendedWarranty);
+   // console.log("Selected warranty:", selectedWarranty);
+//console.log("Selected extended warranty:", selectedExtendedWarranty);
 // console.log("Upsell products:", upsellProducts);
 
     if (!productId) {
@@ -92,7 +92,7 @@ console.log("Selected extended warranty:", selectedExtendedWarranty);
     // cart.items[existingItemIndex].upsells = upsellProducts;
   } else {
     // ✅ Add new item to cart
-    console.log("product:"+product.item_code);
+   // console.log("product:"+product.item_code);
     cart.items.push({
       item_code:product.item_code,
       productId,
@@ -147,7 +147,7 @@ console.log("Selected extended warranty:", selectedExtendedWarranty);
       { status: 200 }
     );
   } catch (error) {
-    console.error("POST cart error:", error);
+    //console.error("POST cart error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -190,7 +190,7 @@ export async function GET(req) {
         };
       })
     );
-    console.log(items);
+   // console.log(items);
 
 
 
@@ -207,7 +207,7 @@ export async function GET(req) {
       { status: 200 }
     );
   } catch (error) {
-    console.error("GET cart error:", error);
+  //  console.error("GET cart error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -235,32 +235,32 @@ export async function PUT(req) {
       return NextResponse.json({ error: "Cart not found" }, { status: 404 });
     }
 
-    console.log(cart.items);
+    //console.log(cart.items);
 
     const itemIndex = cart.items.findIndex(
       (item) => item.productId.toString() === productId
     );
 
-    console.log(itemIndex);
+   // console.log(itemIndex);
     if (itemIndex === -1) {
       return NextResponse.json({ error: "Product not in cart" }, { status: 404 });
     }
 
     cart.items[itemIndex].quantity = quantity;
     const item_code = cart.items[itemIndex].item_code;
-    console.log(item_code);
+   // console.log(item_code);
      const original_quantity = await getQuantity(item_code);
     const totals = calculateCartTotals(cart.items);
     cart.totalItems = totals.totalItems;
     cart.totalPrice = totals.totalPrice;
     cart.items[itemIndex].original_quantity = original_quantity;
-console.log(cart.items);
+//console.log(cart.items);
     
     
     await cart.save();
 
 cart.items.forEach((item) => {
-  console.log(item);
+ // console.log(item);
 });
     const items = cart.items.map((item) => ({
       productId: item.productId._id,
@@ -285,7 +285,7 @@ cart.items.forEach((item) => {
       { status: 200 }
     );
   } catch (error) {
-    console.error("PUT cart error:", error);
+    //console.error("PUT cart error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -395,7 +395,7 @@ export async function DELETE(req) {
     );
 
   } catch (error) {
-    console.error("Remove from cart error:", error);
+   // console.error("Remove from cart error:", error);
     return NextResponse.json(
       { error: error.message || "Failed to update cart" },
       { status: 500 }
