@@ -98,7 +98,7 @@ const CancellationRefundPolicy = () => {
         <ul className="list-disc list-inside mb-8 space-y-2">
           <li className="flex items-center"><FiUser className="mr-2 text-red-600"/> <strong>Name:</strong> Mr. Ian J</li>
           <li className="flex items-center"><FiMail className="mr-2 text-red-600"/> <strong>Email Address:</strong> <a href="mailto:sathyamobiles@sathyaindia.com" className="text-red-600 hover:underline">sathyamobiles@sathyaindia.com</a></li>
-          <li className="flex items-center"><FiPhone className="mr-2 text-red-600"/> <strong>Phone:</strong> 8098872777</li>
+          <li className="flex items-center"><FiPhone className="mr-2 text-red-600"/> <strong>Phone:</strong> 9047048777</li>
         </ul>
 
         <p className="text-sm text-gray-500 mt-8">
