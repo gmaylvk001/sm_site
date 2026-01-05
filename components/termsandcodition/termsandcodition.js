@@ -85,7 +85,7 @@ const TermsAndConditions = () => {
             Please notify us of any problems, damages or defects within **3 days** from the date of delivery, and we will issue a brand new replacement product to you at no extra cost.
           </li>
           <li>
-            In order to get a defective item replaced, please Contact Customer Care via the <Link href="/contact-us" className="text-red-600 hover:underline">Contact Us Page</Link> (at the bottom of sathyamobiles.com webpage) or call us on **+91 8098872777** (Monday to Saturday 9:30 am to 7:30 pm IST), within 3 days from the date of delivery.
+            In order to get a defective item replaced, please Contact Customer Care via the <Link href="/contact-us" className="text-red-600 hover:underline">Contact Us Page</Link> (at the bottom of sathyamobiles.com webpage) or call us on **+91 9047048777** (Monday to Saturday 9:30 am to 7:30 pm IST), within 3 days from the date of delivery.
           </li>
           <li>
             The defective product or part will be recalled and a replacement will be shipped immediately.
@@ -100,7 +100,7 @@ const TermsAndConditions = () => {
             Products without a valid, readable, untampered serial number (including but not limited to products with missing, damaged, altered, or otherwise unreadable serial numbers) will not be eligible for replacement.
           </li>
           <li>
-            All Electronics are insured against theft and damages incurred during transit. If you receive a package that is open or looks to have been tampered with, **do not accept it**. Contact Sathya Customer Care on **+91 8098872777** (Monday to Saturday 9 am to 9 pm IST), and we will have the issue quickly resolved.
+            All Electronics are insured against theft and damages incurred during transit. If you receive a package that is open or looks to have been tampered with, **do not accept it**. Contact Sathya Customer Care on **+91 9047048777** (Monday to Saturday 9 am to 9 pm IST), and we will have the issue quickly resolved.
           </li>
           <li>
             For orders placed through Gift Coupons/vouchers, the refund would be provided in the form of a fresh Gift Coupon/voucher of the same value, and the Expiry date will be the same as in the original gift coupons.
