@@ -16,6 +16,7 @@ const CategoryProducts = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const categoryScrollRefs = useRef({});
   const [isMobile, setIsMobile] = useState(false);
+  const [categoryStyless, setCategories] = useState(null);
 
   const priorityCategories = ["air-conditioner", "mobile-phones", "television", "refrigerator", "washing-machine"];
   
@@ -36,6 +37,17 @@ const CategoryProducts = () => {
     const lastImg = parts[parts.length - 1].trim();
     return lastImg.replace(/\s+/g, "_");
   };
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const res = await fetch("/api/categories/styles");
+      const data = await res.json();
+      setCategories(data);
+    }
+
+    fetchCategories();
+  }, []);
+  
 
   const categoryStyles = {
     "air-conditioner": {
@@ -214,7 +226,7 @@ const CategoryProducts = () => {
     if (!category) return null;
 
     const isActive = activeCategory === categoryProduct._id;
-    const categoryStyle = categoryStyles[category.category_slug] || {
+    const categoryStyle = categoryStyless[category.category_slug] || {
       borderColor: '#1F3A8C',
       bgColor: '#f3f4f6'
     };
@@ -248,7 +260,7 @@ const CategoryProducts = () => {
             
             if (!category || products.length === 0) return null;
             
-            const categoryStyle = categoryStyles[category.category_slug] || {
+            const categoryStyle = categoryStyless[category.category_slug] || {
               backgroundImage: '/uploads/small-appliance-banner.webp',
               borderColor: '#1F3A8C',
               bgColor: '#f3f4f6'

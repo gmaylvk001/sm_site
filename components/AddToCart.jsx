@@ -126,8 +126,11 @@ const AddToCartButton = ({ productId, quantity = 1, warranty, additionalProducts
     }
 
     if(cartResponse.ok == false) {
-      toast.error("Login required!");
-      return;
+      openAuthModal({
+            error: 'Please log in to continue.',
+            onSuccess: () => handleAddToCart(), // retry on success
+          });
+          return;
     }
 
     if (!cartResponse.ok) throw new Error("Failed to add to cart");
