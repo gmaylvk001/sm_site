@@ -480,7 +480,7 @@ export default function ProductClient() {
                     // fetch reviews
                     const reviewsRes = await fetch(`/api/reviews/${data._id}`);
                     const reviewsData = await reviewsRes.json();
-        
+                   // console.log('reviewsData:', reviewsData);
                     if (reviewsData.success) {
                     setReviews(reviewsData.reviews);
                     setAvgRating(reviewsData.avgRating);

@@ -51,6 +51,8 @@ export default function AdminSider({ collapsed }) {
 
   ]
 },
+{ icon: 'mdi:tag-outline', label: 'Reviews', link: 'reviewpage' },
+
 
     // ✅ Updated Settings with new icon + submenu
   {
