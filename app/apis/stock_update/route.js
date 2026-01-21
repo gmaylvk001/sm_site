@@ -19,7 +19,8 @@ export const config = {
 export async function POST(req) {
   try {
     const body = await req.json();
-    const API_SECRET = 'HziubjPvy1BDc2FQQxO97u4dFD6UgN82GOfUf2w8mq5EuN1F47';
+    const API_SECRET = process.env.MY_SECRET_TOKEN;
+    //const API_SECRET = 'HziubjPvy1BDc2FQQxO97u4dFD6UgN82GOfUf2w8mq5EuN1F47';
 
     if (API_SECRET !== body.api_token) {
       return NextResponse.json({ error: 'Invalid API token' }, { status: 401 });
