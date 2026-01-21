@@ -93,7 +93,9 @@ const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { wishlistCount } = useWishlist();
     const { cartCount, updateCartCount } = useCart();
-
+    useEffect(() => {
+         window.scrollTo(0, 0);
+      }, []);
     // ADD: Cross-tab cart sync helpers
     const CART_COUNT_KEY = 'cartCount';
     // ADD: new key for cart data list
@@ -1665,7 +1667,7 @@ const Header = () => {
                                     </Link>
                                   </>
                                 )}
-                              <Link href="/orders" className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-red-50 transition-colors">
+                              <Link href="/order" className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-red-50 transition-colors">
                                 <span className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full bg-red-600 text-white">
                                   <FaShoppingBag className="w-3 h-3 sm:w-4 sm:h-4" />
                                 </span>My Orders

@@ -329,7 +329,7 @@ const handleOnlinePayment = async (totalAmount) => {
         key: process.env.NEXT_PUBLIC_RAZORPAY_TEST_KEY,
         amount: order.amount,
         currency: "INR",
-        name: "BEA",
+        name: "Sathya",
         description: "Product Purchase",
         order_id: order.id,
         handler: async function (response) {

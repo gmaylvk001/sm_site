@@ -28,7 +28,7 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1);
   const [showEMIModal, setShowEMIModal] = useState(false);
   const [featuredProducts, setFeaturedProducts] = useState([]);
-
+ window.scrollTo(0, 0);
 const handleDecrease = () => {
   setQuantity(Math.max(1, quantity - 1));
   setQuantityWarning(false); // clear warning when decreasing
@@ -42,7 +42,9 @@ const handleIncrease = () => {
   }
 };
 
-
+  useEffect(() => {
+     window.scrollTo(0, 0);
+  }, []);
 
   // In your ProductPage component, add these state variables near the top:
 const [selectedFrequentProducts, setSelectedFrequentProducts] = useState([]);
@@ -221,6 +223,10 @@ const fetchBrand = async () => {
   useEffect(() => {
       fetchBrand();
     }, []);
+
+    useEffect(() => {
+     window.scrollTo(0, 0);
+  }, []);
 
 
   const handleThumbnailClick = (index) => {
