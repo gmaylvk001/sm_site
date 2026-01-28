@@ -50,6 +50,25 @@ export default function HomePage() {
 ];
 
 const [activeVideo, setActiveVideo] = useState(null);
+const [isBrandsLoading, setIsBrandsLoading] = useState(true);
+const fetchBrands = async () => {
+        setIsBrandsLoading(true);
+        try {
+            const response = await fetch('/api/brand/get');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            if (data.success) {
+                setBrands(data.brands || []);
+            }
+        } catch (error) {
+            console.error("Error fetching brands:", error);
+            setBrands([]);
+        } finally {
+            setIsBrandsLoading(false);
+        }
+    };
 
 const openVideo = (videoId) => {
     window.open(`https://www.youtube.com/watch?v=${videoId}`, "_blank");

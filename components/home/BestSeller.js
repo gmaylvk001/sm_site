@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
+import Link from 'next/link';
 
 const BestSellers = () => {
   const [categories, setCategories] = useState([]);
@@ -161,6 +162,7 @@ const BestSellers = () => {
 
   {/* IMAGE WRAPPER (FIXED HEIGHT) */}
   <div className="bg-white rounded-lg p-4 flex justify-center items-center h-[260px]">
+ <Link href={`/product/${product.slug}`}>
     <Image
       src={`/uploads/products/${product.images?.[0]}`}
       alt={product.name}
@@ -168,16 +170,18 @@ const BestSellers = () => {
       height={250}
       className="object-contain max-h-full"
     />
+    </Link>
   </div>
 
   {/* CONTENT (FLEX GROWS EVENLY) */}
   <div className="mt-3 text-sm flex flex-col flex-1 justify-between">
 
     {/* PRODUCT TITLE */}
+    <Link href={`/product/${product.slug}`}>
     <p className="font-semibold line-clamp-2 min-h-[40px]">
       {product.name}
     </p>
-
+              </Link>
     {/* PRICE SECTION (ALWAYS BOTTOM) */}
     <div className="mt-2">
       <span className="font-bold text-lg">
