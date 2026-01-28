@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import CustomHeader from "@/components/Headernew";
+import CustomHeader from "@/components/Header_new";
 import CustomFooter from "@/components/Footer";
 import GlobalModals from "@/components/GlobalModals";
 import { AuthProvider } from "@/context/AuthContext";

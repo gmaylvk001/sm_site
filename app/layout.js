@@ -24,6 +24,33 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+         <link
+        rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-straight/css/uicons-regular-straight.css"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/3.0.0/uicons-thin-straight/css/uicons-thin-straight.css"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css"
+      />
+
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClientLayout>{children}</ClientLayout>
         {/* ✅ Tracking Script */}
@@ -59,6 +86,7 @@ export default function RootLayout({ children }) {
             height: 100vh;
           }
         `}</style>
+        
       </body>
     </html>
   );
