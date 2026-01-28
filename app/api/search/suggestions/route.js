@@ -4,6 +4,10 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Product from "@/models/product";
 
+function escapeRegex(text) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
@@ -15,8 +19,10 @@ export async function GET(req) {
 
     await dbConnect();
 
+    const safeQuery = escapeRegex(q);
+
     const results = await Product.find({
-      name: { $regex: q, $options: "i" },
+      name: { $regex: safeQuery, $options: "i" },
     })
       .limit(5)
       .select("name price special_price slug images");
