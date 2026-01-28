@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, EffectCards } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-cards";
+import Link from 'next/link';
 
 export default function LatestProducts() {
   const [products, setProducts] = useState([]);
@@ -44,6 +45,7 @@ export default function LatestProducts() {
                 className="flex items-center rounded-xl bg-linear-to-tr from-pink-200 to-orange-200 p-3"
               >
                 <div className="bg-white rounded-xl overflow-hidden shrink-0">
+                  <Link href={`/product/${product.slug}`}>
                   <Image
                     src={
                       product.images?.[0]
@@ -55,12 +57,15 @@ export default function LatestProducts() {
                     height={130}
                     className="object-contain"
                   />
+                  </Link>
                 </div>
 
                 <div className="ml-4">
+                  <Link href={`/product/${product.slug}`}>
                   <p className="font-semibold text-sm mb-2 line-clamp-2">
                     {product.name}
                   </p>
+                  </Link>
 
                   <div className="flex flex-wrap items-center gap-x-3">
                     <span className="text-red-600 font-bold text-lg">
@@ -121,10 +126,11 @@ export default function LatestProducts() {
                 </div>
 
                 <div className="mt-4 text-sm">
+                  <Link href={`/product/${product.slug}`}>
                   <p className="font-semibold mb-2 line-clamp-2">
                     {product.name}
                   </p>
-
+                    </Link>
                   <ul className="text-gray-700 text-xs space-y-1">
                     <li>Brand : {product.brand || "-"}</li>
                     <li>Stock : {product.stock_status}</li>
