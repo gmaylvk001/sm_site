@@ -44,7 +44,7 @@ console.log('products : ',selectedProduct);
         {/* LEFT CATEGORY LIST */}
         <div className="space-y-4">
           <h2 className="text-xl text-primary font-bold">
-           Fast Moving Products of {selectedProduct.category_name} 
+           Fast Moving Products 
           </h2>
 
           <div className="flex lg:flex-col gap-3 overflow-x-auto">
