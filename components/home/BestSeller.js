@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import Link from 'next/link';
+import Addtocart from "@/components/AddToCart";
 
 const BestSellers = () => {
   const [categories, setCategories] = useState([]);
@@ -187,19 +188,28 @@ const BestSellers = () => {
       <span className="font-bold text-lg">
         ₹ {product.special_price || product.price}
       </span>
-
-      {product.special_price && (
+      
+      {product.special_price && product.price < product.special_price && (
         <span className="text-red-500 line-through ml-2">
           ₹ {product.price}
         </span>
       )}
-     
-        <div className="flex items-center justify-between mt-2">
-
-            <span
-                className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
+        {product.special_price && product.price < product.special_price && (
+              <span
+                className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-md ml-2">
                 {Math.round(100 - (Number(product.special_price) / Number(product.price)) * 100)}% Off
             </span>
+        )}
+        <div className="flex items-center justify-between mt-2">
+
+            
+          
+            <Addtocart
+                  productId={product._id}
+                  stockQuantity={product.quantity}
+                  special_price={product.special_price}
+                  className="flex-1 text-xs sm:text-sm py-1.5 sm:py-2"
+                />
 
             <a
               href={`https://wa.me/919047048777?text=${encodeURIComponent(`Check Out This Product: ${typeof window !== 'undefined' ? window.location.origin : ''}/product/${product.slug}`)}`}

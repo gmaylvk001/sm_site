@@ -335,7 +335,7 @@ background: -webkit-linear-gradient(left, #ed3237 0%, #ffe8e9 100%);
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
-    --color-linearyellow: #f4f087;
+    --color-linearyellow: #ffdfdf;
     --color-primary: #d62929;
   }
 }
