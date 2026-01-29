@@ -21,6 +21,7 @@ export async function GET(req) {
 
   if (categoryId) {
     products = await Product.find({
+      quantity: { $gt: 0 },
       category: categoryId,
       status: "Active",
     })

@@ -458,7 +458,7 @@ export default function ProductClient() {
                 
                 const data = await response.json();
                 // ✅ Final client-side check
-                if (data.status !== "Active") {
+                if (data.status !== "Active" && data.status !== "NewArrived") {
                 router.push("/404");
                 return;
                 }
@@ -939,6 +939,7 @@ export default function ProductClient() {
                         )}
 
                         {/* Stock Alert */}
+                        {(product.stock_status === "In Stock" && product.quantity > 0 && product.status === "Active") && (
                         <div className="mt-4">
                             {/* <p className="font-semibold">⚠ Products are almost sold out</p> */}
                             {product.quantity < 5 ? (
@@ -954,6 +955,7 @@ export default function ProductClient() {
                                 )}
                             </p>
                         </div>
+                        )}
 
                         {/* Add this code right after the Stock Alert section */}
                         {/* <div className="border-2 border-customBlue rounded-lg overflow-hidden bg-blue-50 shadow-md mt-4">
@@ -1174,6 +1176,7 @@ export default function ProductClient() {
                                     </div>
 
                                     {/* Quantity Information */}
+                                    {product.stock_status === "In Stock" && product.quantity > 0 && product.status === "Active" && (
                                     <div className="mb-4">
                                         <h4 className="text-sm font-semibold text-gray-900 mb-1">Available Quantity</h4>
                                         <p className="text-gray-700 text-sm">
@@ -1188,7 +1191,9 @@ export default function ProductClient() {
                                         </div>
                                         )}
                                     </div>
+                                    )}
                                 </div>
+                                
                             </div>
                         </div>
                         <div className="border-b border-gray-400 mt-2"></div>
@@ -1838,7 +1843,7 @@ export default function ProductClient() {
                                 </div>
                             )}
                             {/* Buy Now */}
-                            {product.stock_status === "In Stock" && product.quantity > 0 && (
+                            {product.stock_status === "In Stock" && product.quantity > 0 && product.status === "Active" && (
                             <button
                                 onClick={handleBuyNow}
                                 className="w-full bg-white hover:bg-green-600 hover:text-white text-green-600 border border-green-200 font-semibold py-3 rounded-md shadow-md flex items-center justify-center gap-3"
@@ -1849,6 +1854,7 @@ export default function ProductClient() {
                             )}
 
                             {/* Add to Cart */}
+                            {product.stock_status === "In Stock" && product.quantity > 0 && product.status === "Active" && (
                             <ProductAddtoCart
                                 productId={product._id}
                                 stockQuantity={product.quantity}
@@ -1864,6 +1870,7 @@ export default function ProductClient() {
                                 selectedFrequentProducts={selectedFrequentProducts}
                                 className="w-full bg-customBlue hover:bg-blue-700 text-white font-semibold py-3 rounded-md shadow-md text-center"
                             />
+                            )}
                         </div>
 
                     </div>

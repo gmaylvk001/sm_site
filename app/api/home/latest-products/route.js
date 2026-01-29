@@ -7,6 +7,7 @@ export async function GET() {
     await connectDB();
 
     const products = await Product.find({
+      quantity: { $gt: 0 },
       status: "Active",
     })
       .sort({ createdAt: -1 })

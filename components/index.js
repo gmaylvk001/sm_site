@@ -14,6 +14,9 @@ import VideoModal from "./VideoModal";
 import BestSeller from '@/components/home/BestSeller';
 import LatestProducts from '@/components/home/LatestProducts';
 import OnSaleSection from '@/components/home/OnSaleSection';
+import TopSellersSection from '@/components/home/TopSellersSection';
+import NewlyArrivedSection from '@/components/home/NewlyArrivedSection';
+import BrandSlider from '@/components/home/BrandSlider';
 
 const videos = [
   {
@@ -154,7 +157,7 @@ function CategoryCard({ image, title, bg }) {
             ].map((bank) => (
               <div
                 key={bank}
-                className="w-[250px] shrink-0 flex items-center gap-3 border rounded-xs border-gray-400 px-4 py-2 bg-white"
+                className="w-[235px] shrink-0 flex items-center gap-3 border rounded-xs border-gray-400 px-4 py-2 bg-white"
               >
                 <Image
                   src={`/assets/images/banks/${bank}.svg`}
@@ -300,263 +303,35 @@ function CategoryCard({ image, title, bg }) {
       </div>
     </section>
 
-     <section className="w-full inner-section-padding bg-linear-to-r from-linearyellow via-white to-linearyellow py-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-5 lg:gap-8 items-center">
+{/* ================= Top Sellers Section Products ================= */}  
+        <TopSellersSection />
 
-        {/* LEFT CONTENT */}
-        <div className="space-y-4 text-center md:col-span-2 lg:col-span-1 lg:text-left z-50">
-          <div className="flex justify-between items-end">
-            <h2 className="text-2xl text-primary font-bold">Top Seller&apos;s</h2>
-            <button className="inline-block bg-linear-to-r from-red-700 to-red-500 text-white p-2 rounded-md text-sm font-semibold hover:opacity-90 transition">
-              View All
-            </button>
-          </div>
-
-          <div className="grid grid-rows-3 gap-y-2.5">
-            {[1, 2, 3].map((_, i) => (
-              <div
-                key={i}
-                className="flex items-center rounded-xl bg-linear-to-tr from-pink-200 to-orange-200 p-3"
-              >
-                <div className="bg-white rounded-xl overflow-hidden shrink-0">
-                  <Image
-                    src="/assets/images/apple-day-product-4.jpg"
-                    alt="Product"
-                    width={130}
-                    height={130}
-                  />
-                </div>
-
-                <div>
-                  <p className="font-semibold text-sm ml-4 mb-2">
-                    iPhone 16 128 GB: 5G Mobile Phone with Camera Control, A18 Chip
-                    and a Big Boost in Battery Life.
-                  </p>
-                  <div className="flex items-center flex-wrap">
-                    <span className="text-red-600 font-bold text-lg ml-4">
-                      ₹ 90,382
-                    </span>
-                    <span className="text-gray-500 line-through font-bold text-sm ml-4">
-                      ₹ 100,382
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* CENTER SLIDER */}
-        <div className="relative z-0 col-span-2">
-          {/* Navigation */}
-          <div className="topselling-prev absolute z-50 left-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary rounded-full flex items-center justify-center cursor-pointer">
-            <i className="fi fi-ss-angle-small-left text-white" />
-          </div>
-
-          <div className="topselling-next absolute z-50 right-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary rounded-full flex items-center justify-center cursor-pointer">
-            <i className="fi fi-ss-angle-small-right text-white" />
-          </div>
-
-          <Swiper
-            modules={[Navigation]}
-            navigation={{
-              nextEl: ".topselling-next",
-              prevEl: ".topselling-prev",
-            }}
-            spaceBetween={20}
-            slidesPerView={1}
-            breakpoints={{
-              550: { slidesPerView: 2 },
-              768: { slidesPerView: 3 },
-            }}
-            className="topselling-product-swiper"
-          >
-            {[1, 2, 3, 4, 5, 6].map((_, i) => (
-              <SwiperSlide key={i}>
-                <div className="rounded-xl bg-linear-120 from-yellow-200 to-pink-200 p-4 h-full">
-                  {/* Image */}
-                  <div className="bg-white relative rounded-lg p-4 flex justify-center items-center h-[300px]">
-                    <span className="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                      Hot deal
-                    </span>
-
-                    <Image
-                      src="/assets/images/apple-day-product.png"
-                      alt="Product"
-                      width={260}
-                      height={260}
-                      className="object-contain"
-                    />
-                  </div>
-
-                  {/* Content */}
-                  <div className="mt-3 text-sm">
-                    <p className="text-gray-600">Brand : Daikin</p>
-
-                    <p className="font-semibold text-gray-800 leading-tight mt-1">
-                      Daikin FTKL71UV16 2 Ton 4 Star Inverter Split AC
-                    </p>
-
-                    <div className="mt-2">
-                      <span className="font-bold text-black text-lg">
-                        ₹ 56,449.00
-                      </span>
-                      <span className="text-red-500 line-through ml-2">
-                        ₹ 64,928.00
-                      </span>
-                    </div>
-
-                    <div className="flex items-center justify-between mt-2">
-                      <span className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
-                        30% Off
-                      </span>
-
-                      <button className="w-8 h-8 rounded-full border-2 border-green-600 flex items-center justify-center">
-                        <i className="fi fi-brands-whatsapp text-green-600" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-      </div>
-    </section>
 
      {/* TOP BANNER */}
       <div className="inner-section-padding my-10">
         <div>
-          <Image
-            src="/assets/images/channels4_banner.jpg"
-            alt="Sony Banner"
-            width={1920}
-            height={600}
-            className="rounded-2xl w-full h-auto"
-            priority
-          />
+          <Link href="/aboutus">
+            <Image
+              src="/assets/images/channels4_banner.jpg"
+              alt="Sony Banner"
+              width={1920}
+              height={600}
+              className="rounded-2xl w-full h-auto"
+              priority
+            />
+          </Link>
         </div>
       </div>
+
+
 
       {/* NEWLY ARRIVED SECTION */}
-      <section className="w-full inner-section-padding bg-linear-to-r from-linearyellow via-white to-linearyellow py-10">
-        <h2 className="text-primary font-semibold text-2xl mb-4">
-          Newly Arrived
-        </h2>
+          <NewlyArrivedSection />
+      
+      {/* NEWLY Brand Slider SECTION */}
+          <BrandSlider />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
-
-          {/* LEFT: PRODUCT IMAGE */}
-          <div className="flex flex-col items-center">
-            <Image
-              src="/assets/images/newly-arrived.png"
-              alt="iPhone"
-              width={320}
-              height={500}
-              className="object-contain"
-            />
-          </div>
-
-          {/* MIDDLE: PRODUCT HIGHLIGHTS */}
-          <div>
-            <h3 className="text-primary text-2xl font-semibold mb-4">
-              Product Highlights
-            </h3>
-
-            <ul className="productHighlights">
-              <li>A18 chip with Apple Intelligence</li>
-              <li>Super Retina XDR OLED display</li>
-              <li>New Camera Control button</li>
-              <li>Long-lasting all-day battery</li>
-              <li>USB-C fast charging support</li>
-            </ul>
-          </div>
-
-          {/* RIGHT: PRODUCT FEATURES */}
-          <div className="md:col-span-2 lg:col-span-1">
-            <h3 className="text-primary font-semibold text-2xl mb-4">
-              Product Features
-            </h3>
-
-            <ul className="productFeatures">
-              <li>
-                Powered by the next-generation A18 chip for faster and smoother
-                performance
-              </li>
-              <li>
-                Apple Intelligence support for smarter AI-driven experiences
-              </li>
-              <li>
-                48MP advanced camera system with improved night and portrait
-                photography
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-       <section className="w-full inner-section-padding py-10">
-
-      {/* HEADER */}
-      <div className="flex justify-between items-end mb-5">
-        <h2 className="bg-linear-120 from-red-600 to-red-800 text-white text-lg px-3 py-1 rounded">
-          Brands
-        </h2>
-
-        <a
-          href="#"
-          className="bg-linear-120 from-red-600 to-red-800 text-white text-lg px-3 py-1 rounded"
-        >
-          View all
-        </a>
-      </div>
-
-      {/* SWIPER */}
-      <div className="bg-linear-to-r from-primelinear to-yellow-200 p-4 rounded-lg">
-        <Swiper
-          modules={[Autoplay]}
-          loop
-          grabCursor
-          freeMode={{
-            enabled: true,
-            momentum: false,
-          }}
-          speed={2000}
-          autoplay={{
-            delay: 1,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-          }}
-          spaceBetween={16}
-          slidesPerView={2}
-          breakpoints={{
-            400: { slidesPerView: 3 },
-            640: { slidesPerView: 4 },
-            768: { slidesPerView: 5 },
-            992: { slidesPerView: 6 },
-            1200: { slidesPerView: 7 },
-            1300: { slidesPerView: 8 },
-          }}
-        >
-          {[...brands, ...brands, ...brands].map((brand, index) => (
-            <SwiperSlide key={index} className="flex justify-center">
-              <a href="#">
-                <div className="bg-white rounded-xl p-3 flex items-center justify-center">
-                  <Image
-                    src={`/assets/images/brands/${brand}.png`}
-                    alt={brand}
-                    width={80}
-                    height={32}
-                    className="h-8 w-auto object-contain"
-                  />
-                </div>
-              </a>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-    </section>
-
+     
     <section className="w-full inner-section-padding py-5">
         <h2 className="text-primary mb-5 text-2xl font-bold">
           What&apos;s Trending

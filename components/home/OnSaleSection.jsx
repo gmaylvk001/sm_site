@@ -30,7 +30,7 @@ export default function OnSaleSection() {
   };
 
   
-  console.log('products : ',products);
+  //console.log('products : ',products);
 
   return (
     <section className="w-full inner-section-padding bg-linear-to-r from-linearyellow via-white to-linearyellow py-10">
