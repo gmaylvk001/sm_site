@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
+import Addtocart from "@/components/AddToCart";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -71,7 +72,7 @@ export default function NewlyArrivedSection() {
 
           <ul
             className={`productHighlights transition-all duration-300 overflow-hidden ${
-              showHighlights ? "max-h-[600px]" : "max-h-[160px]"
+              showHighlights ? "max-h-[600px]" : "max-h-[250px]"
             }`}
           >
             {product.product_highlights?.map((item, index) => (
@@ -97,7 +98,7 @@ export default function NewlyArrivedSection() {
 
           <ul
             className={`productFeatures transition-all duration-300 overflow-hidden ${
-              showFeatures ? "max-h-[600px]" : "max-h-[160px]"
+              showFeatures ? "max-h-[600px]" : "max-h-[250px]"
             }`}
           >
             {product.features?.map((item, index) => (
@@ -121,13 +122,14 @@ export default function NewlyArrivedSection() {
             <p className="text-xl font-bold text-black">
               ₹ {product.special_price || product.price}
             </p>
-            */}
+            
             <Link
               href={`/product/${product.slug}`}
               className="inline-block mt-3 bg-primary text-white px-5 py-2 rounded-lg hover:opacity-90 transition"
             >
               View Product
             </Link>
+            */}
           </div>
         </div>
 
@@ -167,42 +169,42 @@ export default function NewlyArrivedSection() {
           border: 2px solid var(--color-primary);
         }
           .productFeatures li,
-.productHighlights li {
-  font-size: 20px;
-  line-height: 1.6;
-  margin-bottom: 8px;
-  font-weight: 700;
-  list-style: none;
-  padding: 10px 10px;
-  border-radius: 10px 50px 50px 10px;
-  border: 2px solid var(--primary-color);
-  background-color: #ffffff;
-  position: relative;
-  color: #585858;
-  overflow: hidden;
-}
+            .productHighlights li {
+            font-size: 12px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+            font-weight: 700;
+            list-style: none;
+            padding: 10px 10px;
+            border-radius: 10px 50px 50px 10px;
+            border: 2px solid var(--primary-color);
+            background-color: #ffffff;
+            position: relative;
+            color: #585858;
+            overflow: hidden;
+            }
 
-.productFeatures li:not(:last-child),
-.productHighlights li:not(:last-child) {
-  margin-bottom: 15px;
-}
+            .productFeatures li:not(:last-child),
+            .productHighlights li:not(:last-child) {
+            margin-bottom: 15px;
+            }
 
-.productFeatures li::after,
-.productHighlights li::after {
-  content: "";
-  background-color: #eaa221;
-  border-radius: 50px;
-  width: 30px;
-  height: 20px;
-  position: absolute;
-  top: -10px;
-  left: -10px;
-}
+            .productFeatures li::after,
+            .productHighlights li::after {
+            content: "";
+            background-color: #eaa221;
+            border-radius: 50px;
+            width: 30px;
+            height: 20px;
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            }
 
-.productFeatures,
-.productHighlights {
-  padding-left: 0;
-}
+            .productFeatures,
+            .productHighlights {
+            padding-left: 0;
+            }
 
       `}</style>
        </>

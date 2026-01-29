@@ -3,23 +3,28 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from 'next/link';
+import Addtocart from "@/components/AddToCart";
 
 export default function OnSaleSection() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [activeCat, setActiveCat] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     fetch("/api/home/categories")
       .then(res => res.json())
       .then(data => {
         setCategories(data);
-        if (data.length) loadProducts(data[0].category_slug);
+        if (data.length){
+        loadProducts(data[0].category_slug);
+        setSelectedProduct(data[0]);
+        } 
       });
   }, []);
 
   
-
+console.log('products : ',selectedProduct);
   const loadProducts = async (slug) => {
     setActiveCat(slug);
     
@@ -38,8 +43,8 @@ export default function OnSaleSection() {
 
         {/* LEFT CATEGORY LIST */}
         <div className="space-y-4">
-          <h2 className="text-2xl text-primary font-bold">
-            On-Sale Products
+          <h2 className="text-xl text-primary font-bold">
+           Fast Moving Products of {selectedProduct.category_name} 
           </h2>
 
           <div className="flex lg:flex-col gap-3 overflow-x-auto">
