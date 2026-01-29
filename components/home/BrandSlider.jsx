@@ -81,7 +81,7 @@ export default function BrandSlider() {
                     <Link href={`/brand/${brand.brand_slug}`}>
                         <div className="bg-white rounded-xl p-3 flex items-center justify-center h-[60px] w-[120px] hover:shadow-md transition">
                         <Image
-                            src={`/uploads/brands/${brand.image}`}
+                            src={`/uploads/Brands/${brand.image}`}
                             alt={brand.brand_name}
                             width={90}
                             height={40}
