@@ -6,7 +6,7 @@ export async function GET(req) {
   try {
     await dbConnect();
     const brands = await ecom_brand_info.find();
-    return Response.json({ data: brands }, {status: 200} );
+    return Response.json({ success: true, data: brands }, {status: 200} );
   } catch (error) {
     return Response.json({ error: "Error fetching brands" }, { status: 500 });
   }
