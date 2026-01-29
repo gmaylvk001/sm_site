@@ -338,7 +338,7 @@ background: -webkit-linear-gradient(left, #ed3237 0%, #ffe8e9 100%);
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    border: 0 solid;
+   
   }
   html, :host {
     line-height: 1.5;
