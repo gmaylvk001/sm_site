@@ -131,10 +131,10 @@ const BestSellers = () => {
       {/* PRODUCT SWIPER */}
       <div className="relative">
         <div className="product-nav-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 w-7 h-7 bg-primary rounded-full flex items-center justify-center cursor-pointer">
-          ‹
+         <i className="fi fi-ss-angle-small-left text-white"></i>
         </div>
         <div className="product-nav-next absolute right-0 top-1/2 -translate-y-1/2 z-10 w-7 h-7 bg-primary rounded-full flex items-center justify-center cursor-pointer">
-          ›
+           <i className="fi fi-ss-angle-small-right text-white"></i>
         </div>
 
         <Swiper

@@ -246,48 +246,56 @@ function CategoryCard({ image, title, bg }) {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* LEFT BIG BANNER */}
         <div className="lg:col-span-2 relative rounded-2xl overflow-hidden bg-black min-h-[260px] lg:min-h-[420px]">
-          <Image
-            src="/assets/images/all-tv-image.png"
-            alt="All LED"
-            fill
-            className="object-cover opacity-80"
-            priority
-          />
-
+          <Link href="/category/smart-tv">
+            <Image
+              src="/assets/images/all-tv-image.png"
+              alt="All LED"
+              fill
+              className="object-cover opacity-80"
+              priority
+            />
+        </Link>
           <div className="relative z-10 p-6 lg:p-10 h-full flex flex-col justify-between">
+            <Link href="/category/smart-tv">
             <h3 className="text-white text-2xl font-semibold">All LED</h3>
+            </Link>
           </div>
         </div>
 
         {/* RIGHT GRID */}
         <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* QLED */}
-          <CategoryCard
-            image="/assets/images/qled-img.webp"
-            title="QLED"
-            bg="bg-gray-800"
-          />
-
+          <Link href="/category/qled">
+            <CategoryCard
+              image="/assets/images/qled-img.webp"
+              title="QLED"
+              bg="bg-gray-800"
+            />
+          </Link>
           {/* QNED */}
+          <Link href="/category/led-hd">
           <CategoryCard
             image="/assets/images/qned.webp"
             title="QNED"
             bg="bg-blue-900"
           />
-
+          </Link>
           {/* OLED */}
+          <Link href="/category/ultra-hd">
           <CategoryCard
             image="/assets/images/oled.webp"
             title="OLED"
             bg="bg-gray-700"
           />
-
+          </Link>
           {/* HD READY */}
+          <Link href="/category/led-hd">
           <CategoryCard
             image="/assets/images/hdready-Photoroom.png"
             title="HD READY"
             bg="bg-gray-600"
           />
+          </Link>
         </div>
       </div>
     </section>
