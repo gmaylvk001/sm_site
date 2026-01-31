@@ -48,7 +48,7 @@ export default function OnSaleSection() {
   }, []);
 
   
-console.log('products : ',selectedProduct);
+ //console.log('products : ',selectedProduct);
   const loadProducts = async (slug) => {
     setActiveCat(slug);
     
@@ -63,13 +63,15 @@ console.log('products : ',selectedProduct);
 
   return (
     <section className="w-full inner-section-padding bg-linear-to-r from-linearyellow via-white to-linearyellow py-10">
+      <h2 className="text-xl text-primary font-bold mb-4">
+           Fast Moving Products of {selectedProduct.category_name}
+          </h2>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
         {/* LEFT CATEGORY LIST */}
+        
         <div className="space-y-4">
-          <h2 className="text-xl text-primary font-bold">
-           Fast Moving Products 
-          </h2>
+          
 
           <div className="flex lg:flex-col gap-3 overflow-x-auto">
             {categories.map(cat => (
@@ -130,9 +132,7 @@ console.log('products : ',selectedProduct);
                   <span className="text-red-600 font-bold">
                     ₹ {p.price}
                   </span>
-                  <span className="line-through text-gray-400 text-sm">
-                    ₹ {p.mrp}
-                  </span>
+                 
                 </div>
 
                 <div className="flex justify-between mt-2">

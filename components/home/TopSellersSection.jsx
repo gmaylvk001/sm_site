@@ -164,12 +164,12 @@ export default function TopSellersSection() {
                 <div className="rounded-xl bg-linear-120 from-yellow-200 to-pink-200 p-4 h-[430px] flex flex-col">
 
                     {/* IMAGE (FIXED HEIGHT) */}
-                    <div className="bg-white rounded-lg p-4 flex justify-center items-center h-[260px]">
+                    <div className="bg-white rounded-lg p-4 flex justify-center items-center h-[240px]">
                         <Image
                         src={`/uploads/products/${product.images?.[0]}`}
                         alt={product.name}
-                        width={260}
-                        height={260}
+                        width={240}
+                        height={240}
                         className="object-contain max-h-full"
                         />
                     </div>
@@ -183,17 +183,18 @@ export default function TopSellersSection() {
                         <p className="text-gray-600">Brand : {product.brand}</p>
                         */}
                         {/* TITLE – FIXED HEIGHT */}
-                        <h4 className="text-xs text-gray-500 mb-1 uppercase truncate line-clamp-2">
-                          <Link href={`/brand/${brandMap[product.brand]?.toLowerCase().replace(/\s+/g, "-") || ""}`} className="hover:text-red-600">
-                            Brand: {brandMap[product.brand] || ""}
-                          </Link>
-                        </h4>
+                        
                         <Link href={`/product/${product.slug}`}>
                             <p className="font-semibold text-sm mb-2 line-clamp-2">
                             {product.name}
                             </p>
                         </Link>
                         </div>
+                        <h4 className="text-xs text-gray-500 mb-1 uppercase truncate line-clamp-2">
+                          <Link href={`/brand/${brandMap[product.brand]?.toLowerCase().replace(/\s+/g, "-") || ""}`} className="hover:text-red-600">
+                            Brand: {brandMap[product.brand] || ""}
+                          </Link>
+                        </h4>
 
                         {/* PRICE + ACTIONS (ALWAYS BOTTOM) */}
                         <div>
