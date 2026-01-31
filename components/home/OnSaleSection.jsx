@@ -64,7 +64,7 @@ export default function OnSaleSection() {
   return (
     <section className="w-full inner-section-padding bg-linear-to-r from-linearyellow via-white to-linearyellow py-10">
       <h2 className="text-xl text-primary font-bold mb-4">
-           Fast Moving Products of {selectedProduct.category_name}
+           Fast Moving Products of {selectedProduct?.category_name }
           </h2>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
