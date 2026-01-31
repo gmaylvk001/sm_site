@@ -12,6 +12,30 @@ import Link from "next/link";
 export default function TopSellersSection() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+   const [brandMap, setBrandMap] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        
+        const brandResponse = await fetch("/api/brand");
+        const brandResult = await brandResponse.json();
+        if (!brandResult.error) {
+          const map = {};
+          brandResult.data.forEach((b) => { map[b._id] = b.brand_name; });
+          setBrandMap(map);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
 
   useEffect(() => {
     fetch("/api/home/top-sellers")
@@ -57,6 +81,11 @@ export default function TopSellersSection() {
                 </div>
 
                 <div>
+                  <h4 className="text-xs text-gray-500  ml-4  uppercase truncate">
+                    <Link href={`/brand/${brandMap[product.brand]?.toLowerCase().replace(/\s+/g, "-") || ""}`} className="hover:text-red-600">
+                      Brand: {brandMap[product.brand] || ""}
+                    </Link>
+                  </h4>
                   <p className="font-semibold text-sm ml-4 mb-2 line-clamp-2">
                     {product.name}
                   </p>
@@ -106,7 +135,7 @@ export default function TopSellersSection() {
         </div>
 
         {/* CENTER SLIDER */}
-        <div className="relative z-0 col-span-2">
+        <div className="relative z-0 col-span-2 pt-10">
 
           {/* Navigation */}
           <div className="topselling-prev absolute z-50 left-0 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary rounded-full flex items-center justify-center cursor-pointer">
@@ -154,6 +183,11 @@ export default function TopSellersSection() {
                         <p className="text-gray-600">Brand : {product.brand}</p>
                         */}
                         {/* TITLE – FIXED HEIGHT */}
+                        <h4 className="text-xs text-gray-500 mb-1 uppercase truncate line-clamp-2">
+                          <Link href={`/brand/${brandMap[product.brand]?.toLowerCase().replace(/\s+/g, "-") || ""}`} className="hover:text-red-600">
+                            Brand: {brandMap[product.brand] || ""}
+                          </Link>
+                        </h4>
                         <Link href={`/product/${product.slug}`}>
                             <p className="font-semibold text-sm mb-2 line-clamp-2">
                             {product.name}

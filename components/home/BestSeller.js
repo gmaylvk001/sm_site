@@ -13,6 +13,30 @@ const BestSellers = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+   const [brandMap, setBrandMap] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        
+        const brandResponse = await fetch("/api/brand");
+        const brandResult = await brandResponse.json();
+        if (!brandResult.error) {
+          const map = {};
+          brandResult.data.forEach((b) => { map[b._id] = b.brand_name; });
+          setBrandMap(map);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
 
   // Fetch categories initially
   useEffect(() => {
@@ -176,7 +200,11 @@ const BestSellers = () => {
 
   {/* CONTENT (FLEX GROWS EVENLY) */}
   <div className="mt-3 text-sm flex flex-col flex-1 justify-between">
-
+<h4 className="text-xs text-gray-500 mb-1 uppercase truncate">
+                          <Link href={`/brand/${brandMap[product.brand]?.toLowerCase().replace(/\s+/g, "-") || ""}`} className="hover:text-red-600">
+                            Brand: {brandMap[product.brand] || ""}
+                          </Link>
+                        </h4>
     {/* PRODUCT TITLE */}
     <Link href={`/product/${product.slug}`}>
     <p className="font-semibold line-clamp-2 min-h-[40px]">

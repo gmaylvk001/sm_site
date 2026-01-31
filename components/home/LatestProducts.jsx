@@ -11,6 +11,8 @@ import Addtocart from "@/components/AddToCart";
 export default function LatestProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [brandMap, setBrandMap] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/home/latest-products")
@@ -19,6 +21,29 @@ export default function LatestProducts() {
       .catch(console.error)
       .finally(() => setLoading(false)); // ✅ correct
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        
+        const brandResponse = await fetch("/api/brand");
+        const brandResult = await brandResponse.json();
+        if (!brandResult.error) {
+          const map = {};
+          brandResult.data.forEach((b) => { map[b._id] = b.brand_name; });
+          setBrandMap(map);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+ // console.log('Latest Products', products);
 
   const leftProducts = products.slice(0, 3);
   const swiperProducts = products.slice(3);
@@ -62,6 +87,11 @@ export default function LatestProducts() {
                 </Link>
 
                 <div className="ml-4">
+                  <h4 className="text-xs text-gray-500 mb-1 uppercase truncate">
+                              <Link href={`/brand/${brandMap[product.brand]?.toLowerCase().replace(/\s+/g, "-") || ""}`} className="hover:text-red-600">
+                                Brand: {brandMap[product.brand] || ""}
+                              </Link>
+                            </h4>
                   <Link href={`/product/${product.slug}`}>
                     <p className="font-semibold text-sm mb-2 line-clamp-2">
                       {product.name}
@@ -109,7 +139,7 @@ export default function LatestProducts() {
         </div>
 
         {/* Right Content */}
-        <div className="relative md:col-span-1 lg:col-span-2 z-0">
+        <div className="relative md:col-span-1 lg:col-span-2 z-0 pt-10">
 
           {/* Navigation */}
           <div className="latest-prev absolute z-50 -left-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary rounded-full flex items-center justify-center cursor-pointer">
@@ -140,7 +170,7 @@ export default function LatestProducts() {
                 ))
               : swiperProducts.map((product) => (
                   <SwiperSlide key={product._id}>
-                    <div className="rounded-xl bg-linear-120 from-yellow-200 to-pink-200 p-4 h-[430px] flex flex-col">
+                    <div className="rounded-xl bg-linear-120 from-yellow-200 to-pink-200 p-4 h-[430px] flex flex-col ">
                       <Link
                         href={`/product/${product.slug}`}
                         className="bg-white rounded-lg p-4 flex justify-center items-center h-[260px]"
@@ -157,8 +187,14 @@ export default function LatestProducts() {
                           className="object-contain"
                         />
                       </Link>
-
+                        
                       <div className="mt-3 flex flex-col flex-1 justify-between text-sm">
+                        {/* Brand Name */}
+                            <h4 className="text-xs text-gray-500 mb-1 uppercase truncate">
+                              <Link href={`/brand/${brandMap[product.brand]?.toLowerCase().replace(/\s+/g, "-") || ""}`} className="hover:text-red-600">
+                                Brand: {brandMap[product.brand] || ""}
+                              </Link>
+                            </h4>
                         <Link href={`/product/${product.slug}`}>
                           <p className="font-semibold line-clamp-2 min-h-[40px]">
                             {product.name}
