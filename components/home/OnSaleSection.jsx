@@ -10,6 +10,30 @@ export default function OnSaleSection() {
   const [products, setProducts] = useState([]);
   const [activeCat, setActiveCat] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
+   const [brandMap, setBrandMap] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        
+        const brandResponse = await fetch("/api/brand");
+        const brandResult = await brandResponse.json();
+        if (!brandResult.error) {
+          const map = {};
+          brandResult.data.forEach((b) => { map[b._id] = b.brand_name; });
+          setBrandMap(map);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
 
   useEffect(() => {
     fetch("/api/home/categories")
@@ -88,8 +112,9 @@ console.log('products : ',selectedProduct);
               <div className="flex flex-col justify-between">
                 <div>
                   <p className="text-xs text-gray-500 mb-1">
-                    Brand : {p.brand}
+                    Brand :  {brandMap[p.brand] || ""}
                   </p>
+                  
                   <h3 className="font-semibold text-sm">
                     {p.name}
                   </h3>

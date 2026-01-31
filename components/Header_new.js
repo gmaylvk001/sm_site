@@ -1677,12 +1677,65 @@ const handleCategoryClick = useCallback((categorySlug, categoryName) => {
 
             {/* Mobile Icons */}
             <div className="max-sm:block hidden">
-              <i className="fi fi-rr-marker flex text-primary font-bold text-2xl"></i>
+              <Link href="/all-stores" className="flex">
+                <i className="fi fi-rr-marker flex text-primary font-bold text-2xl"></i>
+              </Link>
             </div>
 
             <div className="max-sm:block hidden">
-              <i className="fi fi-sr-sign-in-alt flex text-primary font-bold text-2xl"></i>
+              {isLoggedIn ? (
+                              <>
+                                <button onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center text-black ">
+                                  <FiUser size={18} className="text-red-600" />
+                                  <span className="w-min text-center text-[0.7rem] leading-none font-bold text-primary">
+                                      Hi, 
+                                    
+                                  </span>
+                                </button>
+      
+                                {dropdownOpen && (
+                                  <div className="absolute right-0 mt-10 w-48 bg-white rounded-xl shadow-xl z-50 py-2 px-2" style={{
+                                        top: `40px`,
+                                        right: `5%`,
+                                        width: `40%`,
+                                        maxHeight: '220px'
+                                      }}>
+                                      {isAdmin && (
+                                        <>
+                                          <Link href="/admin/dashboard" className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-red-50 transition-colors">
+                                              <span className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full bg-red-600 text-white">
+                                                  <FaUserShield className="w-3 h-3 sm:w-4 sm:h-4" />
+                                              </span>
+                                              Admin Panel
+                                          </Link>
+                                        </>
+                                      )}
+                                    <Link href="/order" className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-red-50 transition-colors">
+                                      <span className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full bg-red-600 text-white">
+                                        <FaShoppingBag className="w-3 h-3 sm:w-4 sm:h-4" />
+                                      </span>My Orders
+                                    </Link>
+                                    <hr className="my-2 border-gray-200" />
+                                    <button onClick={handleLogout} className="flex items-center gap-2 sm:gap-3 w-full text-left px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm text-gray-700 hover:bg-red-50 transition-colors">
+                                        <span className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full bg-red-600 text-white">
+                                            <IoLogOut className="w-3 h-3 sm:w-4 sm:h-4" />
+                                        </span>Logout
+                                    </button>
+                                  </div>
+                                )}
+                              </>
+                            ) : (
+                              <button
+                            onClick={() => setShowAuthModal(true)}
+                            className="flex"
+                          >
+                            <i className="fi fi-sr-sign-in-alt flex text-primary font-bold text-2xl"></i>
+                           
+                          </button>
+                            )}
             </div>
+
+            
 
             {/* Wishlist */}
             <div className="relative flex items-center gap-1 text-sm">
@@ -1715,15 +1768,35 @@ const handleCategoryClick = useCallback((categorySlug, categoryName) => {
         <div className="lg:hidden max-w-2xl px-4 mx-auto pb-2.5">
           <div className="relative w-full">
             <input
-              type="text"
-              placeholder="Search for products"
-              className="w-full pl-5 pr-12 py-2 rounded-full border-2 bg-white text-gray font-bold border-gray-400/80 outline-none"
-            />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2">
-              <i className="fi fi-br-search flex font-bold text-primary"></i>
-            </span>
+                                type="search"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onKeyDown={handleKeyPress}
+                                placeholder="Search for products..."
+                                className="w-full pl-5 pr-12 py-2 rounded-full border-2 bg-white text-gray font-bold border-gray-400/80 outline-none"
+                                ref={searchInputRef}
+                                onFocus={() => {
+                                  setSearchContext('mobileTop'); // ADDED
+                                  if (searchInputRef.current) {
+                                    const rect = searchInputRef.current.getBoundingClientRect();
+                                    setSearchDropdownLeft(rect.left);
+                                    setSearchDropdownTop(rect.bottom + window.scrollY);
+                                    setSearchDropdownWidth(rect.width);
+                                  }
+                                  if (searchQuery.trim().length >= 1) fetchSuggestions(searchQuery);
+                                  setSearchDropdownVisible(true);
+                                }}
+                              />
+                              
+                              <button onClick={handleSearchBtnClick} className="text-red-600 ">
+                                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-red-600">
+                <i className="fi fi-br-search flex font-bold text-primary"></i>
+              </span>
+                                    </button>
           </div>
         </div>
+
+
       </header>
 
       {/* ================= CATEGORY NAV ================= */}
@@ -1765,11 +1838,12 @@ const handleCategoryClick = useCallback((categorySlug, categoryName) => {
       </nav>
 
       {/* NEW MOBILE SEARCH BAR */}
+        {/* 
                       <div className="sm:hidden mt-2 -mx-4 px-0">
                         <div className="bg-gradient-to-r from-[#ed3237] to-[#c11116] w-full px-3 py-3">
                           <div className="flex items-center bg-white h-12 rounded-xl border border-gray-300 shadow-sm overflow-hidden w-full transition-all duration-150 focus-within:border-[#2453d3] focus-within:shadow-[0_0_0_2px_rgba(36,83,211,0.15)] flex-nowrap">
                             
-                            {/* Category select */}
+                            
                             <select
                               value={selectedCategory}
                               onChange={(e) => setSelectedCategory(e.target.value)}
@@ -1821,7 +1895,9 @@ const handleCategoryClick = useCallback((categorySlug, categoryName) => {
                             </button>
                           </div>
                         </div>
-                      </div>
+                      </div> 
+                       */}
+
                       {/* MOBILE TOP SUGGESTIONS (outside menu) */}
                                       {searchDropdownVisible && searchContext === 'mobileTop' && !isMobileMenuOpen && (
                                         <div ref={searchDropdownRef} className="sm:hidden absolute z-[70] left-0 right-0 px-3 mt-1">
@@ -1900,7 +1976,7 @@ const handleCategoryClick = useCallback((categorySlug, categoryName) => {
                                       )}
 {/* Auth Modal */}
                 {showAuthModal && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="fixed inset-0  bg-opacity-50 flex items-center justify-center z-50">
                         <div className="bg-white rounded-lg p-8 w-96 max-w-full relative">
                             <button onClick={() => { setShowAuthModal(false); setFormError(''); setError(''); setErrors({ login: {}, register: {} }); setLoginData({ email: "", password: "" }); setRegisterData({ name: "", email: "", mobile: "", password: "" }); }} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl">
                                 &times;
