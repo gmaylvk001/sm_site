@@ -130,7 +130,7 @@ export default function OnSaleSection() {
       >
         {/* IMAGE */}
         <Image
-          src={`/uploads/products/${p.image}`}
+          src={`/uploads/products/${product.images?.[0]}`}
           alt="Product image"
           width={112}
           height={112}
