@@ -18,7 +18,7 @@ export default function BrandSlider() {
       try {
         const res = await fetch("/api/brand"); // API explained below
         const data = await res.json();
-        console.log('brands data:',data);
+       // console.log('brands data:',data);
         if (data.success) setBrands(data.data);
       } catch (error) {
         console.error("Brand fetch error:", error);
