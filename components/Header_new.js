@@ -1596,6 +1596,7 @@ const handleCategoryClick = useCallback((categorySlug, categoryName) => {
           </div>
 
           {/* Deal Badge */}
+          {/*
           <div className="deals">
             <a
               href="#"
@@ -1604,7 +1605,7 @@ const handleCategoryClick = useCallback((categorySlug, categoryName) => {
               Republic Day Deals
             </a>
           </div>
-
+*/}
           {/* Right Actions */}
           <div className="flex items-center gap-4 shrink-0">
 

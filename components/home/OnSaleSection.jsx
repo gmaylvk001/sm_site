@@ -5,6 +5,9 @@ import Image from "next/image";
 import Link from 'next/link';
 import Addtocart from "@/components/AddToCart";
 
+import Swiper from "swiper";
+import "swiper/css";
+
 export default function OnSaleSection() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -34,6 +37,15 @@ export default function OnSaleSection() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    new Swiper(".onsale-product-swiper", {
+      slidesPerView: 1,
+      navigation: {
+        nextEl: ".onsale-product-nav-next",
+        prevEl: ".onsale-product-nav-prev",
+      },
+    });
+  }, []);
 
   useEffect(() => {
     fetch("/api/home/categories")
@@ -42,16 +54,16 @@ export default function OnSaleSection() {
         setCategories(data);
         if (data.length){
         loadProducts(data[0].category_slug);
-        setSelectedProduct(data[0]);
+        setSelectedProduct(data[0]?.category_name);
         } 
       });
   }, []);
 
   
  //console.log('products : ',selectedProduct);
-  const loadProducts = async (slug) => {
+  const loadProducts = async (slug, name) => {
     setActiveCat(slug);
-    
+    setSelectedProduct(name);
     const res = await fetch(`/api/home/onsale?category=${slug}`);
     const data = await res.json();
     console.log('data : ',data);
@@ -62,93 +74,153 @@ export default function OnSaleSection() {
   //console.log('products : ',products);
 
   return (
+
     <section className="w-full inner-section-padding bg-linear-to-r from-linearyellow via-white to-linearyellow py-10">
-      <h2 className="text-xl text-primary font-bold mb-4">
-           Fast Moving Products of {selectedProduct?.category_name }
-          </h2>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <h2 className="text-xl text-primary font-bold mb-2">
+        Fast Moving Products of{" "}
+        <span className="text-2xl text-red-800">{selectedProduct}</span>
+      </h2>
+  <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 gap-y-4 items-start">
 
-        {/* LEFT CATEGORY LIST */}
-        
-        <div className="space-y-4">
-          
+    {/* LEFT CATEGORY LIST */}
+    <div className="space-y-4 text-center lg:text-left z-50">
+      
 
-          <div className="flex lg:flex-col gap-3 overflow-x-auto">
-            {categories.map(cat => (
-              <div
-                key={cat._id}
-                onClick={() => loadProducts(cat.category_slug)}
-                className={`flex items-center cursor-pointer border-2 rounded-full p-1 bg-white
-                  ${activeCat === cat.category_slug
-                    ? "border-red-600"
-                    : "border-primary"
-                  }`}
-              >
+      <div className="lg:grid lg:grid-rows-7 lg:gap-y-2.5 flex gap-x-2.5 overflow-x-auto">
+        {categories.map((cat) => (
+          <div
+            key={cat._id}
+            onClick={() => loadProducts(cat._id, cat.category_name)}
+            className={`shrink-0 cursor-pointer`}
+          >
+            <div
+              className={`flex items-center border-2 rounded-full bg-white
+                ${activeCat === cat.category_slug
+                  ? "border-red-600"
+                  : "border-primary"
+                }`}
+            >
+              <div className="bg-white rounded-full overflow-hidden shrink-0 w-fit h-fit">
                 <Image
-                  src={`${cat.image}`}
+                  src={cat.image}
                   alt={cat.category_name}
                   width={50}
                   height={50}
-                  className="rounded-full"
                 />
-                <span className="text-red-600 font-bold text-sm ml-3 pr-3">
-                  {cat.category_name}
-                </span>
               </div>
-            ))}
+
+              <span className="max-lg:pr-2.5 text-red-600 font-bold text-sm ml-4">
+                {cat.category_name}
+              </span>
+            </div>
           </div>
-        </div>
+        ))}
+      </div>
+    </div>
 
-        {/* PRODUCT GRID */}
-        <div className="lg:col-span-2 grid grid-cols-2 max-sm:grid-cols-1 gap-4">
-          {products.map((p, i) => (
-            <div key={i} className="bg-white rounded-xl shadow-lg p-4 flex gap-4">
-              <Image
-                src={`/uploads/products/${p.image}`}
-                alt={p.name}
-                width={110}
-                height={110}
-                className="object-contain"
-              />
+    {/* PRODUCT AREA (Fixed Equal Height Grid) */}
+<div className="relative z-0 col-span-2">
+  <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-3.5 auto-rows-fr">
 
-              <div className="flex flex-col justify-between">
-                <div>
-                  <p className="text-xs text-gray-500 mb-1">
-                    Brand :  {brandMap[p.brand] || ""}
-                  </p>
-                  
-                  <h3 className="font-semibold text-sm">
-                    {p.name}
-                  </h3>
-                </div>
+    {products.map((p, i) => (
+      <div
+        key={i}
+        className="bg-white rounded-xl shadow-[0px_0px_10px_0px_rgba(0,0,0,0.5)]
+                   p-4 flex gap-4 h-full"
+      >
+        {/* IMAGE */}
+        <Image
+          src={`/uploads/products/${p.image}`}
+          alt="Product image"
+          width={112}
+          height={112}
+          className="object-contain shrink-0"
+        />
 
-                <ul className="text-xs text-gray-500">
-                  {p.specs?.map((s, idx) => (
-                    <li key={idx}>{s}</li>
-                  ))}
-                </ul>
+        {/* CONTENT */}
+        <div className="flex flex-col justify-between w-full min-h-full">
 
-                <div className="flex justify-between mt-2">
-                  <span className="text-red-600 font-bold">
+          {/* TOP */}
+          <div>
+            <p className="mb-2 text-sm text-gray-500">
+              {brandMap[p.brand] &&  (
+              <Link href={`/brand/${brandMap[p.brand]?.toLowerCase().replace(/\s+/g, "-") || ""}`} className="hover:text-red-600">
+                  Brand: {brandMap[p.brand] || ""}
+                </Link>
+                 )}
+            </p>
+
+            {/* Clamp title to 2 lines */}
+            <h3 className="font-semibold text-sm leading-snug line-clamp-2">
+              {p.name}
+            </h3>
+          </div>
+
+          {/* Clamp specs */}
+          <ul className="text-gray-500 mt-2 text-xs line-clamp-3">
+            {p.specs?.map((s, idx) => (
+              <li key={idx}>{s}</li>
+            ))}
+          </ul>
+
+          {/* PRICE */}
+          <div className="mt-2 flex items-center justify-between">
+            <span className="text-red-600 font-bold text-lg">
+              ₹ {p.price}
+            </span>
+             {p.special_price && p.price < p.special_price && (
+                  <span className="text-red-500 line-through ml-2">
                     ₹ {p.price}
                   </span>
-                 
-                </div>
+                )}
+                  {p.special_price && p.price < p.special_price && (
+                        <span
+                          className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-md ml-2">
+                          {Math.round(100 - (Number(p.special_price) / Number(p.price)) * 100)}% Off
+                      </span>
+                  )}
+          </div>
 
-                <div className="flex justify-between mt-2">
-                  <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
-                    {p.discount}% OFF
-                  </span>
-                  <button className="bg-green-500 p-1.5 rounded-full">
-                    <i className="fi fi-brands-whatsapp text-white"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+          {/* ACTIONS */}
+          <div className="mt-2 flex items-center justify-between">
+             <Addtocart
+                  productId={p._id}
+                  stockQuantity={p.quantity}
+                  special_price={p.special_price}
+                  className="flex-1 text-xs sm:text-sm py-1.5 sm:py-2"
+                />
+
+                <a
+                href={`https://wa.me/919047048777?text=${encodeURIComponent(
+                    `Check Out This Product: ${
+                    typeof window !== "undefined"
+                        ? window.location.origin
+                        : ""
+                    }/product/${p.slug}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-500 hover:bg-green-600 text-white p-2 rounded-full flex items-center justify-center transition"
+                >
+                <svg className="w-4 h-4" viewBox="0 0 32 32" fill="currentColor">
+                    <path d="M16.003 2.667C8.64 2.667 2.667 8.64 2.667 16c0 2.773.736 5.368 2.009 7.629L2 30l6.565-2.643A13.254 13.254 0 0016.003 29.333C23.36 29.333 29.333 23.36 29.333 16c0-7.36-5.973-13.333-13.33-13.333zm7.608 18.565c-.32.894-1.87 1.749-2.574 1.865-.657.104-1.479.148-2.385-.148-.55-.175-1.256-.412-2.162-.812-3.8-1.648-6.294-5.77-6.49-6.04-.192-.269-1.55-2.066-1.55-3.943 0-1.878.982-2.801 1.33-3.168.346-.364.75-.456 1.001-.456.25 0 .5.002.719.013.231.01.539-.088.845.643.32.768 1.085 2.669 1.18 2.863.096.192.16.423.03.683-.134.26-.2.423-.39.65-.192.231-.413.512-.589.689-.192.192-.391.401-.173.788.222.392.986 1.625 2.116 2.636 1.454 1.298 2.682 1.7 3.075 1.894.393.192.618.173.845-.096.23-.27.975-1.136 1.237-1.527.262-.392.524-.32.894-.192.375.13 2.35 1.107 2.75 1.308.393.205.656.308.75.48.096.173.096 1.003-.224 1.897z" />
+                </svg>
+                </a>
+          </div>
         </div>
-
       </div>
-    </section>
+    ))}
+
+    {!products.length && (
+      <p className="col-span-2 text-center text-gray-500">
+        No products available
+      </p>
+    )}
+
+  </div>
+</div>
+
+  </div>
+</section>
   );
 }

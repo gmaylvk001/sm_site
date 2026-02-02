@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
-
+import Product from "@/models/product";
 import Order from "@/models/ecom_order_info";
 
 export async function GET(req) {
@@ -10,65 +10,35 @@ export async function GET(req) {
   const categorySlug = searchParams.get("category");
 
   try {
-    const pipeline = [
-      { $unwind: "$order_item" },
+   const order_products = await Order.find({
+      order_status: "shipped",
+      "order_item.0.category": categorySlug,
+    }).sort({ createdAt: -1 });
 
-      // Join with Product
-      {
-        $lookup: {
-          from: "products", // mongoose auto-plural for Product
-          localField: "order_item.item_code",
-          foreignField: "item_code",
-          as: "product",
-        },
-      },
-      { $unwind: "$product" },
+     // 2️⃣ Extract item_codes from orders
+    const itemCodes = order_products.flatMap(order =>
+      order.order_item.map(item => item.item_code)
+    );
 
-      // Join with Category
-      {
-        $lookup: {
-          from: "ecom_category_infos",
-          localField: "product.category", // ✅ FIXED
-          foreignField: "category_slug",
-          as: "category",
-        },
-      },
-      { $unwind: "$category" },
+    // Safety check
+    if (!itemCodes.length) {
+      return NextResponse.json({
+        success: true,
+        data: [],
+        category: categorySlug,
+      });
+    }
 
-      // Optional category filter
-      ...(categorySlug
-        ? [{ $match: { "category.category_slug": categorySlug } }]
-        : []),
+    // 3️⃣ Fetch products using item_code
+    const products = await Product.find({
+      item_code: { $in: itemCodes },
+    });
 
-      // Latest orders first
-      { $sort: { "order_item.created_at": -1 } },
-
-      // Limit products
-      { $limit: 8 },
-
-      // Final output
-      {
-        $project: {
-          _id: 0,
-          name: "$product.name",
-          brand: "$product.brand",
-          price: {
-            $ifNull: ["$product.special_price", "$product.price"],
-          },
-          mrp: "$product.price",
-          image: { $arrayElemAt: ["$product.images", 0] },
-          specs: "$product.key_specifications",
-          category: "$category.category_name",
-          category_slug: "$category.category_slug",
-        },
-      },
-    ];
-
-    const products = await Order.aggregate(pipeline);
 
     return NextResponse.json({
       success: true,
       data: products,
+      category : categorySlug,
     });
   } catch (error) {
     return NextResponse.json(
