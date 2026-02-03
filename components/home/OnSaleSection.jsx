@@ -187,6 +187,7 @@ export default function OnSaleSection() {
                   productId={p._id}
                   stockQuantity={p.quantity}
                   special_price={p.special_price}
+                  category={p.category}
                   className="flex-1 text-xs sm:text-sm py-1.5 sm:py-2"
                 />
 

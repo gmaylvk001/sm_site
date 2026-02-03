@@ -25,6 +25,7 @@ const OrderSchema = new mongoose.Schema(
       id: { type: Number },
       name: { type: String },
       price: { type: Number },
+      category: { type: String },
       item_code: { type: String },
       model:{ type: String },
       coupondiscount:{ type: Number},

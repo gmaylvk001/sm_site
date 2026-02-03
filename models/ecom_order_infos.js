@@ -9,7 +9,16 @@ const OrderSchema = new mongoose.Schema(
   order_item: [{
     id: Number,
     name: String,
-    price: Number
+    price: Number,
+    category: String,
+    item_code: String,
+    image: String,
+    warranty: Number,
+    extendedWarranty: Number,
+    upsells: [{
+      name: String,
+      price: Number,
+    }],
   }],
   order_details: [{
     item_code: String,
