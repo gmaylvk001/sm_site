@@ -108,6 +108,7 @@ export async function POST(req) {
         item_code: product.item_code,
         productId,
         quantity,
+        category: product.category,
         price: product.special_price ?? product.price,
         name: product.name,
         image: product.images[0],

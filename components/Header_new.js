@@ -2123,7 +2123,7 @@ const handleCategoryClick = useCallback((categorySlug, categoryName) => {
             className="hidden sm:flex flex-col fixed z-[80] bg-white shadow-xl rounded-xl border border-gray-200 overflow-hidden"
             style={{
               top: `70px`,
-              left: `10%`,
+              left: `18%`,
               width: `50%`,
               maxHeight: '420px'
             }}
