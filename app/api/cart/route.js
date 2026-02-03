@@ -154,7 +154,7 @@ export async function GET(req) {
     
 
     cart = await Cart.findOne({ userId }).populate(
-      "items.productId",
+      "items.productId", 
       "name price images item_code quantity"
     );
 
@@ -186,6 +186,7 @@ export async function GET(req) {
           original_quantity,
           item_code: item.productId.item_code,
           productId: item.productId._id,
+          category: item.category,
           name: item.productId.name,
           price: item.price,
           image: item.productId.images[0],
@@ -292,6 +293,7 @@ cart.items.forEach((item) => {
     const items = cart.items.map((item) => ({
       productId: item.productId._id,
       name: item.name,
+      category: item.category,
       price: item.price,
       image: item.productId.images,
       quantity: item.quantity,
