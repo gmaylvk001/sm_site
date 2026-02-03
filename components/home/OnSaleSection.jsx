@@ -53,7 +53,7 @@ export default function OnSaleSection() {
       .then(data => {
         setCategories(data);
         if (data.length){
-        loadProducts(data[0].category_slug);
+        loadProducts(data[0]._id,data[0]?.category_name);
         setSelectedProduct(data[0]?.category_name);
         } 
       });
