@@ -254,6 +254,8 @@ const [isSubmitting, setIsSubmitting] = useState(false);
       setCartItems(cartData.cart.items);
     }
 
+    console.log('cartItems : ',cartItems);
+
     // Fetch user address
     const addressResponse = await fetch(`/api/useraddress?user_id=${userId}`);
     if (!addressResponse.ok) throw new Error("Failed to fetch address data");

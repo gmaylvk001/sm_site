@@ -74,7 +74,7 @@ export default function CheckoutPage() {
 
         const cartData = await cartResponse.json();
         setCartItems(cartData.cart.items);
-
+        console.log('cartItems : ',cartItems);
         // Fetch user address
         const addressResponse = await fetch(`/api/useraddress?user_id=${userId}`);
         if (!addressResponse.ok) {

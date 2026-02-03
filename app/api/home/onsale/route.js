@@ -11,7 +11,7 @@ export async function GET(req) {
 
   try {
    const order_products = await Order.find({
-      order_status: "shipped",
+     // order_status: "shipped",
       "order_item.0.category": categorySlug,
     }).sort({ createdAt: -1 });
 
