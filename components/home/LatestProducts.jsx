@@ -103,10 +103,16 @@ export default function LatestProducts() {
                       ₹ {product.special_price || product.price}
                     </span>
 
-                    {product.special_price && (
+                    {product.special_price && product.price < product.special_price && (
                       <span className="text-gray-500 line-through text-sm">
                         ₹ {product.price}
                       </span>
+                    )}
+                    {product.special_price && product.price < product.special_price && (
+                          <span
+                            className="bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-md ml-2">
+                            {Math.round(100 - (Number(product.special_price) / Number(product.price)) * 100)}% Off
+                        </span>
                     )}
                   </div>
                   <div className="flex items-center justify-between mt-2">

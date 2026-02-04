@@ -2,7 +2,9 @@
 import CategoryClient from "@/components/category/[slug]/page";
 
 export async function generateMetadata({ params }) {
-  const { sub_slug } = params;
+ // const { sub_slug } = params;
+  const awaitedParams = await params;
+  const sub_slug = awaitedParams.sub_slug;
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
   try {

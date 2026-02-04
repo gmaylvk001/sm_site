@@ -128,14 +128,15 @@ export default function OnSaleSection() {
                    p-4 flex gap-4 h-full"
       >
         {/* IMAGE */}
-        <Image
-          src={`/uploads/products/${p.images?.[0]}`}
-          alt="Product image"
-          width={112}
-          height={112}
-          className="object-contain shrink-0"
-        />
-
+        <Link href={`/product/${p.slug}`}>
+          <Image
+            src={`/uploads/products/${p.images?.[0]}`}
+            alt="Product image"
+            width={112}
+            height={112}
+            className="object-contain shrink-0"
+          />
+        </Link>
         {/* CONTENT */}
         <div className="flex flex-col justify-between w-full min-h-full">
 
@@ -151,7 +152,9 @@ export default function OnSaleSection() {
 
             {/* Clamp title to 2 lines */}
             <h3 className="font-semibold text-sm leading-snug line-clamp-2">
+              <Link href={`/product/${p.slug}`}>
               {p.name}
+              </Link>
             </h3>
           </div>
 

@@ -8,6 +8,7 @@ export async function GET() {
 
     const products = await Product.find({
       quantity: { $gt: 0 },
+      images : { $ne : [] },
       status: "Active",
     })
       .sort({ createdAt: -1 })
