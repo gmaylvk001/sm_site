@@ -170,7 +170,7 @@ export async function POST(req) {
       if (existingProductall) {
         await Product_all.updateOne({ item_code: item.item_code }, { $set: commonData });
       } else {
-       // await Product_all.create(commonData);
+        await Product_all.create(commonData);
       }
     }
     await ZTrackApi.create({ type: 'prod_all_master' });
