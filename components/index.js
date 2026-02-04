@@ -146,8 +146,8 @@ function CategoryCard({ image, title, bg }) {
 
       {/* ================= BANK OFFER STRIP ================= */}
       <section className="w-full bg-white border-dotted border-b">
-        <div className="mx-5 py-4">
-          <div className="flex gap-4 overflow-x-auto">
+        <div className="mx-5 py-4 ">
+          <div className="flex gap-4 overflow-x-auto items-center justify-between">
             {[
               "hsbc",
               "sbi-card",
