@@ -72,12 +72,14 @@ export default function TopSellersSection() {
                 className="flex items-center rounded-xl bg-linear-to-tr from-pink-200 to-orange-200 p-3"
               >
                 <div className="bg-white rounded-xl overflow-hidden shrink-0">
+                <Link href={`/product/${product.slug}`}>
                   <Image
                     src={`/uploads/products/${product.images?.[0]}`}
                     alt={product.name}
                     width={130}
                     height={130}
                   />
+                  </Link>
                 </div>
 
                 <div>
@@ -87,7 +89,9 @@ export default function TopSellersSection() {
                     </Link>
                   </h4>
                   <p className="font-semibold text-sm ml-4 mb-2 line-clamp-2">
+                    <Link href={`/product/${product.slug}`}>
                     {product.name}
+                    </Link>
                   </p>
 
                   <div className="flex items-center flex-wrap gap-x-2">
@@ -165,6 +169,7 @@ export default function TopSellersSection() {
 
                     {/* IMAGE (FIXED HEIGHT) */}
                     <div className="bg-white rounded-lg p-4 flex justify-center items-center h-[240px]">
+                      <Link href={`/product/${product.slug}`}>
                         <Image
                         src={`/uploads/products/${product.images?.[0]}`}
                         alt={product.name}
@@ -172,6 +177,7 @@ export default function TopSellersSection() {
                         height={240}
                         className="object-contain max-h-full"
                         />
+                        </Link>
                     </div>
 
                     {/* CONTENT (FLEXED) */}
