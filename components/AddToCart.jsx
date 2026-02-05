@@ -161,7 +161,7 @@ const AddToCartButton = ({ productId, quantity = 1, warranty, additionalProducts
     updateCartCount(responseData.cart.totalItems + additionalProducts.length);
 
     // ✅ Track events (skip if guest)
-    
+    /*
     if (isLoggedIn) {
       trackAddToCart({
         user: {
@@ -180,7 +180,7 @@ const AddToCartButton = ({ productId, quantity = 1, warranty, additionalProducts
         },
       });
     }
-
+*/
     // ✅ Store frequently bought together
     if (selectedFrequentProducts?.length > 0) {
       const ids = selectedFrequentProducts.map((p) => p._id);
