@@ -8,6 +8,8 @@ import ProductCard from "@/components/ProductCard";
 import Addtocart from "@/components/AddToCart";
 import { ToastContainer, toast } from 'react-toastify';
 import { Range as ReactRange } from "react-range";
+import CategorySchema from "@/components/schema/CategorySchema";
+import CategoryBreadcrumbSchema from "@/components/schema/CategoryBreadcrumbSchema";
 
 export default function CategoryPage() {
   const [categoryData, setCategoryData] = useState({
@@ -1092,6 +1094,8 @@ useEffect(() => {
       )}
       </div>
       <ToastContainer />
+      <CategorySchema category={categoryData.main_category} products={categoryData.products} />
+<CategoryBreadcrumbSchema category={categoryData.main_category} />
     </div>
   );
 }
