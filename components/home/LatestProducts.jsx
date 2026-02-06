@@ -71,7 +71,7 @@ export default function LatestProducts() {
   const swiperProducts = products.slice(3);
 
   return (
-    <section className="w-full py-10 bg-linear-to-r from-linearyellow via-white to-linearyellow inner-section-padding">
+    <section className="w-full py-10 bg-linear-to-r from-linearyellow via-white to-linearyellow inner-section-padding border border-gray-300 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center">
 
         {/* LEFT CONTENT */}

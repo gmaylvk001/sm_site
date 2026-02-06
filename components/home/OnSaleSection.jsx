@@ -91,7 +91,7 @@ export default function OnSaleSection() {
   };
 
   return (
-    <section className="w-full inner-section-padding bg-linear-to-r from-linearyellow via-white to-linearyellow py-10">
+    <section className="w-full inner-section-padding bg-linear-to-r from-linearyellow via-white to-linearyellow py-10 border border-gray-300 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
       <h2 className="text-xl text-primary font-bold mb-2">
         Fast Moving Products of{" "}
         <span className="text-2xl text-red-800">

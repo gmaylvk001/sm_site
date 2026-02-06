@@ -94,7 +94,7 @@ const BestSellers = () => {
   };
 
   return (
-    <section className="inner-section-padding py-10 bg-linear-to-r from-primelinear via-white to-primelinear">
+    <section className="inner-section-padding py-10 border border-gray-300 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
       <h2 className="text-2xl font-bold text-primary text-center mb-5">
         Best Price in the Market
       </h2>

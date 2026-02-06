@@ -12,7 +12,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div>
+    <div className="bg-linear-to-r from-linearyellow via-white to-linearyellow">
       
       <LandingpageComponent /> 
     </div>
