@@ -70,7 +70,7 @@ export default function TopSellersSection() {
   if (loading || products.length === 0) return null;
 
   return (
-    <section className="w-full inner-section-padding bg-linear-to-r from-linearyellow via-white to-linearyellow py-10">
+    <section className="w-full inner-section-padding bg-linear-to-r from-linearyellow via-white to-linearyellow py-10 border border-gray-300 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-5 lg:gap-8 items-center">
 
         {/* LEFT LIST */}

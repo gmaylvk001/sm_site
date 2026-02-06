@@ -29,7 +29,7 @@ export default function NewlyArrivedSection() {
 
   return (
      <>
-     <section className="w-full inner-section-padding bg-linear-to-r from-linearyellow via-white to-linearyellow py-5">
+     <section className="w-full inner-section-padding bg-linear-to-r from-linearyellow via-white to-linearyellow py-5 border border-gray-300 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
       <h2 className="text-primary font-semibold text-2xl mb-4">
         Newly Arrived
       </h2>
