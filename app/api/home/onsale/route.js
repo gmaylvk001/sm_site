@@ -20,6 +20,9 @@ export async function GET(req) {
       order.order_item.map(item => item.item_code)
     );
 
+    // Remove duplicates
+    const uniqueItemCodes = [...new Set(itemCodes)];
+
     // Safety check
     if (!itemCodes.length) {
       return NextResponse.json({
@@ -29,9 +32,11 @@ export async function GET(req) {
       });
     }
 
+    
+
     // 3️⃣ Fetch products using item_code
     const products = await Product.find({
-      item_code: { $in: itemCodes },
+      item_code: { $in: uniqueItemCodes.slice(0,4) },
     });
 
 
