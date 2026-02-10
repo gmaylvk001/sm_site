@@ -38,12 +38,14 @@ export default function BrandSlider() {
       <div className="flex justify-between items-end mb-5">
         <h5 className= "text-lg font-semibold">Shop by Brands</h5>
 
+        {/*
         <Link
-          href="/brands"
-          className="bg-linear-120 from-red-600 to-red-800 text-white text-lg px-3 py-1 rounded"
+          href="/brand"
+          className="bg-linear-120 from-red-600 to-red-800 text-black text-lg px-3 py-1 rounded"
         >
           View all
         </Link>
+        */}
       </div>
 
       {/* SLIDER */}
