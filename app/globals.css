@@ -1897,3 +1897,11 @@ background: -webkit-linear-gradient(left, #ed3237 0%, #ffe8e9 100%);
             background-position: 100%;
         }
     }
+
+    .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
