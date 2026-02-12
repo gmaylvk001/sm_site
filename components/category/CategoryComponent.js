@@ -470,7 +470,9 @@ useEffect(() => {
    }
 
   return (
-
+<>
+<CategorySchema category={categoryData.main_category} products={categoryData.products} />
+<CategoryBreadcrumbSchema category={categoryData.main_category} />
 
     <div className="container mx-auto px-4 py-2 pb-3 max-w-7xl">
 
@@ -1094,8 +1096,8 @@ useEffect(() => {
       )}
       </div>
       <ToastContainer />
-      <CategorySchema category={categoryData.main_category} products={categoryData.products} />
-<CategoryBreadcrumbSchema category={categoryData.main_category} />
+      
     </div>
+    </>
   );
 }

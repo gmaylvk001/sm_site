@@ -31,6 +31,12 @@ const ProductSchema = new mongoose.Schema({
   default: [] 
 },
 
+add_ons: {
+  type: [mongoose.Schema.Types.ObjectId],
+  ref: "Product",
+  default: [],
+},
+
   warranty: Number,
   extended_warranty:Number,
   overviewdescription: String,

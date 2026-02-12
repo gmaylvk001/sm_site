@@ -16,6 +16,7 @@ import { Play } from "lucide-react";
 import { Navigation } from 'swiper/modules';
 import { useHeaderdetails } from "@/context/HeaderContext";
 import HeaderNav from "@/components/HeaderNav";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 // ADD: alphaSortString - case-insensitive, null-safe string comparator
 const alphaSortString = (a, b) => {
@@ -294,6 +295,25 @@ const handleCategoryClick = useCallback((categorySlug, categoryName) => {
           return sortedProducts;
       }
     };
+
+    const [openMenu, setOpenMenu] = useState(false);
+  const [openCategory, setOpenCategory] = useState(null);
+
+    const [categoriesMenu, setCategoriesMenu] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/categories/menu")
+      .then(res => res.json())
+      .then(data => setCategoriesMenu(data));
+  }, []);
+
+  const chunkArray = (arr, size) => {
+  const result = [];
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+  return result;
+};
 
     // --- Add cache helpers after your state declarations (place near other consts) ---
     const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
@@ -967,6 +987,15 @@ const handleCategoryClick = useCallback((categorySlug, categoryName) => {
         
         return result;
     };
+
+    useEffect(() => {
+  if (openMenu) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+}, [openMenu]);
+
     // Flatten all starting from actual visible categories (like Refrigerator, ACâ€¦)
     const flattenAllCategories = (cats) => {
         let result = [];
@@ -1802,41 +1831,71 @@ const handleCategoryClick = useCallback((categorySlug, categoryName) => {
 
       {/* ================= CATEGORY NAV ================= */}
       <nav className="bg-primary text-white md:block hidden">
-        <div className="max-w-7xl mx-auto px-4">
-          <ul className="flex items-center justify-between gap-6 py-3 overflow-x-auto whitespace-nowrap font-semibold text-sm">
-             <Link href={`/category/mobiles`} >               
-            <li className="flex items-center gap-1 text-[16px] font-black hover:text-yellow-300 cursor-pointer">
-              <i className="fi fi-rr-mobile-notch mr-1"></i> Mobiles
-            </li>
+      <div className="max-w-7xl mx-auto px-4">
+        <ul className="flex items-center gap-8 py-3 font-semibold text-sm justify-between">
+          {categoriesMenu.map((cat) => (
+            <li key={cat._id} className="relative group">
+  {/* Main Category */}
+  <Link
+    href={`/category/${cat.category_slug}`}
+    className="flex items-center gap-2 text-[16px] font-black hover:text-yellow-300"
+  >
+    <Image
+      src={cat.image}
+      alt={cat.category_name}
+      width={28}
+      height={28}
+      className="object-contain"
+    />
+    <span>{cat.category_name}</span>
+  </Link>
+
+  {/* Submenu */}
+  {cat.subcategories?.length > 0 && (
+  <div className="absolute left-0 top-full mt-2 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 bg-linear-to-r from-linearyellow via-white to-linearyellow text-black rounded-lg shadow-lg p-4 z-50">
+    
+    <div className="flex gap-10 items-start">
+  
+  {/* LEFT SIDE - Subcategories */}
+  <div className="flex gap-8">
+    {chunkArray(cat.subcategories, 10).map((group, index) => (
+      <ul key={index} className="space-y-2 min-w-[180px]">
+        {group.map((sub) => (
+          <li key={sub._id}>
+            <Link
+              href={`/category/${sub.category_slug}`}
+              className="block hover:text-primary hover:underline"
+            >
+              {sub.category_name}
             </Link>
-            <Link href={`/category/air-conditioner`} >
-            <li className="flex items-center gap-1 text-[16px] font-black hover:text-yellow-300 cursor-pointer">
-              <i className="fi fi-rr-air-conditioner mr-1"></i> Air Conditioners
-            </li>
-            </Link>
-            <Link href={`/category/laptop-desktops`} >
-            <li className="flex items-center gap-1 text-[16px] font-black hover:text-yellow-300 cursor-pointer">
-              <i className="fi fi-rs-laptop mr-1"></i> Laptop & Desktops
-            </li>
-            </Link>
-            <Link href={`/category/accessories`} >
-            <li className="flex items-center gap-1 text-[16px] font-black hover:text-yellow-300 cursor-pointer">
-              <i className="fi fi-ss-headphones mr-1"></i> Accessories
-            </li>
-            </Link>
-            <Link href={`/category/smart-tv`} >
-            <li className="flex items-center gap-1 text-[16px] font-black hover:text-yellow-300 cursor-pointer">
-              <i className="fi fi-rs-screen mr-1"></i> Smart TV
-            </li>
-            </Link>
-            <Link href={`/category/tablets`} >
-            <li className="flex items-center gap-1 text-[16px] font-black hover:text-yellow-300 cursor-pointer">
-              <i className="fi fi-ts-tablet-rugged mr-1"></i> Tablets
-            </li>
-              </Link>
-          </ul>
-        </div>
-      </nav>
+          </li>
+        ))}
+      </ul>
+    ))}
+  </div>
+
+  {/* RIGHT SIDE - Category Image */}
+  {cat.image && (
+    <div className="min-w-[180px]">
+      <Image
+        src={cat.image}
+        alt={cat.category_name}
+        width={180}
+        height={180}
+        className="object-contain rounded-lg"
+      />
+    </div>
+  )}
+
+</div>
+
+  </div>
+)}
+</li>
+          ))}
+        </ul>
+      </div>
+    </nav>
 
       {/* NEW MOBILE SEARCH BAR */}
         {/* 
