@@ -24,7 +24,10 @@ export async function GET(req) {
         $regex: sub_category_new,
         $options: "i"
       },
-        status: "Active" 
+        status: "Active" ,
+            // 🔥 HIDE OUT OF STOCK PRODUCTS
+  quantity: { $gt: 0 },
+  stock_status: { $ne: "Out of Stock" }
       };
     
 
